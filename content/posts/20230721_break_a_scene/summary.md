@@ -1,8 +1,11 @@
-+++
-title = 'Summary: Break-A-Scene: Extracting Multiple Concepts from a Single Image'
-date =  2023-07-21
-draft = false
-+++
+---
+title: "Summary: Break-A-Scene: Extracting Multiple Concepts from a Single Image"
+date:  "2023-07-21"
+draft: false
+tags: ["Diffusion models"] 
+ShowToc: false
+ShowBreadCrumbs: true
+---
 
 **TL;DR**
 Fine-tuning of a diffusion model using a single image to generate images conditions on user-provided concepts.
@@ -32,8 +35,10 @@ From the paper examples, seems like the pose is fixed: The dog in figure 10 is a
 
 In their evaluation, they used COCO annotated segmentation masks. It is not clear how much noisy segmentation masks affect the performance. This is important for a large scale image generation.
 
-![Image generation process](method.jpg)
-![Generated image example](eval.jpg)
+
+
+
+![Generated image example](eval.jpg#center)
 
 <!-- <figure>
     <img src="/content/posts/20230721_break_a_scene/method.jpg"
