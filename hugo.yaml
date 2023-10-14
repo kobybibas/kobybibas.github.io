@@ -24,14 +24,14 @@ params:
   images: ["<link or path of image for opengraph, twitter-cards>"]
   DateFormat: "January 2, 2006"
   defaultTheme: light
-  disableThemeToggle: false
+  disableThemeToggle: true
 
   ShowReadingTime: true
   ShowShareButtons: false
-  ShowPostNavLinks: false
-  ShowBreadCrumbs: false
+  ShowPostNavLinks: true
+  ShowBreadCrumbs: true
   ShowCodeCopyButtons: false
-  ShowWordCount: false
+  ShowWordCount: true
   ShowRssButtonInSectionTermList: false
   UseHugoToc: false
   disableSpecial1stPost: false
@@ -61,7 +61,7 @@ params:
     enabled: false # needs to be explicitly set
     title: Koby Bibas
     subtitle: "This is subtitle"
-    imageUrl: "<img location>"
+    imageUrl: "https://avatars.githubusercontent.com/u/20231227?s=400&u=69d468e592fd813502382e25d4500e6169c95478&v=4"
     imageWidth: 120
     imageHeight: 120
     imageTitle: my image
@@ -74,31 +74,31 @@ params:
   # home-info mode
   homeInfoParams:
     Title: "Hi there \U0001F44B"
-    Content: Welcome to my blog
+    Content: "Welcome to my website. I'm Koby, a machine learning researcher and engineer."
 
   socialIcons:
-    - name: twitter
-      url: "https://twitter.com/"
-    - name: Google scholar
+    - name: googlescholar
       url: "https://scholar.google.com/citations?user=MYsSRvYAAAAJ&hl=iw"
     - name: github
       url: "https://github.com/kobybibas"
+    - name: linkedin
+      url: "https://www.linkedin.com/in/koby-bibas/"
 
-  analytics:
-    google:
-      SiteVerificationTag: "XYZabc"
-    bing:
-      SiteVerificationTag: "XYZabc"
-    yandex:
-      SiteVerificationTag: "XYZabc"
+  # analytics:
+  #   google:
+  #     SiteVerificationTag: "XYZabc"
+  #   bing:
+  #     SiteVerificationTag: "XYZabc"
+  #   yandex:
+  #     SiteVerificationTag: "XYZabc"
 
   cover:
     hidden: true # hide everywhere but not in structured data
-    hiddenInList: true # hide on list pages and home
-    hiddenInSingle: true # hide on single page
+    hiddenInList: false # hide on list pages and home
+    hiddenInSingle: false # hide on single page
 
   editPost:
-    URL: "https://github.com/<path_to_repo>/content"
+    URL: "https://github.com/kobybibas/kobybibas.github.io/blob/main/content"
     Text: "Suggest Changes" # edit text
     appendFilePath: true # to append file path to Edit link
 
