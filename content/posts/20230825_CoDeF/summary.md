@@ -1,7 +1,9 @@
----
-title: 'Summary: CoDeF: Content Deformation Fields for Temporally Consistent Video Processing'
-date: 2023-08-25
----
++++
+title = 'Summary: CoDeF: Content Deformation Fields for Temporally Consistent Video Processing'
+date =  2023-08-25
+draft = false
++++
+
 **TL;DR**
 
 

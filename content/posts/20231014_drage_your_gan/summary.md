@@ -1,12 +1,8 @@
 +++
 title = 'Summary: Drag Your GAN: Interactive Point-based Manipulation on the Generative Image Manifold'
-date = 2023-10-14T13:30:29+03:00
+date = 2023-10-14
 draft = false
 +++
-
-tags:
-  - GAN
-  - Image editing
 
 **TL;DR** This work enables interactive editing of a GAN's generated image by translating ("dragging") any point in the image to a target location.
 

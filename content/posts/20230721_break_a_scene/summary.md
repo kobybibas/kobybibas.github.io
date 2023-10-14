@@ -1,11 +1,9 @@
----
-title: 'Summary: Break-A-Scene: Extracting Multiple Concepts from a Single Image'
-date: 2023-07-21
-permalink: /posts/2023/tldr_Break-A-Scene/
-tags:
-  - Diffusion
-  - Controllability
----
++++
+title = 'Summary: Break-A-Scene: Extracting Multiple Concepts from a Single Image'
+date =  2023-07-21
+draft = false
++++
+
 **TL;DR**
 Fine-tuning of a diffusion model using a single image to generate images conditions on user-provided concepts.
 
@@ -14,7 +12,7 @@ Diffusion models are not able to generate a new image of user-provided concepts.
 
 ## Method
 The method consists of two phases.
-1. Freezing the model weights, and optimize handles to reconstruct the input image. This is done with a large learning rate to not harmthe model generalization.
+1. Freezing the model weights, and optimize handles to reconstruct the input image. This is done with a large learning rate to not harm the model generalization.
 2. Fine-tuning the model weights while continuing to optimize the handles. This is done with a small learning rate that enables faithful reconstruction of the extracted concepts.
 
 In addition, the authors incorporate the following losses:
@@ -34,15 +32,18 @@ From the paper examples, seems like the pose is fixed: The dog in figure 10 is a
 
 In their evaluation, they used COCO annotated segmentation masks. It is not clear how much noisy segmentation masks affect the performance. This is important for a large scale image generation.
 
-<figure>
-    <img src="/_posts/2023-07-21-Break-A-Scene/method.jpg"
+![Image generation process](method.jpg)
+![Generated image example](eval.jpg)
+
+<!-- <figure>
+    <img src="/content/posts/20230721_break_a_scene/method.jpg"
          alt="Image generation process"
          width="764">
-</figure>
-<figure>
-    <img src="/_posts/2023-07-21-Break-A-Scene/eval.jpg"
+</figure> -->
+<!-- <figure>
+    <img src="eval.jpg"
          alt="Generated image example"
          width="764">
-</figure>
+</figure> -->
 
 <https://arxiv.org/abs/2305.16311>
