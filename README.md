@@ -1,2 +1,1 @@
-# kobybibas.github.io
-My presonal website
+This is the code repository for my blog where I discuss technical topics like infrastructure and blockchain. The web application is powered by [Hugo](https://gohugo.io/), dressed in the cool vibes of the [PaperMod](https://github.com/adityatelange/hugo-PaperMod) theme, and freely hosted on [Github Pages](https://pages.github.com/).

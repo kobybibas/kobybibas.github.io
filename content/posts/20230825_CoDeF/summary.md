@@ -1,9 +1,8 @@
+---
 title: "Summary: CoDeF: Content Deformation Fields for Temporally Consistent Video Processing"
-date:  "2023-08-25"
-draft: false
-tags: ["Video processing"] 
-ShowToc: false
-ShowBreadCrumbs: true
+date: 2023-08-25
+tags: 
+    - Video processing
 ---
 <https://arxiv.org/abs/2305.16311>
 
