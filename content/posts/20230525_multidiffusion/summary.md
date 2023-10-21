@@ -1,10 +1,13 @@
-+++
-title = 'Summary: MultiDiffusion: Fusing Diffusion Paths for Controlled Image Generation'
-date =  2023-05-19
-draft = false
-+++
+---
+title: "[Summary] MultiDiffusion: Fusing Diffusion Paths for Controlled Image Generation"
+date: 2023-05-19
+tags: 
+    - Diffusion model
+    - Image editing
+    - Controllability 
+---
 
-**TL;DR** 
+## TL;DR
 To enable a more controllable image diffusion, MultiDiffusion introduce patches generation with a global constrain.
 
 ## Problem statements
@@ -33,4 +36,5 @@ The compute cost is linear in the number of patches (each additional patch requi
          width="764">
 </figure>
 
+# Resource
 <https://arxiv.org/abs/2302.08113>

@@ -11,14 +11,14 @@ params:
 
   # Home page
   homeInfoParams:
-    title: Hey! 👋
-    image:
-      url: me.png
-      title: Me
+    title: Welcome 👋
+    # image:
+    # url: me.png
+    # title: Me
     content: |
-      - My name is Koby, I'm an [infrastructure software engineer](https://flexport.engineering/what-its-like-to-work-as-an-infrastructure-software-engineer-at-flexport-252267999fd9) working at [@Polygon Labs](https://twitter.com/0xPolygonLabs) to scale [Ethereum](https://ethereum.org/en/) (prev: [@Renault Software Factory](https://twitter.com/renaultgroup) and [@INP ENSEEIHT](https://www.enseeiht.fr/en/enseeiht.html)).
-      Sometimes, I write technical articles and take part in hackathons (e.g. Chainlink Spring 2022: [Everest Protocol](https://devpost.com/software/everest-ab708o)).
-      - I'm very interested in blockchain technologies and web3 security at the moment. Other than that, I'm just a random baguette guy, gym rat, fond of sports and football :)
+      - My name is Koby, a passionate PhD student specializing in machine learning. My academic journey revolves around exploring the fascinating realms of computer vision and information theory. 
+      - When I'm not immersed in the world of algorithms and data, you can find me indulging in my guilty pleasure - coffee and carbs.
+      - In this website, I'm documenting my learning notes, paper summaries, and proof of concepts.
     social:
       align: left
       icons:
@@ -70,7 +70,11 @@ menu:
       name: Posts
       url: /posts/
       weight: 10
+    - identifier: publications
+      name: Publications
+      url: /publications/
+      weight: 20
     - identifier: tags
       name: Tags
       url: /tags/
-      weight: 20
+      weight: 30

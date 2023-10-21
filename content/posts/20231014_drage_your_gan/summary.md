@@ -1,5 +1,5 @@
 ---
-title: "Summary: Drag Your GAN: Interactive Point-based Manipulation on the Generative Image Manifold"
+title: "[Summary] Drag Your GAN: Interactive Point-based Manipulation on the Generative Image Manifold"
 date: 2023-10-14
 tags: 
     - GAN
