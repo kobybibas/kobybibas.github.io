@@ -37,8 +37,7 @@ For each layer, a group of canonical fields and deformation fields represent the
 ![Method](/posts/20230825_CoDeF/method.png)
 
 ## Limitations
-Each the mode needs to be train per a specific video. The training duration is approximately 5 minutes when utilizing 100
-video frames (3 second video).
+The mode needs to be train per a specific video. The training duration is approximately 5 minutes for 100 video frames (3 second video).
 
 Unable to manage diverse videos that cannot be represented by a canonical image.
 
