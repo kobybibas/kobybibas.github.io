@@ -11,7 +11,7 @@ draft: false
 ## TL;DR
 A new video representation by (i) a canonical image that aggregates the static contents and (ii) a temporal deformation field that reconstructs the video frames when applied to the static image.
 
-![Example]((/posts/20230825_CoDeF/example.png)
+![Example](/posts/20230825_CoDeF/example.png)
 
 ## Problem statements
 Video processing comes at a high cost,and naively processing frames results in poor cross-frame consistency.
