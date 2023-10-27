@@ -6,21 +6,26 @@ draft: true
 ---
 
 ## TL;DR
+Generating animated fashion videos from still images based on input image and pose sequence (represented by the DensePose model). Fashion videos refer to a human model animated with a pose sequence.
+
+![Example](/posts/20231120_dream_pose/pose_sequence.png#center)
 
 ## Problem statements
+Diffusion models able to generate images based on given text. However, they do not produce animated sequence nor able to be conditioned on an input pose sequence.
+
 
 ## Method 
+Taking a diffusion model and apply the following changes:
+1. Insread of the CLIP text encoder, replace by CLIP image encoder + VAE encoder + Adapter
+2. Along with a random noise, feed the UNET model a pose sequence
+3. 
 
-An additional contribution is: instead using a tracker to track the movement of the source features toward the target destination that might add an additional computation cost, they track the movement of the source features directly using nearest neighbor with the GAN's feature space.
+
+![Architecture](/posts/20231120_dream_pose/architecture.png#center)
 
 ## Limitations
+Each input image requires finetunining of the UNET, adapter and VAE. On V100 it takes  ~1 hour.
 
-
-<!-- <figure>
-    <img src="/images/drag_your_gan.png"
-         alt="Method architecture"
-         width="764">
-</figure> -->
 
 
 ## Resource
