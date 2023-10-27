@@ -12,11 +12,11 @@ params:
   # Home page
   homeInfoParams:
     title: Welcome 👋
-    # image:
-    # url: me.png
-    # title: Me
+    image:
+      url: green-man-drawing-vector-cartoon-icon_53876-118118.jpg
+      title: Me
     content: |
-      - My name is Koby, a passionate PhD student specializing in machine learning. My academic journey revolves around exploring the fascinating realms of computer vision and information theory. 
+      - My name is Koby, a PhD student specializing in machine learning. My academic journey revolves around exploring the fascinating realms of computer vision and information theory. 
       - When I'm not immersed in the world of algorithms and data, you can find me indulging in my guilty pleasure - coffee and carbs.
       - In this website, I'm documenting my learning notes, paper summaries, and proof of concepts.
     social:
