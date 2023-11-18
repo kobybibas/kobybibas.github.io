@@ -16,9 +16,9 @@ params:
       url: green-man-drawing-vector-cartoon-icon_53876-118118.jpg
       title: Me
     content: |
-      - My name is Koby, a PhD student specializing in machine learning. My academic journey revolves around exploring computer vision and information theory algorithms. 
-      - When I'm not immersed in the world of algorithms and data, you can find me indulging in my guilty pleasure - coffee and carbs.
-      - In this website, I'm documenting my learning notes, paper summaries, and proof of concepts.
+      - I'm Koby, a PhD student with a focus on machine learning. My academic pursuits center around computer vision and information theory algorithms.
+      - In my free time, I like enjoying my guilty pleasures: coffee and carbs.
+      - This website serves as a repository for my learning notes, paper summaries, and proof of concepts.
     social:
       align: left
       icons:
