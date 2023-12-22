@@ -43,10 +43,14 @@ The model is trained in step 2 with the [UBC Fashion dataset](https://vision.cs.
 
 
 # Proof-of-Concept
-Testing the method's performance by Zara image. \
-On the Left: the input image, on the Right: the generated video.
+Testing the method's performance with images from Zara. 
+
+On the Left: the input image, on the Right: the generated video. 
+
 {{< video label="output_zara2" mp4="/posts/20231120_dream_pose/output_zara2.mp4" >}}
+
 {{< video label="output_zara3" mp4="/posts/20231120_dream_pose/output_zara3.mp4" >}}
+
 The temporal consistency and the visual similarity to the original image are not great. The reason might be that I fine-tuned the model using "--use_8bit_adam" which might produce lower quality videos than the original implementation.
 
 
