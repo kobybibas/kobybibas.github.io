@@ -1,5 +1,5 @@
 ---
-title: "[Summary] DreamPose: Fashion Image-to-Video Synthesis via Stable Diffusion"
+title: "[Proof-of-Concept] DreamPose: Fashion Image-to-Video Synthesis via Stable Diffusion"
 date: 2023-11-18
 tags: 
     - Video generation
@@ -40,6 +40,14 @@ The model is trained in step 2 with the [UBC Fashion dataset](https://vision.cs.
 * Fine-tuning the UNET, adapter, and VAE is necessary for each input image, and on V100, takes approximately one hour.
 * The domain is highly constrained: only images featuring humans as inputs and producing solely different poses of human models as outputs.
 * I tried running the code with Zara images. Results seem not as good as the paper figures. 
+
+
+# Proof-of-Concept
+Testing the method's performance by Zara image. \
+On the Left: the input image, on the Right: the generated video.
+{{< video label="output_zara2" mp4="/posts/20231120_dream_pose/output_zara2.mp4" >}}
+{{< video label="output_zara3" mp4="/posts/20231120_dream_pose/output_zara3.mp4" >}}
+The temporal consistency and the visual similarity to the original image are not great. The reason might be that I fine-tuned the model using "--use_8bit_adam" which might produce lower quality videos than the original implementation.
 
 
 ## Resource
