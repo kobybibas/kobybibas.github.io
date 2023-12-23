@@ -7,12 +7,10 @@
 <meta name="robots" content="index, follow">
 <title>Posts | Koby Bibas</title>
 <meta name="keywords" content="">
-<meta name="description" content="posts">
+<meta name="description" content="Posts - Koby Bibas">
 <meta name="author" content="">
 <link rel="canonical" href="https://kobybibas.github.io/posts/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.58d67bacca2323104d6537e743eec91eef711a177b9dc748528b4bd025746a16.css" integrity="sha256-WNZ7rMojIxBNZTfnQ&#43;7JHu9xGhd7ncdIUotL0CV0ahY=" rel="preload stylesheet" as="style">
-<script defer crossorigin="anonymous" src="/assets/js/highlight.f413e19d0714851f6474e7ee9632408e58ac146fbdbe62747134bea2fa3415e0.js" integrity="sha256-9BPhnQcUhR9kdOfuljJAjlisFG&#43;9vmJ0cTS&#43;ovo0FeA="
-    onload="hljs.initHighlightingOnLoad();"></script>
 <link rel="icon" href="https://kobybibas.github.io/favicon.ico">
 <link rel="icon" type="image/png" sizes="16x16" href="https://kobybibas.github.io/favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="https://kobybibas.github.io/favicon-32x32.png">
@@ -20,6 +18,7 @@
 <link rel="mask-icon" href="https://kobybibas.github.io/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" type="application/rss+xml" href="https://kobybibas.github.io/posts/index.xml">
 <noscript>
     <style>
         #theme-toggle,
@@ -68,15 +67,13 @@ if (!doNotTrack) {
 }
 </script>
 <meta property="og:title" content="Posts" />
-<meta property="og:description" content="posts" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://kobybibas.github.io/posts/" /><meta property="article:section" content="" />
-
-
+<meta property="og:description" content="" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://kobybibas.github.io/posts/" />
 
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Posts"/>
-<meta name="twitter:description" content="posts"/>
+<meta name="twitter:description" content=""/>
 
 
 <script type="application/ld+json">
@@ -93,38 +90,9 @@ if (!doNotTrack) {
   ]
 }
 </script>
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "BlogPosting",
-  "headline": "Posts",
-  "name": "Posts",
-  "description": "posts",
-  "keywords": [
-    
-  ],
-  "articleBody": "",
-  "wordCount" : "0",
-  "inLanguage": "en",
-  "datePublished": "0001-01-01T00:00:00Z",
-  "dateModified": "0001-01-01T00:00:00Z",
-  "mainEntityOfPage": {
-    "@type": "WebPage",
-    "@id": "https://kobybibas.github.io/posts/"
-  },
-  "publisher": {
-    "@type": "Organization",
-    "name": "Koby Bibas",
-    "logo": {
-      "@type": "ImageObject",
-      "url": "https://kobybibas.github.io/favicon.ico"
-    }
-  }
-}
-</script>
 </head>
 
-<body class="" id="top">
+<body class="list" id="top">
 <script>
     if (localStorage.getItem("pref-theme") === "dark") {
         document.body.classList.add('dark');
@@ -182,25 +150,86 @@ if (!doNotTrack) {
         </ul>
     </nav>
 </header>
-<main class="main">
+<main class="main"> 
+<header class="page-header">
+  <h1>
+    Posts
+  </h1>
+</header>
 
-<article class="post-single">
-  <header class="post-header">
-    
-    <h1 class="post-title entry-hint-parent">
-      Posts
-    </h1>
-    <div class="post-meta">0 min&nbsp;·&nbsp;0 words&nbsp;|&nbsp;<a href="https://github.com/kobybibas/kobybibas.github.io/tree/main/content//posts.md" rel="noopener noreferrer" target="_blank">📝 Suggest changes</a>
-
-</div>
-  </header> 
-
-
-  <footer class="post-footer">
-    <ul class="post-tags">
-    </ul>
-  </footer>
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">[Summary] Direct Preference Optimization (DPO)
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>TL;DR Direct Preference Optimization is a method of fine-tuning Large Language Model (LLM) to better align with human preference. It’s used as a simpler alternative to RLHF since it can be directly applied to the model without needing a reward function nor reinforcement learning optimization.
+Method The authors propose to re-parameterize the reward model in RLHF that enables extraction of the corresponding optimal policy in closed form. This enables to solve the standard RLHF problem with only a simple classification loss....</p>
+  </div>
+  <footer class="entry-footer"><span title='2023-12-23 00:00:00 +0000 UTC'>December 23, 2023</span>&nbsp;·&nbsp;1 min&nbsp;·&nbsp;185 words</footer>
+  <a class="entry-link" aria-label="post link to [Summary] Direct Preference Optimization (DPO)" href="https://kobybibas.github.io/posts/20231223_dpo/summary/"></a>
 </article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">[Concept] Reinforcement learning from human feedback (RLHF)
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>TL;DR Machine learning models require a loss function to tune their parameters. Designing a loss function to reflect ambiguous human values poses a challenge, e.g., it’s not clear how to formulate a loss function to represent what is funny or ethical. To this end, a reward model is trained via human feedback. This reward model takes the model’s output and predicts a reward score that is then used by the model to optimize its parameters....</p>
+  </div>
+  <footer class="entry-footer"><span title='2023-12-09 00:00:00 +0000 UTC'>December 9, 2023</span>&nbsp;·&nbsp;2 min&nbsp;·&nbsp;350 words</footer>
+  <a class="entry-link" aria-label="post link to [Concept] Reinforcement learning from human feedback (RLHF)" href="https://kobybibas.github.io/posts/20231209_rlhf/summary/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">[Proof-of-Concept] DreamPose: Fashion Image-to-Video Synthesis via Stable Diffusion
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>TL;DR Typical diffusion models create images using input text. DreamPose, presented at ECCV 2023, enhances this functionality by generating a video from an image incorporating a human model and pose sequence, as represented by DensePose.
+Problem statements Common diffusion models able to generate images based on given text. However, they can not produce animated sequence nor able to be conditioned on an input pose sequence.
+Method Apply the following modifications to a diffusion model:...</p>
+  </div>
+  <footer class="entry-footer"><span title='2023-11-18 00:00:00 +0000 UTC'>November 18, 2023</span>&nbsp;·&nbsp;3 min&nbsp;·&nbsp;437 words</footer>
+  <a class="entry-link" aria-label="post link to [Proof-of-Concept] DreamPose: Fashion Image-to-Video Synthesis via Stable Diffusion" href="https://kobybibas.github.io/posts/20231120_dream_pose/summary/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">[Summary] CoDeF: Content Deformation Fields for Temporally Consistent Video Processing
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>TL;DR A new video representation by (i) a canonical image that aggregates the static contents and (ii) a temporal deformation field that reconstructs the video frames when applied to the static image.
+Problem statements Video processing comes at a high cost,and naively processing frames results in poor cross-frame consistency.
+Method High level objective. The proposed representations should have the following characteristics:
+Fitting capability for faithful video reconstruction. Semantic correctness of the canonical image to ensure the performance of image processing algorithms....</p>
+  </div>
+  <footer class="entry-footer"><span title='2023-10-27 00:00:00 +0000 UTC'>October 27, 2023</span>&nbsp;·&nbsp;2 min&nbsp;·&nbsp;361 words</footer>
+  <a class="entry-link" aria-label="post link to [Summary] CoDeF: Content Deformation Fields for Temporally Consistent Video Processing" href="https://kobybibas.github.io/posts/20230825_codef/summary/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">[Summary] Drag Your GAN: Interactive Point-based Manipulation on the Generative Image Manifold
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>TL;DR This work enables interactive editing of a GAN’s generated image by translating (“dragging”) any point in the image to a target location.
+Problem statements GAN based image generation takes a noise vector to generate an image. There is a need of a localized controlled image manipulation as moving a region to a different location in the image.
+Method Given a GAN generated image, a user input of the source coordinates (q) and the coordinates of the destination (p)...</p>
+  </div>
+  <footer class="entry-footer"><span title='2023-10-14 00:00:00 +0000 UTC'>October 14, 2023</span>&nbsp;·&nbsp;1 min&nbsp;·&nbsp;206 words</footer>
+  <a class="entry-link" aria-label="post link to [Summary] Drag Your GAN: Interactive Point-based Manipulation on the Generative Image Manifold" href="https://kobybibas.github.io/posts/20231014_drage_your_gan/summary/"></a>
+</article>
+<footer class="page-footer">
+  <nav class="pagination">
+    <a class="next" href="https://kobybibas.github.io/posts/page/2/">Next&nbsp;&nbsp;»
+    </a>
+  </nav>
+</footer>
     </main>
     
 <footer class="footer">
@@ -270,53 +299,6 @@ if (!doNotTrack) {
         }
     })
 
-</script>
-<script>
-    document.querySelectorAll('pre > code').forEach((codeblock) => {
-        const container = codeblock.parentNode.parentNode;
-
-        const copybutton = document.createElement('button');
-        copybutton.classList.add('copy-code');
-        copybutton.innerHTML = 'copy';
-
-        function copyingDone() {
-            copybutton.innerHTML = 'copied!';
-            setTimeout(() => {
-                copybutton.innerHTML = 'copy';
-            }, 2000);
-        }
-
-        copybutton.addEventListener('click', (cb) => {
-            if ('clipboard' in navigator) {
-                navigator.clipboard.writeText(codeblock.textContent);
-                copyingDone();
-                return;
-            }
-
-            const range = document.createRange();
-            range.selectNodeContents(codeblock);
-            const selection = window.getSelection();
-            selection.removeAllRanges();
-            selection.addRange(range);
-            try {
-                document.execCommand('copy');
-                copyingDone();
-            } catch (e) { };
-            selection.removeRange(range);
-        });
-
-        if (container.classList.contains("highlight")) {
-            container.appendChild(copybutton);
-        } else if (container.parentNode.firstChild == container) {
-            
-        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
-            
-            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
-        } else {
-            
-            codeblock.parentNode.appendChild(copybutton);
-        }
-    });
 </script>
 </body>
 
