@@ -4,6 +4,7 @@ theme: PaperMod
 paginate: 5
 googleAnalytics: G-X37V3L4LW0
 enableRobotsTXT: true
+languageCode: en-us
 # publishDir: docs # Have hugo output to the docs/
 
 params:
