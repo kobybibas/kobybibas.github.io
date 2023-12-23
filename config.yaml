@@ -3,6 +3,7 @@ title: Koby Bibas
 theme: PaperMod
 paginate: 5
 googleAnalytics: G-X37V3L4LW0
+enableRobotsTXT: true
 
 params:
   env: production # to enable google analytics, opengraph, twitter-cards and schema.
