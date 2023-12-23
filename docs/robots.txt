@@ -1,0 +1,3 @@
+User-agent: *
+Disallow:
+Sitemap: https://kobybibas.github.io/sitemap.xml

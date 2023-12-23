@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>[Concept] Reinforcement learning from human feedback (RLHF) | Koby Bibas</title>
+<meta name="keywords" content="Reinforcement learning, LLM, Reward function">
+<meta name="description" content="TL;DR Machine learning models require a loss function to tune their parameters. Designing a loss function to reflect ambiguous human values poses a challenge, e.g., it&rsquo;s not clear how to formulate a loss function to represent what is funny or ethical. To this end, a reward model is trained via human feedback. This reward model takes the model&rsquo;s output and predicts a reward score that is then used by the model to optimize its parameters.">
+<meta name="author" content="">
+<link rel="canonical" href="https://kobybibas.github.io/posts/20231209_rlhf/summary/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.58d67bacca2323104d6537e743eec91eef711a177b9dc748528b4bd025746a16.css" integrity="sha256-WNZ7rMojIxBNZTfnQ&#43;7JHu9xGhd7ncdIUotL0CV0ahY=" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.f413e19d0714851f6474e7ee9632408e58ac146fbdbe62747134bea2fa3415e0.js" integrity="sha256-9BPhnQcUhR9kdOfuljJAjlisFG&#43;9vmJ0cTS&#43;ovo0FeA="
+    onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="https://kobybibas.github.io/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://kobybibas.github.io/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://kobybibas.github.io/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://kobybibas.github.io/apple-touch-icon.png">
+<link rel="mask-icon" href="https://kobybibas.github.io/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-X37V3L4LW0"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-X37V3L4LW0', { 'anonymize_ip': false });
+}
+</script>
+<meta property="og:title" content="[Concept] Reinforcement learning from human feedback (RLHF)" />
+<meta property="og:description" content="TL;DR Machine learning models require a loss function to tune their parameters. Designing a loss function to reflect ambiguous human values poses a challenge, e.g., it&rsquo;s not clear how to formulate a loss function to represent what is funny or ethical. To this end, a reward model is trained via human feedback. This reward model takes the model&rsquo;s output and predicts a reward score that is then used by the model to optimize its parameters." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://kobybibas.github.io/posts/20231209_rlhf/summary/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-12-09T00:00:00+00:00" />
+<meta property="article:modified_time" content="2023-12-09T00:00:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="[Concept] Reinforcement learning from human feedback (RLHF)"/>
+<meta name="twitter:description" content="TL;DR Machine learning models require a loss function to tune their parameters. Designing a loss function to reflect ambiguous human values poses a challenge, e.g., it&rsquo;s not clear how to formulate a loss function to represent what is funny or ethical. To this end, a reward model is trained via human feedback. This reward model takes the model&rsquo;s output and predicts a reward score that is then used by the model to optimize its parameters."/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://kobybibas.github.io/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "[Concept] Reinforcement learning from human feedback (RLHF)",
+      "item": "https://kobybibas.github.io/posts/20231209_rlhf/summary/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "[Concept] Reinforcement learning from human feedback (RLHF)",
+  "name": "[Concept] Reinforcement learning from human feedback (RLHF)",
+  "description": "TL;DR Machine learning models require a loss function to tune their parameters. Designing a loss function to reflect ambiguous human values poses a challenge, e.g., it\u0026rsquo;s not clear how to formulate a loss function to represent what is funny or ethical. To this end, a reward model is trained via human feedback. This reward model takes the model\u0026rsquo;s output and predicts a reward score that is then used by the model to optimize its parameters.",
+  "keywords": [
+    "Reinforcement learning", "LLM", "Reward function"
+  ],
+  "articleBody": "TL;DR Machine learning models require a loss function to tune their parameters. Designing a loss function to reflect ambiguous human values poses a challenge, e.g., it’s not clear how to formulate a loss function to represent what is funny or ethical. To this end, a reward model is trained via human feedback. This reward model takes the model’s output and predicts a reward score that is then used by the model to optimize its parameters.\nMethod Pre-trained model. We are given a pre-trained model. In the RLHF context, this model was trained with a large dataset in unsupervised manner (like next token prediction). This pre-trained model then might be fine-tuned on a labeled dataset like in the summarization task. Reward model training. This stage includes:\nSample many prompts and feed them to the model. Humans rank the outputs to create a ranking score. We might use multiple models such that the same prompts going through different models. A reward model is trained based on the human feedback of (c): Given text input, its output is a scalar. Notice, this dataset is labeled and created specifically based on the pre-trained model. Therefore is much smaller than the original dataset. Fine-tune with Reinforcement Learning (RL). Here we train the model with the predictions of the reward model. However, we constrain it (the fined-tuned RLHF model) to be not too far from the original weights with the KL-divergence loss. Lastly, we plug the reward to the RL optimizer. RL update e.g. PPO. A side note: Why using a reward model and not training the base model with human feedback directly? Usually, the base model is trained in unsupervised way (like next token prediction) on a large amount of data. Annotating this data with human feedback is expensive.\nLimitations This approach is difficult to use: on one hand with don’t one the model to divergent too much from the original model to not loos performance. On the other hand, to better reflect human feedback, the model needs to be trained on the reward score.\nResource Reinforcement Learning from Human Feedback: From Zero to chatGPT\n",
+  "wordCount" : "350",
+  "inLanguage": "en",
+  "datePublished": "2023-12-09T00:00:00Z",
+  "dateModified": "2023-12-09T00:00:00Z",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://kobybibas.github.io/posts/20231209_rlhf/summary/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Koby Bibas",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://kobybibas.github.io/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://kobybibas.github.io/" accesskey="h" title="Koby Bibas (Alt + H)">Koby Bibas</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://kobybibas.github.io/posts/" title="Posts">
+                    <span>Posts</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://kobybibas.github.io/publications/" title="Publications">
+                    <span>Publications</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://kobybibas.github.io/tags/" title="Tags">
+                    <span>Tags</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title entry-hint-parent">
+      [Concept] Reinforcement learning from human feedback (RLHF)
+    </h1>
+    <div class="post-meta"><span title='2023-12-09 00:00:00 +0000 UTC'>December 9, 2023</span>&nbsp;·&nbsp;2 min&nbsp;·&nbsp;350 words&nbsp;|&nbsp;<a href="https://github.com/kobybibas/kobybibas.github.io/tree/main/content//posts/20231209_rlhf/summary.md" rel="noopener noreferrer" target="_blank">📝 Suggest changes</a>
+
+</div>
+  </header> <div class="toc">
+    <details >
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">Table of Contents</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#tldr" aria-label="TL;DR">TL;DR</a></li>
+                <li>
+                    <a href="#method" aria-label="Method">Method</a></li>
+                <li>
+                    <a href="#limitations" aria-label="Limitations">Limitations</a></li>
+                <li>
+                    <a href="#resource" aria-label="Resource">Resource</a>
+                </li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+  <div class="post-content"><h2 id="tldr">TL;DR<a hidden class="anchor" aria-hidden="true" href="#tldr">#</a></h2>
+<p>Machine learning models require a loss function to tune their parameters. Designing a loss function to reflect ambiguous human values poses a challenge, e.g., it&rsquo;s not clear how to formulate a loss function to represent what is funny or ethical.
+To this end, a reward model is trained via human feedback. This reward model takes the model&rsquo;s output and predicts a reward score that is then used by the model to optimize its parameters.</p>
+<h2 id="method">Method<a hidden class="anchor" aria-hidden="true" href="#method">#</a></h2>
+<ol>
+<li>
+<p><strong>Pre-trained model.</strong> We are given a pre-trained model. In the RLHF context, this model was trained with a large dataset in unsupervised manner (like next token prediction).
+This pre-trained model then might be fine-tuned on a labeled dataset like in the summarization task.
+<img loading="lazy" src="/posts/20231209_rlhf/1_pretraining.png" alt="Pre-trained model"  />
+</p>
+</li>
+<li>
+<p><strong>Reward model training.</strong> This stage includes:</p>
+<ol>
+<li>Sample many prompts and feed them to the model.</li>
+<li>Humans rank the outputs to create a ranking score.  We might use multiple models such that the same prompts going through different models.</li>
+<li>A reward model is trained based on the human feedback of (c): Given text input, its output is a scalar.</li>
+</ol>
+</li>
+</ol>
+<p>Notice, this dataset is labeled and created specifically based on the pre-trained model. Therefore is much smaller than the original dataset.
+<img loading="lazy" src="/posts/20231209_rlhf/2_reward_model_training.png" alt="Reward model training"  />
+</p>
+<ol start="3">
+<li><strong>Fine-tune with Reinforcement Learning (RL).</strong> Here we train the model with the predictions of the reward model.
+However, we constrain it (the fined-tuned RLHF model) to be not too far from the original weights with the KL-divergence loss.
+Lastly, we plug the reward to the RL optimizer. RL update e.g. PPO.</li>
+</ol>
+<p><img loading="lazy" src="/posts/20231209_rlhf/3_fine_tuning_with_rl.png" alt="RL fine-tuning"  />
+</p>
+<p><strong>A side note:</strong>
+Why using a reward model and not training the base model with human feedback directly?
+Usually, the base model is trained in unsupervised way (like next token prediction) on a large amount of data.
+Annotating this data with human feedback is expensive.</p>
+<h2 id="limitations">Limitations<a hidden class="anchor" aria-hidden="true" href="#limitations">#</a></h2>
+<p>This approach is difficult to use: on one hand with don&rsquo;t one the model to divergent too much from the original model to not loos performance.
+On the other hand, to better reflect human feedback, the model needs to be trained on the reward score.</p>
+<h2 id="resource">Resource<a hidden class="anchor" aria-hidden="true" href="#resource">#</a></h2>
+<p><a href="https://www.youtube.com/watch?v=2MBJOuVq380">Reinforcement Learning from Human Feedback: From Zero to chatGPT</a></p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://kobybibas.github.io/tags/reinforcement-learning/">Reinforcement learning</a></li>
+      <li><a href="https://kobybibas.github.io/tags/llm/">LLM</a></li>
+      <li><a href="https://kobybibas.github.io/tags/reward-function/">Reward function</a></li>
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+    <span>&copy; 2023 <a href="https://kobybibas.github.io/">Koby Bibas</a></span>
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

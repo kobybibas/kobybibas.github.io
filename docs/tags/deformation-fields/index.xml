@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Deformation fields on Koby Bibas</title>
+    <link>https://kobybibas.github.io/tags/deformation-fields/</link>
+    <description>Recent content in Deformation fields on Koby Bibas</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 27 Oct 2023 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://kobybibas.github.io/tags/deformation-fields/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[Summary] CoDeF: Content Deformation Fields for Temporally Consistent Video Processing</title>
+      <link>https://kobybibas.github.io/posts/20230825_codef/summary/</link>
+      <pubDate>Fri, 27 Oct 2023 00:00:00 +0000</pubDate>
+      <guid>https://kobybibas.github.io/posts/20230825_codef/summary/</guid>
+      <description>TL;DR A new video representation by (i) a canonical image that aggregates the static contents and (ii) a temporal deformation field that reconstructs the video frames when applied to the static image.
+Problem statements Video processing comes at a high cost,and naively processing frames results in poor cross-frame consistency.
+Method High level objective. The proposed representations should have the following characteristics:
+Fitting capability for faithful video reconstruction. Semantic correctness of the canonical image to ensure the performance of image processing algorithms.</description>
+    </item>
+  </channel>
+</rss>

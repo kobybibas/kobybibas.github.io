@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Controllability on Koby Bibas</title>
+    <link>https://kobybibas.github.io/tags/controllability/</link>
+    <description>Recent content in Controllability on Koby Bibas</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 19 May 2023 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://kobybibas.github.io/tags/controllability/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[Summary] MultiDiffusion: Fusing Diffusion Paths for Controlled Image Generation</title>
+      <link>https://kobybibas.github.io/posts/20230525_multidiffusion/summary/</link>
+      <pubDate>Fri, 19 May 2023 00:00:00 +0000</pubDate>
+      <guid>https://kobybibas.github.io/posts/20230525_multidiffusion/summary/</guid>
+      <description>TL;DR To enable a more controllable image diffusion, MultiDiffusion introduce patches generation with a global constrain.
+Problem statements Diffusion models lack user controllability and methods that offer such control require a costly fine-tuning.
+Method The method can be reduced to the following algorithm: At each time step t:
+Extract patches from the global image I_{t-1} Execute the de-noising step to generate the patches J_{i,t} Combine the patches by average their pixel values to create the global image I_t For the panorama use case: simply generate N images with overlapping regions between them.</description>
+    </item>
+  </channel>
+</rss>

@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>[Proof-of-Concept] DreamPose: Fashion Image-to-Video Synthesis via Stable Diffusion | Koby Bibas</title>
+<meta name="keywords" content="Video generation, Video editing, Animation, Diffusion model, Image to video">
+<meta name="description" content="TL;DR Typical diffusion models create images using input text. DreamPose, presented at ECCV 2023, enhances this functionality by generating a video from an image incorporating a human model and pose sequence, as represented by DensePose.
+Problem statements Common diffusion models able to generate images based on given text. However, they can not produce animated sequence nor able to be conditioned on an input pose sequence.
+Method Apply the following modifications to a diffusion model:">
+<meta name="author" content="">
+<link rel="canonical" href="https://kobybibas.github.io/posts/20231120_dream_pose/summary/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.58d67bacca2323104d6537e743eec91eef711a177b9dc748528b4bd025746a16.css" integrity="sha256-WNZ7rMojIxBNZTfnQ&#43;7JHu9xGhd7ncdIUotL0CV0ahY=" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.f413e19d0714851f6474e7ee9632408e58ac146fbdbe62747134bea2fa3415e0.js" integrity="sha256-9BPhnQcUhR9kdOfuljJAjlisFG&#43;9vmJ0cTS&#43;ovo0FeA="
+    onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="https://kobybibas.github.io/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://kobybibas.github.io/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://kobybibas.github.io/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://kobybibas.github.io/apple-touch-icon.png">
+<link rel="mask-icon" href="https://kobybibas.github.io/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-X37V3L4LW0"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-X37V3L4LW0', { 'anonymize_ip': false });
+}
+</script>
+<meta property="og:title" content="[Proof-of-Concept] DreamPose: Fashion Image-to-Video Synthesis via Stable Diffusion" />
+<meta property="og:description" content="TL;DR Typical diffusion models create images using input text. DreamPose, presented at ECCV 2023, enhances this functionality by generating a video from an image incorporating a human model and pose sequence, as represented by DensePose.
+Problem statements Common diffusion models able to generate images based on given text. However, they can not produce animated sequence nor able to be conditioned on an input pose sequence.
+Method Apply the following modifications to a diffusion model:" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://kobybibas.github.io/posts/20231120_dream_pose/summary/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-11-18T00:00:00+00:00" />
+<meta property="article:modified_time" content="2023-11-18T00:00:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="[Proof-of-Concept] DreamPose: Fashion Image-to-Video Synthesis via Stable Diffusion"/>
+<meta name="twitter:description" content="TL;DR Typical diffusion models create images using input text. DreamPose, presented at ECCV 2023, enhances this functionality by generating a video from an image incorporating a human model and pose sequence, as represented by DensePose.
+Problem statements Common diffusion models able to generate images based on given text. However, they can not produce animated sequence nor able to be conditioned on an input pose sequence.
+Method Apply the following modifications to a diffusion model:"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://kobybibas.github.io/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "[Proof-of-Concept] DreamPose: Fashion Image-to-Video Synthesis via Stable Diffusion",
+      "item": "https://kobybibas.github.io/posts/20231120_dream_pose/summary/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "[Proof-of-Concept] DreamPose: Fashion Image-to-Video Synthesis via Stable Diffusion",
+  "name": "[Proof-of-Concept] DreamPose: Fashion Image-to-Video Synthesis via Stable Diffusion",
+  "description": "TL;DR Typical diffusion models create images using input text. DreamPose, presented at ECCV 2023, enhances this functionality by generating a video from an image incorporating a human model and pose sequence, as represented by DensePose.\nProblem statements Common diffusion models able to generate images based on given text. However, they can not produce animated sequence nor able to be conditioned on an input pose sequence.\nMethod Apply the following modifications to a diffusion model:",
+  "keywords": [
+    "Video generation", "Video editing", "Animation", "Diffusion model", "Image to video"
+  ],
+  "articleBody": "TL;DR Typical diffusion models create images using input text. DreamPose, presented at ECCV 2023, enhances this functionality by generating a video from an image incorporating a human model and pose sequence, as represented by DensePose.\nProblem statements Common diffusion models able to generate images based on given text. However, they can not produce animated sequence nor able to be conditioned on an input pose sequence.\nMethod Apply the following modifications to a diffusion model:\nSubstitute the CLIP text encoder with a combination of CLIP image encoder + VAE encoder + Adapter. Concatenate a pose sequence, along with random noise, to the UNET model. The rationale for step 1: Conditioning by an image can be done by concatenating the image with input noise for the denoising U-Net(as in InstructPix2Pix). However, the goal is to generate images that are not spatially aligned with the input image. For step 2, the pose conditioning is aligned with the image. Consequently, the noisy latents can be connected to the target pose representation.\nThe training procedure comprises the following steps:\nInitialize the unaltered Stable Diffusion layers from pre-trained text-to-image Stable Diffusion checkpoints. Fine-tune the UNet and adapter module on the complete training dataset (UBC Fashion) to generate frames consistent with an input image and pose. Further fine-tune the UNet and adapter module, followed by the VAE decoder, using one or more subject-specific input images to create a model tailored to the specific subject. During inference, generate video frames frame-by-frame from a single input image and a sequence of poses using the subject-specific model. Dataset The model is trained in step 2 with the UBC Fashion dataset. It contains 339 training and 100 test videos. Each video has a frame rate of 30 frames/second and is approximately 12 seconds long. During training, the authors randomly sample pairs of frames from the training videos.\nLimitations Fine-tuning the UNET, adapter, and VAE is necessary for each input image, and on V100, takes approximately one hour. The domain is highly constrained: only images featuring humans as inputs and producing solely different poses of human models as outputs. I tried running the code with Zara images. Results seem not as good as the paper figures. Proof-of-Concept Testing the method’s performance with images from Zara.\nOn the Left: the input image, on the Right: the generated video.\nThe temporal consistency and the visual similarity to the original image are not great. The reason might be that I fine-tuned the model using “–use_8bit_adam” which might produce lower quality videos than the original implementation.\nResource Paper webpage\nhttps://arxiv.org/abs/2304.06025 published in ICCV 2023\nOriginal github repository\nMy adaptation of the github repository\n",
+  "wordCount" : "437",
+  "inLanguage": "en",
+  "datePublished": "2023-11-18T00:00:00Z",
+  "dateModified": "2023-11-18T00:00:00Z",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://kobybibas.github.io/posts/20231120_dream_pose/summary/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Koby Bibas",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://kobybibas.github.io/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://kobybibas.github.io/" accesskey="h" title="Koby Bibas (Alt + H)">Koby Bibas</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://kobybibas.github.io/posts/" title="Posts">
+                    <span>Posts</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://kobybibas.github.io/publications/" title="Publications">
+                    <span>Publications</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://kobybibas.github.io/tags/" title="Tags">
+                    <span>Tags</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title entry-hint-parent">
+      [Proof-of-Concept] DreamPose: Fashion Image-to-Video Synthesis via Stable Diffusion
+    </h1>
+    <div class="post-meta"><span title='2023-11-18 00:00:00 +0000 UTC'>November 18, 2023</span>&nbsp;·&nbsp;3 min&nbsp;·&nbsp;437 words&nbsp;|&nbsp;<a href="https://github.com/kobybibas/kobybibas.github.io/tree/main/content//posts/20231120_dream_pose/summary.md" rel="noopener noreferrer" target="_blank">📝 Suggest changes</a>
+
+</div>
+  </header> <div class="toc">
+    <details >
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">Table of Contents</span>
+        </summary>
+
+        <div class="inner"><ul><ul>
+                <li>
+                    <a href="#tldr" aria-label="TL;DR">TL;DR</a></li>
+                <li>
+                    <a href="#problem-statements" aria-label="Problem statements">Problem statements</a></li>
+                <li>
+                    <a href="#method" aria-label="Method">Method</a></li></ul>
+                    
+                <li>
+                    <a href="#dataset" aria-label="Dataset">Dataset</a><ul>
+                        
+                <li>
+                    <a href="#limitations" aria-label="Limitations">Limitations</a></li></ul>
+                </li>
+                <li>
+                    <a href="#proof-of-concept" aria-label="Proof-of-Concept">Proof-of-Concept</a><ul>
+                        
+                <li>
+                    <a href="#resource" aria-label="Resource">Resource</a>
+                </li>
+            </ul>
+            </li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+  <div class="post-content"><h2 id="tldr">TL;DR<a hidden class="anchor" aria-hidden="true" href="#tldr">#</a></h2>
+<p>Typical diffusion models create images using input text. <a href="https://grail.cs.washington.edu/projects/dreampose/">DreamPose</a>, presented at ECCV 2023, enhances this functionality by generating a video from an image incorporating a human model and pose sequence, as represented by <a href="http://densepose.org/">DensePose</a>.</p>
+<p><img loading="lazy" src="/posts/20231120_dream_pose/pose_sequence.png#center" alt="Example"  />
+</p>
+<h2 id="problem-statements">Problem statements<a hidden class="anchor" aria-hidden="true" href="#problem-statements">#</a></h2>
+<p>Common diffusion models able to generate images based on given text. However, they can not produce animated sequence nor able to be conditioned on an input pose sequence.</p>
+<h2 id="method">Method<a hidden class="anchor" aria-hidden="true" href="#method">#</a></h2>
+<p>Apply the following modifications to a diffusion model:</p>
+<ol>
+<li>Substitute the CLIP text encoder with a combination of CLIP image encoder + VAE encoder + Adapter.</li>
+<li>Concatenate a pose sequence, along with random noise, to the UNET model.</li>
+</ol>
+<p>The rationale for step 1: Conditioning by an image can be done by concatenating the image with input noise for the denoising U-Net(as in  <a href="https://www.timothybrooks.com/instruct-pix2pix">InstructPix2Pix</a>). However, the goal is to generate images that are <em>not</em> spatially aligned with the input image. For step 2, the pose conditioning is aligned with the image. Consequently, the noisy latents can be connected to the target pose representation.</p>
+<p>The training procedure comprises the following steps:</p>
+<ol>
+<li>Initialize the unaltered Stable Diffusion layers from pre-trained text-to-image Stable Diffusion checkpoints.</li>
+<li>Fine-tune the UNet and adapter module on the complete training dataset (<a href="https://vision.cs.ubc.ca/datasets/fashion/">UBC Fashion</a>) to generate frames consistent with an input image and pose.</li>
+<li>Further fine-tune the UNet and adapter module, followed by the VAE decoder, using one or more subject-specific input images to create a model tailored to the specific subject.</li>
+<li>During inference, generate video frames frame-by-frame from a single input image and a sequence of poses using the subject-specific model.</li>
+</ol>
+<p><img loading="lazy" src="/posts/20231120_dream_pose/architecture.png#center" alt="Architecture"  />
+</p>
+<h1 id="dataset">Dataset<a hidden class="anchor" aria-hidden="true" href="#dataset">#</a></h1>
+<p>The model is trained in step 2 with the <a href="https://vision.cs.ubc.ca/datasets/fashion/">UBC Fashion dataset</a>. It contains 339 training and 100 test videos. Each video has a frame rate of 30 frames/second and is approximately 12 seconds long. During training, the authors randomly sample pairs of frames from the training videos.</p>
+<h2 id="limitations">Limitations<a hidden class="anchor" aria-hidden="true" href="#limitations">#</a></h2>
+<ul>
+<li>Fine-tuning the UNET, adapter, and VAE is necessary for each input image, and on V100, takes approximately one hour.</li>
+<li>The domain is highly constrained: only images featuring humans as inputs and producing solely different poses of human models as outputs.</li>
+<li>I tried running the code with Zara images. Results seem not as good as the paper figures.</li>
+</ul>
+<h1 id="proof-of-concept">Proof-of-Concept<a hidden class="anchor" aria-hidden="true" href="#proof-of-concept">#</a></h1>
+<p>Testing the method&rsquo;s performance with images from Zara.</p>
+<p>On the Left: the input image, on the Right: the generated video.</p>
+<video autoplay loop muted playsinline aria-label='output_zara2' style="width: 100%; height: auto;">
+    <source src="/posts/20231120_dream_pose/output_zara2.mp4" type="video/mp4">
+    
+    
+</video>
+<video autoplay loop muted playsinline aria-label='output_zara3' style="width: 100%; height: auto;">
+    <source src="/posts/20231120_dream_pose/output_zara3.mp4" type="video/mp4">
+    
+    
+</video>
+<p>The temporal consistency and the visual similarity to the original image are not great. The reason might be that I fine-tuned the model using &ldquo;&ndash;use_8bit_adam&rdquo; which might produce lower quality videos than the original implementation.</p>
+<h2 id="resource">Resource<a hidden class="anchor" aria-hidden="true" href="#resource">#</a></h2>
+<p><a href="https://grail.cs.washington.edu/projects/dreampose/">Paper webpage</a></p>
+<p><a href="https://arxiv.org/abs/2304.06025">https://arxiv.org/abs/2304.06025</a> published in ICCV 2023</p>
+<p><a href="https://github.com/johannakarras/DreamPose">Original github repository</a></p>
+<p><a href="https://github.com/kobybibas/DreamPose">My adaptation of the github repository</a></p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://kobybibas.github.io/tags/video-generation/">Video generation</a></li>
+      <li><a href="https://kobybibas.github.io/tags/video-editing/">Video editing</a></li>
+      <li><a href="https://kobybibas.github.io/tags/animation/">Animation</a></li>
+      <li><a href="https://kobybibas.github.io/tags/diffusion-model/">Diffusion model</a></li>
+      <li><a href="https://kobybibas.github.io/tags/image-to-video/">Image to video</a></li>
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+    <span>&copy; 2023 <a href="https://kobybibas.github.io/">Koby Bibas</a></span>
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

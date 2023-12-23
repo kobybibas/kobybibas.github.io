@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>GAN on Koby Bibas</title>
+    <link>https://kobybibas.github.io/tags/gan/</link>
+    <description>Recent content in GAN on Koby Bibas</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 14 Oct 2023 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://kobybibas.github.io/tags/gan/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[Summary] Drag Your GAN: Interactive Point-based Manipulation on the Generative Image Manifold</title>
+      <link>https://kobybibas.github.io/posts/20231014_drage_your_gan/summary/</link>
+      <pubDate>Sat, 14 Oct 2023 00:00:00 +0000</pubDate>
+      <guid>https://kobybibas.github.io/posts/20231014_drage_your_gan/summary/</guid>
+      <description>TL;DR This work enables interactive editing of a GAN&amp;rsquo;s generated image by translating (&amp;ldquo;dragging&amp;rdquo;) any point in the image to a target location.
+Problem statements GAN based image generation takes a noise vector to generate an image. There is a need of a localized controlled image manipulation as moving a region to a different location in the image.
+Method Given a GAN generated image, a user input of the source coordinates (q) and the coordinates of the destination (p)</description>
+    </item>
+  </channel>
+</rss>

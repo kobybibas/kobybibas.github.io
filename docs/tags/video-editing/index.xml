@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Video editing on Koby Bibas</title>
+    <link>https://kobybibas.github.io/tags/video-editing/</link>
+    <description>Recent content in Video editing on Koby Bibas</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 18 Nov 2023 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://kobybibas.github.io/tags/video-editing/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[Proof-of-Concept] DreamPose: Fashion Image-to-Video Synthesis via Stable Diffusion</title>
+      <link>https://kobybibas.github.io/posts/20231120_dream_pose/summary/</link>
+      <pubDate>Sat, 18 Nov 2023 00:00:00 +0000</pubDate>
+      <guid>https://kobybibas.github.io/posts/20231120_dream_pose/summary/</guid>
+      <description>TL;DR Typical diffusion models create images using input text. DreamPose, presented at ECCV 2023, enhances this functionality by generating a video from an image incorporating a human model and pose sequence, as represented by DensePose.
+Problem statements Common diffusion models able to generate images based on given text. However, they can not produce animated sequence nor able to be conditioned on an input pose sequence.
+Method Apply the following modifications to a diffusion model:</description>
+    </item>
+  </channel>
+</rss>

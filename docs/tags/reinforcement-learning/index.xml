@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Reinforcement learning on Koby Bibas</title>
+    <link>https://kobybibas.github.io/tags/reinforcement-learning/</link>
+    <description>Recent content in Reinforcement learning on Koby Bibas</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 23 Dec 2023 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://kobybibas.github.io/tags/reinforcement-learning/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[Summary] Direct Preference Optimization (DPO)</title>
+      <link>https://kobybibas.github.io/posts/20231223_dpo/summary/</link>
+      <pubDate>Sat, 23 Dec 2023 00:00:00 +0000</pubDate>
+      <guid>https://kobybibas.github.io/posts/20231223_dpo/summary/</guid>
+      <description>TL;DR Direct Preference Optimization is a method of fine-tuning Large Language Model (LLM) to better align with human preference. It&amp;rsquo;s used as a simpler alternative to RLHF since it can be directly applied to the model without needing a reward function nor reinforcement learning optimization.
+Method The authors propose to re-parameterize the reward model in RLHF that enables extraction of the corresponding optimal policy in closed form. This enables to solve the standard RLHF problem with only a simple classification loss.</description>
+    </item>
+    <item>
+      <title>[Concept] Reinforcement learning from human feedback (RLHF)</title>
+      <link>https://kobybibas.github.io/posts/20231209_rlhf/summary/</link>
+      <pubDate>Sat, 09 Dec 2023 00:00:00 +0000</pubDate>
+      <guid>https://kobybibas.github.io/posts/20231209_rlhf/summary/</guid>
+      <description>TL;DR Machine learning models require a loss function to tune their parameters. Designing a loss function to reflect ambiguous human values poses a challenge, e.g., it&amp;rsquo;s not clear how to formulate a loss function to represent what is funny or ethical. To this end, a reward model is trained via human feedback. This reward model takes the model&amp;rsquo;s output and predicts a reward score that is then used by the model to optimize its parameters.</description>
+    </item>
+  </channel>
+</rss>

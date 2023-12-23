@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>[Summary] CoDeF: Content Deformation Fields for Temporally Consistent Video Processing | Koby Bibas</title>
+<meta name="keywords" content="Video processing, Video representation, Deformation fields">
+<meta name="description" content="TL;DR A new video representation by (i) a canonical image that aggregates the static contents and (ii) a temporal deformation field that reconstructs the video frames when applied to the static image.
+Problem statements Video processing comes at a high cost,and naively processing frames results in poor cross-frame consistency.
+Method High level objective. The proposed representations should have the following characteristics:
+Fitting capability for faithful video reconstruction. Semantic correctness of the canonical image to ensure the performance of image processing algorithms.">
+<meta name="author" content="">
+<link rel="canonical" href="https://kobybibas.github.io/posts/20230825_codef/summary/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.58d67bacca2323104d6537e743eec91eef711a177b9dc748528b4bd025746a16.css" integrity="sha256-WNZ7rMojIxBNZTfnQ&#43;7JHu9xGhd7ncdIUotL0CV0ahY=" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.f413e19d0714851f6474e7ee9632408e58ac146fbdbe62747134bea2fa3415e0.js" integrity="sha256-9BPhnQcUhR9kdOfuljJAjlisFG&#43;9vmJ0cTS&#43;ovo0FeA="
+    onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="https://kobybibas.github.io/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://kobybibas.github.io/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://kobybibas.github.io/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://kobybibas.github.io/apple-touch-icon.png">
+<link rel="mask-icon" href="https://kobybibas.github.io/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-X37V3L4LW0"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-X37V3L4LW0', { 'anonymize_ip': false });
+}
+</script>
+<meta property="og:title" content="[Summary] CoDeF: Content Deformation Fields for Temporally Consistent Video Processing" />
+<meta property="og:description" content="TL;DR A new video representation by (i) a canonical image that aggregates the static contents and (ii) a temporal deformation field that reconstructs the video frames when applied to the static image.
+Problem statements Video processing comes at a high cost,and naively processing frames results in poor cross-frame consistency.
+Method High level objective. The proposed representations should have the following characteristics:
+Fitting capability for faithful video reconstruction. Semantic correctness of the canonical image to ensure the performance of image processing algorithms." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://kobybibas.github.io/posts/20230825_codef/summary/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-10-27T00:00:00+00:00" />
+<meta property="article:modified_time" content="2023-10-27T00:00:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="[Summary] CoDeF: Content Deformation Fields for Temporally Consistent Video Processing"/>
+<meta name="twitter:description" content="TL;DR A new video representation by (i) a canonical image that aggregates the static contents and (ii) a temporal deformation field that reconstructs the video frames when applied to the static image.
+Problem statements Video processing comes at a high cost,and naively processing frames results in poor cross-frame consistency.
+Method High level objective. The proposed representations should have the following characteristics:
+Fitting capability for faithful video reconstruction. Semantic correctness of the canonical image to ensure the performance of image processing algorithms."/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://kobybibas.github.io/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "[Summary] CoDeF: Content Deformation Fields for Temporally Consistent Video Processing",
+      "item": "https://kobybibas.github.io/posts/20230825_codef/summary/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "[Summary] CoDeF: Content Deformation Fields for Temporally Consistent Video Processing",
+  "name": "[Summary] CoDeF: Content Deformation Fields for Temporally Consistent Video Processing",
+  "description": "TL;DR A new video representation by (i) a canonical image that aggregates the static contents and (ii) a temporal deformation field that reconstructs the video frames when applied to the static image.\nProblem statements Video processing comes at a high cost,and naively processing frames results in poor cross-frame consistency.\nMethod High level objective. The proposed representations should have the following characteristics:\nFitting capability for faithful video reconstruction. Semantic correctness of the canonical image to ensure the performance of image processing algorithms.",
+  "keywords": [
+    "Video processing", "Video representation", "Deformation fields"
+  ],
+  "articleBody": "TL;DR A new video representation by (i) a canonical image that aggregates the static contents and (ii) a temporal deformation field that reconstructs the video frames when applied to the static image.\nProblem statements Video processing comes at a high cost,and naively processing frames results in poor cross-frame consistency.\nMethod High level objective. The proposed representations should have the following characteristics:\nFitting capability for faithful video reconstruction. Semantic correctness of the canonical image to ensure the performance of image processing algorithms. Smoothness of the deformation field to guarantee temporal consistency and correct propagation. Model. The model consists of a 2D hash-based canonical image field (C) coupled with a 3D hash-based temporal deformation field (D). An arbitrary position x in the t-th frame is first encoded by a 3D hash encoding function γ3D(x, t) to get high-dimension multi-resolution features. Then a tiny MLP maps the embedded features its corresponding position in canonical field (γ3D(x, t)) → x′.\nMultiple deformation files. For videos featuring large occlusions, additional layers corresponding to multiple content deformation fields are used. These layers would be defined based on semantic segmentation (using the Segment-Anything-track method). Each semantic layer is associated with a mask. For each layer, a group of canonical fields and deformation fields represent the separate motion of different objects.\nTraining loss. The representation is trained by minimizing the L2 loss between the ground truth color and the predicted color for a given coordinate in addition to multiple regularization terms.\nLimitations The model needs to be train per a specific video. The training duration is approximately 5 minutes for 100 video frames (3 second video).\nUnable to manage diverse videos that cannot be represented by a canonical image.\nResource https://arxiv.org/abs/2305.16311 published in ECCV 2022.\nA youtube video that shows how to run the code\nComputing methods:\nYoni Kasten, Dolev Ofri, Oliver Wang, and Tali Dekel. Layered neural atlases for consistent video editing. ACM Trans. Graph., 2021. Zachary Teed and Jia Deng. Raft: Recurrent all-pairs field transforms for optical flow. In Eur. Conf. Comput. Vis., 2020. This method utilizes:\nYangming Cheng, Liulei Li, Yuanyou Xu, Xiaodi Li, Zongxin Yang, Wenguan Wang, and Yi Yang. Segment and track anything, 2023. ",
+  "wordCount" : "361",
+  "inLanguage": "en",
+  "datePublished": "2023-10-27T00:00:00Z",
+  "dateModified": "2023-10-27T00:00:00Z",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://kobybibas.github.io/posts/20230825_codef/summary/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Koby Bibas",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://kobybibas.github.io/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://kobybibas.github.io/" accesskey="h" title="Koby Bibas (Alt + H)">Koby Bibas</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://kobybibas.github.io/posts/" title="Posts">
+                    <span>Posts</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://kobybibas.github.io/publications/" title="Publications">
+                    <span>Publications</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://kobybibas.github.io/tags/" title="Tags">
+                    <span>Tags</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title entry-hint-parent">
+      [Summary] CoDeF: Content Deformation Fields for Temporally Consistent Video Processing
+    </h1>
+    <div class="post-meta"><span title='2023-10-27 00:00:00 +0000 UTC'>October 27, 2023</span>&nbsp;·&nbsp;2 min&nbsp;·&nbsp;361 words&nbsp;|&nbsp;<a href="https://github.com/kobybibas/kobybibas.github.io/tree/main/content//posts/20230825_CoDeF/summary.md" rel="noopener noreferrer" target="_blank">📝 Suggest changes</a>
+
+</div>
+  </header> <div class="toc">
+    <details >
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">Table of Contents</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#tldr" aria-label="TL;DR">TL;DR</a></li>
+                <li>
+                    <a href="#problem-statements" aria-label="Problem statements">Problem statements</a></li>
+                <li>
+                    <a href="#method" aria-label="Method">Method</a></li>
+                <li>
+                    <a href="#limitations" aria-label="Limitations">Limitations</a></li>
+                <li>
+                    <a href="#resource" aria-label="Resource">Resource</a>
+                </li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+  <div class="post-content"><h2 id="tldr">TL;DR<a hidden class="anchor" aria-hidden="true" href="#tldr">#</a></h2>
+<p>A new video representation by (i) a canonical image that aggregates the static contents and (ii) a temporal deformation field that reconstructs the video frames when applied to the static image.</p>
+<p><img loading="lazy" src="/posts/20230825_CoDeF/example.png" alt="Example"  />
+</p>
+<h2 id="problem-statements">Problem statements<a hidden class="anchor" aria-hidden="true" href="#problem-statements">#</a></h2>
+<p>Video processing comes at a high cost,and naively processing frames results in poor cross-frame consistency.</p>
+<h2 id="method">Method<a hidden class="anchor" aria-hidden="true" href="#method">#</a></h2>
+<p><strong>High level objective.</strong> The proposed representations should have the following characteristics:</p>
+<ul>
+<li>Fitting capability for faithful video reconstruction.</li>
+<li>Semantic correctness of the canonical image to ensure the performance of image processing algorithms.</li>
+<li>Smoothness of the deformation field to guarantee temporal consistency and correct propagation.</li>
+</ul>
+<p><strong>Model.</strong> The model consists of a 2D hash-based canonical image field (<em>C</em>) coupled with a 3D hash-based temporal deformation field (<em>D</em>).
+An arbitrary position <em>x</em> in the <em>t</em>-th frame is first encoded by a 3D hash encoding function <em>γ3D(x, t)</em> to get high-dimension multi-resolution features.
+Then a tiny MLP maps the embedded features its corresponding position in canonical field
+<em>(γ3D(x, t)) → x′</em>.</p>
+<p><strong>Multiple deformation files.</strong> For videos featuring large occlusions, additional layers corresponding to multiple content deformation fields are used. These layers would be defined based on semantic segmentation (using the Segment-Anything-track method).
+Each semantic layer is associated with a mask.
+For each layer, a group of canonical fields and deformation fields represent the separate motion of different objects.</p>
+<p><strong>Training loss.</strong> The representation is trained by minimizing the L2 loss between the ground truth color and the predicted color for a given coordinate in addition to multiple regularization terms.</p>
+<p><img loading="lazy" src="/posts/20230825_CoDeF/method.png" alt="Method"  />
+</p>
+<h2 id="limitations">Limitations<a hidden class="anchor" aria-hidden="true" href="#limitations">#</a></h2>
+<p>The model needs to be train per a specific video. The training duration is approximately 5 minutes for 100 video frames (3 second video).</p>
+<p>Unable to manage diverse videos that cannot be represented by a canonical image.</p>
+<h2 id="resource">Resource<a hidden class="anchor" aria-hidden="true" href="#resource">#</a></h2>
+<p><a href="https://arxiv.org/abs/2305.16311">https://arxiv.org/abs/2305.16311</a> published in ECCV 2022.</p>
+<p><a href="https://www.youtube.com/watch?v=VNlqXGoVE1o">A youtube video that shows how to run the code</a></p>
+<p>Computing methods:</p>
+<ul>
+<li>Yoni Kasten, Dolev Ofri, Oliver Wang, and Tali Dekel. Layered neural atlases for consistent video editing. ACM Trans. Graph., 2021.</li>
+<li>Zachary Teed and Jia Deng. Raft: Recurrent all-pairs field transforms for optical flow. In Eur. Conf. Comput. Vis., 2020.</li>
+</ul>
+<p>This method utilizes:</p>
+<ul>
+<li>Yangming Cheng, Liulei Li, Yuanyou Xu, Xiaodi Li, Zongxin Yang, Wenguan Wang, and Yi Yang. Segment and track anything, 2023.</li>
+</ul>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://kobybibas.github.io/tags/video-processing/">Video processing</a></li>
+      <li><a href="https://kobybibas.github.io/tags/video-representation/">Video representation</a></li>
+      <li><a href="https://kobybibas.github.io/tags/deformation-fields/">Deformation fields</a></li>
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+    <span>&copy; 2023 <a href="https://kobybibas.github.io/">Koby Bibas</a></span>
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

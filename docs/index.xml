@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Koby Bibas</title>
+    <link>https://kobybibas.github.io/</link>
+    <description>Recent content on Koby Bibas</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 23 Dec 2023 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://kobybibas.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[Summary] Direct Preference Optimization (DPO)</title>
+      <link>https://kobybibas.github.io/posts/20231223_dpo/summary/</link>
+      <pubDate>Sat, 23 Dec 2023 00:00:00 +0000</pubDate>
+      <guid>https://kobybibas.github.io/posts/20231223_dpo/summary/</guid>
+      <description>TL;DR Direct Preference Optimization is a method of fine-tuning Large Language Model (LLM) to better align with human preference. It&amp;rsquo;s used as a simpler alternative to RLHF since it can be directly applied to the model without needing a reward function nor reinforcement learning optimization.
+Method The authors propose to re-parameterize the reward model in RLHF that enables extraction of the corresponding optimal policy in closed form. This enables to solve the standard RLHF problem with only a simple classification loss.</description>
+    </item>
+    <item>
+      <title>[Concept] Reinforcement learning from human feedback (RLHF)</title>
+      <link>https://kobybibas.github.io/posts/20231209_rlhf/summary/</link>
+      <pubDate>Sat, 09 Dec 2023 00:00:00 +0000</pubDate>
+      <guid>https://kobybibas.github.io/posts/20231209_rlhf/summary/</guid>
+      <description>TL;DR Machine learning models require a loss function to tune their parameters. Designing a loss function to reflect ambiguous human values poses a challenge, e.g., it&amp;rsquo;s not clear how to formulate a loss function to represent what is funny or ethical. To this end, a reward model is trained via human feedback. This reward model takes the model&amp;rsquo;s output and predicts a reward score that is then used by the model to optimize its parameters.</description>
+    </item>
+    <item>
+      <title>[Proof-of-Concept] DreamPose: Fashion Image-to-Video Synthesis via Stable Diffusion</title>
+      <link>https://kobybibas.github.io/posts/20231120_dream_pose/summary/</link>
+      <pubDate>Sat, 18 Nov 2023 00:00:00 +0000</pubDate>
+      <guid>https://kobybibas.github.io/posts/20231120_dream_pose/summary/</guid>
+      <description>TL;DR Typical diffusion models create images using input text. DreamPose, presented at ECCV 2023, enhances this functionality by generating a video from an image incorporating a human model and pose sequence, as represented by DensePose.
+Problem statements Common diffusion models able to generate images based on given text. However, they can not produce animated sequence nor able to be conditioned on an input pose sequence.
+Method Apply the following modifications to a diffusion model:</description>
+    </item>
+    <item>
+      <title>[Summary] CoDeF: Content Deformation Fields for Temporally Consistent Video Processing</title>
+      <link>https://kobybibas.github.io/posts/20230825_codef/summary/</link>
+      <pubDate>Fri, 27 Oct 2023 00:00:00 +0000</pubDate>
+      <guid>https://kobybibas.github.io/posts/20230825_codef/summary/</guid>
+      <description>TL;DR A new video representation by (i) a canonical image that aggregates the static contents and (ii) a temporal deformation field that reconstructs the video frames when applied to the static image.
+Problem statements Video processing comes at a high cost,and naively processing frames results in poor cross-frame consistency.
+Method High level objective. The proposed representations should have the following characteristics:
+Fitting capability for faithful video reconstruction. Semantic correctness of the canonical image to ensure the performance of image processing algorithms.</description>
+    </item>
+    <item>
+      <title>[Summary] Drag Your GAN: Interactive Point-based Manipulation on the Generative Image Manifold</title>
+      <link>https://kobybibas.github.io/posts/20231014_drage_your_gan/summary/</link>
+      <pubDate>Sat, 14 Oct 2023 00:00:00 +0000</pubDate>
+      <guid>https://kobybibas.github.io/posts/20231014_drage_your_gan/summary/</guid>
+      <description>TL;DR This work enables interactive editing of a GAN&amp;rsquo;s generated image by translating (&amp;ldquo;dragging&amp;rdquo;) any point in the image to a target location.
+Problem statements GAN based image generation takes a noise vector to generate an image. There is a need of a localized controlled image manipulation as moving a region to a different location in the image.
+Method Given a GAN generated image, a user input of the source coordinates (q) and the coordinates of the destination (p)</description>
+    </item>
+    <item>
+      <title>[Summary] Break-A-Scene: Extracting Multiple Concepts from a Single Image</title>
+      <link>https://kobybibas.github.io/posts/20230721_break_a_scene/summary/</link>
+      <pubDate>Fri, 21 Jul 2023 00:00:00 +0000</pubDate>
+      <guid>https://kobybibas.github.io/posts/20230721_break_a_scene/summary/</guid>
+      <description>TL;DR Fine-tuning of a diffusion model using a single image to generate images conditions on user-provided concepts.
+Problem statements Diffusion models are not able to generate a new image of user-provided concepts. Methods (DreemBooth) that enable this capabilities require several input images that contain the desired concept.
+Method The method consists of two phases.
+Freezing the model weights, and optimize handles to reconstruct the input image. This is done with a large learning rate to not harm the model generalization.</description>
+    </item>
+    <item>
+      <title>[Summary] MultiDiffusion: Fusing Diffusion Paths for Controlled Image Generation</title>
+      <link>https://kobybibas.github.io/posts/20230525_multidiffusion/summary/</link>
+      <pubDate>Fri, 19 May 2023 00:00:00 +0000</pubDate>
+      <guid>https://kobybibas.github.io/posts/20230525_multidiffusion/summary/</guid>
+      <description>TL;DR To enable a more controllable image diffusion, MultiDiffusion introduce patches generation with a global constrain.
+Problem statements Diffusion models lack user controllability and methods that offer such control require a costly fine-tuning.
+Method The method can be reduced to the following algorithm: At each time step t:
+Extract patches from the global image I_{t-1} Execute the de-noising step to generate the patches J_{i,t} Combine the patches by average their pixel values to create the global image I_t For the panorama use case: simply generate N images with overlapping regions between them.</description>
+    </item>
+    <item>
+      <title>Posts</title>
+      <link>https://kobybibas.github.io/posts/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://kobybibas.github.io/posts/</guid>
+      <description>posts</description>
+    </item>
+    <item>
+      <title>Publications</title>
+      <link>https://kobybibas.github.io/publications/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://kobybibas.github.io/publications/</guid>
+      <description>publications</description>
+    </item>
+  </channel>
+</rss>

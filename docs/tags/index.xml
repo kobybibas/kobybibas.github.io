@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on Koby Bibas</title>
+    <link>https://kobybibas.github.io/tags/</link>
+    <description>Recent content in Tags on Koby Bibas</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 23 Dec 2023 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://kobybibas.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>LLM</title>
+      <link>https://kobybibas.github.io/tags/llm/</link>
+      <pubDate>Sat, 23 Dec 2023 00:00:00 +0000</pubDate>
+      <guid>https://kobybibas.github.io/tags/llm/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Reinforcement learning</title>
+      <link>https://kobybibas.github.io/tags/reinforcement-learning/</link>
+      <pubDate>Sat, 23 Dec 2023 00:00:00 +0000</pubDate>
+      <guid>https://kobybibas.github.io/tags/reinforcement-learning/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Reward function</title>
+      <link>https://kobybibas.github.io/tags/reward-function/</link>
+      <pubDate>Sat, 23 Dec 2023 00:00:00 +0000</pubDate>
+      <guid>https://kobybibas.github.io/tags/reward-function/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Animation</title>
+      <link>https://kobybibas.github.io/tags/animation/</link>
+      <pubDate>Sat, 18 Nov 2023 00:00:00 +0000</pubDate>
+      <guid>https://kobybibas.github.io/tags/animation/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Diffusion model</title>
+      <link>https://kobybibas.github.io/tags/diffusion-model/</link>
+      <pubDate>Sat, 18 Nov 2023 00:00:00 +0000</pubDate>
+      <guid>https://kobybibas.github.io/tags/diffusion-model/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Image to video</title>
+      <link>https://kobybibas.github.io/tags/image-to-video/</link>
+      <pubDate>Sat, 18 Nov 2023 00:00:00 +0000</pubDate>
+      <guid>https://kobybibas.github.io/tags/image-to-video/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Video editing</title>
+      <link>https://kobybibas.github.io/tags/video-editing/</link>
+      <pubDate>Sat, 18 Nov 2023 00:00:00 +0000</pubDate>
+      <guid>https://kobybibas.github.io/tags/video-editing/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Video generation</title>
+      <link>https://kobybibas.github.io/tags/video-generation/</link>
+      <pubDate>Sat, 18 Nov 2023 00:00:00 +0000</pubDate>
+      <guid>https://kobybibas.github.io/tags/video-generation/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Deformation fields</title>
+      <link>https://kobybibas.github.io/tags/deformation-fields/</link>
+      <pubDate>Fri, 27 Oct 2023 00:00:00 +0000</pubDate>
+      <guid>https://kobybibas.github.io/tags/deformation-fields/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Video processing</title>
+      <link>https://kobybibas.github.io/tags/video-processing/</link>
+      <pubDate>Fri, 27 Oct 2023 00:00:00 +0000</pubDate>
+      <guid>https://kobybibas.github.io/tags/video-processing/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Video representation</title>
+      <link>https://kobybibas.github.io/tags/video-representation/</link>
+      <pubDate>Fri, 27 Oct 2023 00:00:00 +0000</pubDate>
+      <guid>https://kobybibas.github.io/tags/video-representation/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>GAN</title>
+      <link>https://kobybibas.github.io/tags/gan/</link>
+      <pubDate>Sat, 14 Oct 2023 00:00:00 +0000</pubDate>
+      <guid>https://kobybibas.github.io/tags/gan/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Image editing</title>
+      <link>https://kobybibas.github.io/tags/image-editing/</link>
+      <pubDate>Sat, 14 Oct 2023 00:00:00 +0000</pubDate>
+      <guid>https://kobybibas.github.io/tags/image-editing/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Controllability</title>
+      <link>https://kobybibas.github.io/tags/controllability/</link>
+      <pubDate>Fri, 19 May 2023 00:00:00 +0000</pubDate>
+      <guid>https://kobybibas.github.io/tags/controllability/</guid>
+      <description></description>
+    </item>
+  </channel>
+</rss>
