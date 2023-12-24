@@ -13,8 +13,8 @@
       <link>https://kobybibas.github.io/posts/20231223_dpo/summary/</link>
       <pubDate>Sat, 23 Dec 2023 00:00:00 +0000</pubDate>
       <guid>https://kobybibas.github.io/posts/20231223_dpo/summary/</guid>
-      <description>TL;DR Direct Preference Optimization is a method of fine-tuning Large Language Model (LLM) to better align with human preference. It&amp;rsquo;s used as a simpler alternative to RLHF since it can be directly applied to the model without needing a reward function nor reinforcement learning optimization.
-Method The authors propose to re-parameterize the reward model in RLHF that enables extraction of the corresponding optimal policy in closed form. This enables to solve the standard RLHF problem with only a simple classification loss.</description>
+      <description>TL;DR Direct Preference Optimization is a method of fine-tuning Large Language Models (LLM) to better align their outputs with human preference. It&amp;rsquo;s used as a simpler alternative to RLHF since it can be directly applied to the model without needing a reward function nor reinforcement learning optimization.
+Method The authors propose to re-parameterize the reward model of RLHF to obtain the optimal policy in closed form. This enables to solve the standard RLHF problem using a simple classification loss.</description>
     </item>
     <item>
       <title>[Concept] Reinforcement learning from human feedback (RLHF)</title>
