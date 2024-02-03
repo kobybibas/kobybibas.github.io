@@ -66,3 +66,5 @@ The paper also provides a video evaluation dataset the includes object-focused s
 [Denoising diffusion implicit models (DDIM)](https://arxiv.org/abs/2010.02502): A method of accelerating the sampling process of diffusion model.
 
 [An explanation of the ControlNet parameters](https://www.andyhtu.com/post/understanding-controlnet-interface-in-automatic-1111-web-ui) 
+
+[Online video editor (used to produce the Proof of concept)](https://app.clipchamp.com/editor) 
