@@ -13,7 +13,7 @@ The process of video editing can be time-consuming and laborious. Many diffusion
 
 
 ## Proof-of-Concept
-I've tested the method with videos from Amazon ([official code](https://github.com/rehg-lab/RAVE)). 
+I've tested the method with videos from Amazon ([my code fork](https://github.com/kobybibas/RAVE)). 
 
 Prompt: "A zoom in of an handbag laying on the floor". \
 ControlNet conditioning: "softedge_hed". \
