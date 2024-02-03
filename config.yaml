@@ -1,7 +1,7 @@
 baseURL: https://kobybibas.github.io/
 title: Koby Bibas
 theme: PaperMod
-paginate: 5
+paginate: 20
 googleAnalytics: G-X37V3L4LW0
 enableRobotsTXT: true
 languageCode: en-us
@@ -20,7 +20,7 @@ params:
       title: Me
     content: |
       - I'm Koby, a PhD student with a focus on machine learning. My academic pursuits center around computer vision and information theory algorithms.
-      - In my free time, I like enjoying my guilty pleasures: coffee and carbs.
+      - In my free time, I enjoy my guilty pleasures: coffee and carbs.
       - This website serves as a repository for my learning notes, paper summaries, and proof of concepts.
     social:
       align: left
