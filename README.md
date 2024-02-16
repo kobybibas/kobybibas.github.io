@@ -4,3 +4,5 @@ Launch a local site:
 ```
 hugo server
 ```
+
+Deploy site to github.io: https://gohugo.io/hosting-and-deployment/hosting-on-github/
