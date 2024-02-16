@@ -9,11 +9,11 @@ summary: publications
 
 Koby Bibas, Shachar Shayovitz, and Meir Feder, ``Deep Individual Active Learning: Safeguarding Against Out-of-Distribution Challenges in Neural Networks''. Entropy, 2024. 
 
-Koby Bibas, Oren Sar Shalom, Dietmar Jannach ``Semi-supervised Adversarial Learning for Complementary Item Recommendation''. The ACM Web Conference 2023
+Koby Bibas, Oren Sar Shalom, and Dietmar Jannach, ``Semi-supervised Adversarial Learning for Complementary Item Recommendation''. The ACM Web Conference, 2023.
 
-Koby Bibas, Oren Sar Shalom, Dietmar Jannach ``Collaborative Image Understanding''. The ACM International Conference on Information & Knowledge Management
+Koby Bibas, Oren Sar Shalom, and Dietmar Jannach, ``Collaborative Image Understanding''. The ACM International Conference on Information & Knowledge Management, 2022.
 
-Koby Bibas, and Meir Feder, ``Beyond Ridge Regression for Distribution-Free Data''. Preprint arXiv:2206.08757, 2022.
+Koby Bibas, and Meir Feder, ``Beyond Ridge Regression for Distribution-Free Data''. arXiv:2206.08757, 2022.
 
 Koby Bibas, Meir Feder, and Tal Hassner, ``Single Layer Predictive Normalized Maximum Likelihood for Out-of-Distribution Detection''. NeurIPS, 2021.
 
