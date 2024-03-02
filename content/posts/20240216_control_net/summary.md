@@ -23,7 +23,7 @@ Control Net is a framework designed to control the content of images generated b
 <figure>
     <img src="/posts/20240216_control_net/architecture.png"
          alt="architecture"
-         width="512">
+         width="256">
 </figure>
 
 **Training process.** Control Net requires training for every new input conditioning signals:
