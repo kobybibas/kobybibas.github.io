@@ -20,11 +20,7 @@ Control Net is a framework designed to control the content of images generated b
 2. Cloning some of the original model blocks to a trainable copy. The trainable copy takes an external conditioning vector c as input.
 3. Connecting the trainable copy to the locked model with zero initialized convolution layers.
 
-<figure>
-    <img src="/posts/20240216_control_net/architecture.png"
-         alt="architecture"
-         width="256">
-</figure>
+![architecture](/posts/20240216_control_net/architecture.png)
 
 **Training process.** Control Net requires training for every new input conditioning signals:
 Given an input image z0, image diffusion algorithms progressively add noise to the image and produce a noisy image zt, where t represents the number of times noise is added. 
