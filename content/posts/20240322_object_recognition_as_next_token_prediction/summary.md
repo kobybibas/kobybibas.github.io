@@ -13,17 +13,17 @@ draft: false
 Models for object classification require a fixed set of pre-defined classes which constrain the model from recognizing any object. In this paper, a visual classifier is trained to predict the most likely token of a pre-trained Large Language Model (LLM). 
 Given that LLMs are trained on extensive textual data, training a model to predict across the entire token space allows it capture the full range of textual information.
 
-![teaser](/posts/220240322_object_recognition_as_next_token_prediction/teaser.png)
+![teaser](/posts/20240322_object_recognition_as_next_token_prediction/teaser.png)
 
 
 ## Methods
 The model is trained to predict the probability for each token of a pretrained LLM:
 Denote Xv as the visual features, W as the LLM token embeddings, and w represents the most probable single token, the model prediction is
-![token_prediction](/posts/220240322_object_recognition_as_next_token_prediction/token_prediction.png)
+![token_prediction](/posts/20240322_object_recognition_as_next_token_prediction/token_prediction.png)
 
 To guide the language decoder, the authors prompt it with “the objects in the image are” (Xp). 
 Then they concatenate the visual features (Xv) and instruction (Xp) along with the special token [IMG] to indicate the boundary 
-![teaser](/posts/220240322_object_recognition_as_next_token_prediction/decoder_tokens.png)
+![teaser](/posts/20240322_object_recognition_as_next_token_prediction/decoder_tokens.png)
 
 
 **Multiclass prediction.**
