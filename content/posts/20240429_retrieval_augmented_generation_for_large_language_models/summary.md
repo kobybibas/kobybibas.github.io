@@ -38,7 +38,7 @@ Notice that updating the document encoder is expensive as it requires periodic u
 * The authors utilized a seq2seq transformer for generating answers. However, a more efficient strategy might be to use the embeddings directly. This would only require only a decoder model, rather than a seq2seq transformer.
 
 ## Resource
-[Arxiv](https://arxiv.org/pdf/2005.11401): published in 
+[Arxiv](https://arxiv.org/pdf/2005.11401): published in NeurIPS 2024
 
 [GitHub](https://github.com/KaiyangZhou/CoOp)
 
