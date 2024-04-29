@@ -24,6 +24,7 @@ The method consists of 3 building blocks.
 
 
 Marginalized over the K documents:
+
 ![RAG-Sequence-Model](/posts/20240429_retrieval_augmented_generation_for_large_language_models/RAG-Sequence Model.png)
 
 ### Training procedure
