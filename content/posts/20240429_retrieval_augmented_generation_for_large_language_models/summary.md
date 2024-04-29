@@ -12,7 +12,7 @@ draft: false
 ## TL;DR
 Generative Large Language Models (LLMs) are limited to generate text based on their training data which means any extension to additional sources necessitates additional training. Retrieval Augmented Generation (RAG) is a method that combines the use of a database with LLMs  enables updating the LLM knowledge and make it more precise for specific applications.
 
-![overview](/posts/20240330_retrieval_augmented_generation_for_large_language_models/overview.png)
+![overview](/posts/20240429_retrieval_augmented_generation_for_large_language_models/overview.png)
 
 ## Method
 
@@ -22,7 +22,7 @@ The method consists of 3 building blocks.
 2. **Retrieval.**  A query (e.g. a question) is encoded using a BART model similar to (1) with the difference it was trained on questions part of TriviaQA. Then the top k most relevant documents from the database are retrieved. Relevance is determined by the maximum inner product between the query and document embeddings.
 3. **Text generation.** To generate the answer, the query is concatenated with a retrieved document and then inputted into another Language Model (a seq2seq transformer). The generator then calculates the output sequence probability for each document. To produce a final answer, the output probabilities are marginalized over the K documents.
 
-![RAG-Sequence Model](/posts/20240330_retrieval_augmented_generation_for_large_language_models/RAG-Sequence Model.png)
+![RAG-Sequence Model](/posts/20240429_retrieval_augmented_generation_for_large_language_models/RAG-Sequence Model.png)
 
 ### Training procedure
 The retriever and generator are jointly fine-tuned on input/output pairs, without a direct supervision of the retrieved documents. It's important to note that updating the document encoder is expensive as it requires periodic updates to the document index. The authors found that this step wasn't not needed for achieving high performance, so they kept the document encoder and index static. Only the query encoder and the BART generator were fine-tuned.
