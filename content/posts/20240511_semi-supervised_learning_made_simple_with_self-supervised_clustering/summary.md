@@ -33,14 +33,14 @@ Some notes:
 By learning with unlabeled data only there are no guarantees that representations will organize the clusters according to the class labels. 
 With annotated data, the pseudo-label can be replaced with the ground-truth label when available:
 ![equation](/posts/20240511_semi-supervised_learning_made_simple_with_self-supervised_clustering/semi_supervised_learning_eq.png)
-where y is the ground truth label, y^ is the pseudo label, and $l$ is the loss function.
+where y is the ground truth label and y^ is the pseudo label.
 
-Since the authors balance the labeled and unlabeled loss by 1:1, implementation wise they concatenate the labeled and unlabeled samples, the pseudo label and true label. Then they feed them to the same cross entropy loss.
+Since the authors balance the labeled and unlabeled loss by 1:1, implementation wise they concatenate the labeled with the unlabeled samples and the pseudo labels with true labels. Then they feed them to the same cross entropy loss.
 
 ![Method](/posts/20240511_semi-supervised_learning_made_simple_with_self-supervised_clustering/method.png)
 
 ## Limitations
-* It's not clear it the method works when there are some classes with no label data. Potentially, this classes can be spread across clusters with not meaningful semantic separation. 
+* It's not clear it the method works when there are some classes with no labeled samples. Potentially, this classes can be spread across clusters with not meaningful semantic separation. 
 * There is a hidden hyperparameter of balancing the labeled and unlabeled loss. In the paper, the authors assume it's 1 without explicitly mention and discuss it. The method is probably sensitive for this hyperparameter
   
 
