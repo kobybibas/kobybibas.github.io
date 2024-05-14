@@ -11,8 +11,9 @@ draft: false
 ---
 
 ## TL;DR
-Take advantage of the few annotations available in the semi-supervised setting to learn even better representations.
-Our main intuition is to replace the cluster centroids with class prototypes learned with supervision. In this way, unlabeled samples will be clustered around the class prototypes, guided by the self-supervised clustering-based objective.
+In self-supervised learning there are no guarantees that representations will organize the clusters according to their semantic classes.
+In many cases, labels are partially available and can be leveraged to improve the semantic clustering of self-supervised learners.  
+In this paper, for the labeled samples the authors propose to replace the cluster centroids with class prototypes learned with supervision. In this way, unlabeled samples will be clustered around the class prototypes, guided by the self-supervised clustering-based objective.
 
 
 ## Method
@@ -29,17 +30,20 @@ Some notes:
 * The cluster assignment is not needed: The difference between h and h^ can directly be used as the loss function. However, the clustering helps to prevent collapsing of the representation: where all samples are assigned to the same cluster. 
 * Intuitively, the loss leverages cluster assignments as a proxy to minimize the distance between latent representations (h, ˆh). As a by-product, the objective also learns a set of cluster.
 
-**Labeled data.**
-This can be achieved by optimizing the same loss function in Eq. 2
-while replacing the pseudo-label with the ground-truth la-
-bel when available:
+**Leveraging labeled data.**
+By learning with unlabeled data only there are no guarantees that representations will organize the clusters according to the class labels. 
+With annotated data, the pseudo-label can be replaced with the ground-truth label when available:
+![equation](/posts/20240511_Semi-supervised learning made simple with self-supervised clustering/semi_supervised_learning_eq.png)
+where y is the ground truth label, y^ is the pseudo label, and $l$ is the loss function.
 
+Since the authors balance the labeled and unlabeled loss by 1:1, implementation wise they concatenate the labeled and unlabeled samples, the pseudo label and true label. Then they feed them to the same cross entropy loss.
 
-![Method](/posts/20240511_Semi-supervised learning made simple with self-supervised clustering/summary.md)
+![Method](/posts/20240511_Semi-supervised learning made simple with self-supervised clustering/method.png)
 
 ## Limitations
-* In the paper's experiment, the authors considered the settings where all classes have some labaled samples. It's not clear how the method can be used where there are unknown clusters with no annotated samples. 
-* 
+* It's not clear it the method works when there are some classes with no label data. Potentially, this classes can be spread across clusters with not meaningful semantic separation. 
+* There is a hidden hyperparameter of balancing the labeled and unlabeled loss. In the paper, the authors assume it's 1 without explicitly mention and discuss it. The method is probably sensitive for this hyperparameter
+  
 
 ## Resource
 [Arxiv](https://arxiv.org/pdf/2306.07483): published in CVPR 2022
