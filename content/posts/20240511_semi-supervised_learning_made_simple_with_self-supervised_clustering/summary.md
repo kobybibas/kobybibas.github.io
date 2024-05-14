@@ -17,17 +17,16 @@ In this way, unlabeled samples will be clustered around the class prototypes, gu
 
 
 ## Method
-Essentially the method trains a model by a joint optimization of a supervised loss on the labeled data and a self-supervised loss on the unlabeled data using the same loss function (cross-entropy).
+The method trains a model by jointly optimize a supervised loss on labeled data and a self-supervised loss on unlabeled data using the same loss function (cross-entropy).
 
-**Unlabeled data.** Given two correlated views of an input image:
-1. Feeding the images to an encoder (x,x^)
-2. Use an additional bias-free linear layer to produce (h, h^)
+**Learning with unlabeled data.** Given two correlated views (x,x^) of an input image:
+1. Feeding the images to an encoder. with an additional bias-free linear layer to produce the feature vectors (h, h^).
 3. Create a clustering assignment of h^ by applying the softmax function. This acts as the pseudo-label y^.
-4. y^ is used as the target label in the cross-entropy loss for softmax(h). Note that a stop-gradient operation is performed, so that the gradient is not propagated through the pseudo-label.
+4. y^ is used as the target label in the cross-entropy loss for softmax(h). A stop-gradient operation is performed to not propagate gradients through the pseudo-label.
 
 Some notes:
-* The length of h and h^ is equal the number of clusters. The number of clusters is pre-defined. 
-* The cluster assignment is not needed: The difference between h and h^ can directly be used as the loss function. However, the clustering helps to prevent collapsing of the representation: where all samples are assigned to the same cluster. 
+* The length of h and h^ is equal the number of clusters and the number of clusters is pre-defined. 
+* The cluster assignment is not needed: The difference between h and h^ can directly be used as the loss function. However, the clustering helps to prevent collapsing of the representation (where all samples are assigned to the same cluster). 
 * Intuitively, the loss leverages cluster assignments as a proxy to minimize the distance between latent representations (h, ˆh). As a by-product, the objective also learns a set of cluster.
 
 **Leveraging labeled data.**
