@@ -27,70 +27,50 @@ Some weirds phenomena of the Tokenization process:
 ![Tokenizer](/posts/20240608_lets_build_the_gpt_tokenizer/tokenizer_example.png)
 
 
-# Creating a tokenizer
-Each character is represented in Unicode. There are several encoding from Unicode to byte-string, the most common one is UTF-8.
-![utf8](/posts/20240608_lets_build_the_gpt_tokenizer/string_to_utf8.png)
-Using UTF8 naively means we could have only 256 tokens (the maximum number a byte represents), which is too small and would create a very long context length per input sentence. 
+# Creating a Tokenizer
+The common paradigm to represent characters in text is using the [Unicode format](https://en.wikipedia.org/wiki/Unicode). 
+To convert Unicode to a byte-string, several encoding methods exist, with UTF-8 being the most common. However, using UTF-8 naively limits us to only 256 tokens (the maximum number a byte can represent), which is insufficient and would result in excessively long context lengths. The solution to this problem is "Byte Pair Encoding" (BPE).
 
-The solution is "Byte Pair encoding" 
+![utf8](/posts/20240608_lets_build_the_gpt_tokenizer/string_to_utf8.png)
 
 ## Byte Pair Encoding
-We are looking for the most frequent pair of tokens and replace it with a new token. 
-We repeat this iteratively until a stopping condition is met. 
+The process of Byte Pair Encoding is as follows.
+1. Encode the input text using UTF-8, starting with 256 initial tokens.
+2. Identify the most frequent pair of tokens and replace it with a new token.
+3. Repeat step 2 iteratively until a predefined condition, such as the desired number of tokens in the vocabulary, is met.
 
-An important measurement for the tokenizer is the compression ratio: the text length in characters / the text length in tokens
+An important metric for evaluating tokenizer is the compression ratio: (the text length in characters) / (the text length in tokens). A higher compression ratio indicates that the LLM can handle a longer context length.
 
-# Regex patterns
-We don't want to map 'dog.', 'dog!', 'dog?' to a single token since the semantic meaning is different. 
-In gpt-2 code, there are additional merging rules to prevent such merges implemented as [regex](https://github.com/openai/gpt-2/blob/master/src/encoder.py#L53). This regex enforces rules to prevent merging of token.
-
-Some of the rules are:
+## Regex Patterns
+To ensure tokens retain their semantic meaning, certain patterns should not be merged, e.g., 'dog.', 'dog!', and 'dog?' should remain separate tokens.
+In the GPT-2 code, additional merging rules are enforced to prevent such merges. These rules are implemented using [regular expressions (regex)](https://github.com/openai/gpt-2/blob/master/src/encoder.py#L53). Some of the rules are:
 1. Not merging sequences with space between.
-2. Numbers cannot be merged with letters.
-3. The character ' split tokens.
+2. Numbers are not merged with letters.
+3. The character ' splits tokens.
 4. White spacing are included in the beginning of the words (" are").
-5. Punctuation are grouped together 
-The implementation splits the input string to a list by the regex. Then apply byte pair encoding such that different elements in the list cannot be merged.
+5. Punctuations are grouped together 
+The implementation first splits the input string into a list based on these regex rules, then applies byte pair encoding so that different elements in the list cannot be merged.
 ![regex patterns](/posts/20240608_lets_build_the_gpt_tokenizer/regex_rules.png)
 
-# Special tokens
-there are 256 raw byte token. GPT does 50,000 merges. Therefore we should have 50256 token in the dictionary.
-In addition, there's an additional 1 special token: '<|endoftext|>'.
-It's used to delimited documents in the training set. This hint the language model it should ignore the previous tokens before the <|endoftext|> token when it produces text.
-There's additional tokens to distinguish between user and chat answers. 
+## Special Tokens
+There are 256 raw byte tokens. GPT performs 50,000 merges, resulting in a total of 50,256 tokens in the vocabulary. 
+Additionally, there is and additional special token: '<|endoftext|>', used to delimit documents in the training set. This token hints the LLM to ignore previous tokens before the special token when predicting the next text.
 
-It's very common to train an LLM with special tokens. When adding a new token we should keep in mind
-1. Add an additional row to the embedding matrix (in which each row stand for a specific token) that is later fed to the LLM.
-2. Extend the final layer of the LLM to be able to predict the new token
-Base model -> chat model.
 
-## More information
-* In deep learning, We want to keep the raw data as much as possible, no text normalization
-* Characters that were not in the training set have a fallback to utf8 byte. Without bytefallback we get the 'unk' token. We better to have bytefallback true. We better feed the model with different tokens not just a major chunk of known.
-* LAMA2 uses the tokenizer that adds space (' ') to every beginning of sentence such that ' hello' and 'hello' are mapped to the same token. 
-* Having space in the end of the sentnce you want to model to complete makes the complition much worse since ' ' is encodedhas the token but in the wild most complition are with ' word'
+When doing finetuning LLMs, many special tokens are introduces to provide more context to the model: browser interactions, chat responses, etc. 
+1. Add an additional row to the embedding matrix (each row represents a specific token) to be fed into the LLM.
+2. Extend the final layer of the LLM to predict the new token.
+
+Usually, fine-tuning involves training only the new parameters associated with the additional tokens while keeping the rest of the model parameters frozen.
 
 
 # Set vocabulary size
+Vocabulary size impacts two aspects of LLM architecture:
+1.  The number of rows of the token embedding table, where each token is associated with a row trained via backpropagation.
+2. The last layer assigns a probability to each token in the vocabulary, requiring more probabilities as the vocabulary size increases.
 
-There's a sweet spot of the number of token in the vocabulary
-Increasing the number of tokens in vocabulary makes a sentence to be encoded to less tokens. However, this makes the embeddings table larger, and the LLM SoftMax function to take a larger vector.
+There's a sweet spot of vocabulary size. While a larger vocabulary reduces the number of tokens needed to encode a sentence and effectively increases the context length, it also increases the size of the embedding table and the complexity of the SoftMax function which has negative impact on the computational requirements. In addition, tokens become rarer during training, leading to under-trained vectors.
 
-
-Vocabulary size affects the token embedding table: number of rows. Each token is associate with a raw that is trained with backpropogation. 
-The last layer of the LLM also depends on the vocabulary size since we want to create a probablity assignment for each token in the vocabulary. When having more tokens, we produce more probablities. 
-
-Having a large vocabulary:
-1. Each token becomes more rare during the training process, vectors becomes under-trained.
-2. Text are squicshed togehter.
-3. More computation.
-
-Positive
-2. We can feed the model larger texts.
-
-
-When doing finetuning, many special tokens are introduces to provide more context to the model: broswer interaction, chat respocne etc.
-Training only the new parameters and freezing the rest.
 
 # Multimodality 
 Recent trasformers can take both images and text and produce either image and text.
@@ -101,7 +81,13 @@ Sora took visual encoder to create token patches. Then use it as tokens.
 ![multimodal](/posts/20240608_lets_build_the_gpt_tokenizer/multimodal.png)
 
 
-## Resource
+# Additional insights of Andrej 
+* In deep learning, We want to keep the raw data as much as possible, no text normalization
+* Characters that were not in the training set have a fallback to utf8 byte. Without bytefallback we get the 'unknown' token. We better to have bytefallback true. We better feed the model with different tokens not just a major chunk of known.
+* LAMA2 uses the tokenizer that adds space (' ') to every beginning of sentence such that ' hello' and 'hello' are mapped to the same token. 
+* Having space in the end of the sentnce you want to model to complete makes the complition much worse since ' ' is encodedhas the token but in the wild most complition are with ' word'
+
+# Resource
 [Youtube video](https://www.youtube.com/watch?v=zduSFxRajkE)
 
 
@@ -109,6 +95,8 @@ Sora took visual encoder to create token patches. Then use it as tokens.
 https://github.com/google/sentencepiece) A common tokenization library. Was used in Llama2. Not very recommended by Andrej, too nuance settings.
 
 tiktoken : GPT4 tokens. Doesn't have training code.
+
+[Unicode format](https://en.wikipedia.org/wiki/Unicode)
 
 
 minmbpe :Andrej libaray to train,encode, and decode.
