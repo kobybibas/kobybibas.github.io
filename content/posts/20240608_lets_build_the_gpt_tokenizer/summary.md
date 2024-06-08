@@ -56,7 +56,6 @@ The implementation first splits the input string into a list based on these rege
 There are 256 raw byte tokens. GPT performs 50,000 merges, resulting in a total of 50,256 tokens in the vocabulary. 
 Additionally, there is and additional special token: '<|endoftext|>', used to delimit documents in the training set. This token hints the LLM to ignore previous tokens before the special token when predicting the next text.
 
-
 When doing finetuning LLMs, many special tokens are introduces to provide more context to the model: browser interactions, chat responses, etc. 
 1. Add an additional row to the embedding matrix (each row represents a specific token) to be fed into the LLM.
 2. Extend the final layer of the LLM to predict the new token.
@@ -64,39 +63,33 @@ When doing finetuning LLMs, many special tokens are introduces to provide more c
 Usually, fine-tuning involves training only the new parameters associated with the additional tokens while keeping the rest of the model parameters frozen.
 
 
-# Set vocabulary size
+# Vocabulary Size Tradeoffs
 Vocabulary size impacts two aspects of LLM architecture:
-1.  The number of rows of the token embedding table, where each token is associated with a row trained via backpropagation.
+1. The number of rows of the token embedding table, where each token is associated with a row trained via backpropagation.
 2. The last layer assigns a probability to each token in the vocabulary, requiring more probabilities as the vocabulary size increases.
 
 There's a sweet spot of vocabulary size. While a larger vocabulary reduces the number of tokens needed to encode a sentence and effectively increases the context length, it also increases the size of the embedding table and the complexity of the SoftMax function which has negative impact on the computational requirements. In addition, tokens become rarer during training, leading to under-trained vectors.
 
 
-# Multimodality 
-Recent trasformers can take both images and text and produce either image and text.
-Man approaches take image, chunk it to integers and use it as tokens alonng with text tokens.
-
-Sora took visual encoder to create token patches. Then use it as tokens.   
-
+# Multi-modality 
+Recent transformers can process both images and text, producing either type of output. Many methods involve feeding images into a pre-trained visual encoder, then applying quantization to convert them into integers, which are used as tokens alongside text tokens.
 ![multimodal](/posts/20240608_lets_build_the_gpt_tokenizer/multimodal.png)
 
 
-# Additional insights of Andrej 
-* In deep learning, We want to keep the raw data as much as possible, no text normalization
-* Characters that were not in the training set have a fallback to utf8 byte. Without bytefallback we get the 'unknown' token. We better to have bytefallback true. We better feed the model with different tokens not just a major chunk of known.
-* LAMA2 uses the tokenizer that adds space (' ') to every beginning of sentence such that ' hello' and 'hello' are mapped to the same token. 
-* Having space in the end of the sentnce you want to model to complete makes the complition much worse since ' ' is encodedhas the token but in the wild most complition are with ' word'
+# Additional Insights from Andrej
+* In deep learning, it is preferable to keep the raw data intact without text normalization. This better represents real-world distribution and enable the model to learn nuance representations.
+* Characters not present in the training set should fall back to UTF-8 bytes. Without this fallback, we might get many 'unknown' token at inference stage. 
+* Llama2 uses a tokenizer that adds a space (' ') at the beginning of every sentence, so ' hello' and 'hello' map to the same token.
+* Ending a sentence with a space negatively impacts the model's completion accuracy since ' ' is encoded as a token. In real-world usage, most completions include ' <word>' rather than just a space.
 
 # Resource
 [Youtube video](https://www.youtube.com/watch?v=zduSFxRajkE)
 
-
 [sentencepiece:](
-https://github.com/google/sentencepiece) A common tokenization library. Was used in Llama2. Not very recommended by Andrej, too nuance settings.
+https://github.com/google/sentencepiece) A common tokenization library. It was used in Llama2 but it's not very recommended by Andrej since it has too nuance settings.
 
-tiktoken : GPT4 tokens. Doesn't have training code.
+[tiktoken](https://github.com/openai/tiktoken): A library for producing GPT4 tokens. It contains the encoder and decoder but doesn't have the tokenizer training code.
 
 [Unicode format](https://en.wikipedia.org/wiki/Unicode)
 
-
-minmbpe :Andrej libaray to train,encode, and decode.
+[minmbpe:](https://github.com/karpathy/minbpe) Andrej's Tokernizer library to train, encode, and decode text.
