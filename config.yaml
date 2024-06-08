@@ -17,7 +17,7 @@ params:
     title: Welcome 👋
     image:
       # url: green-man-drawing-vector-cartoon-icon_53876-118118.jpg
-      url: avatar
+      url: avatar.png
       title: Me
     content: |
       - I'm Koby, a PhD student with a focus on machine learning. My academic pursuits center around computer vision and information theory algorithms.

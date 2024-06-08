@@ -4,7 +4,8 @@ date: 2024-03-02
 tags: 
     - Image editing
     - Diffusion models
-    - Control net
+    - Control Net
+    - Summary
 draft: false 
 ---
 

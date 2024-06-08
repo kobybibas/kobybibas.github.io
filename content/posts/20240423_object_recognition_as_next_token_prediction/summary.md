@@ -6,6 +6,7 @@ tags:
     - Object Recognition
     - Prompt engineering  
     - Open set
+    - Summary
 draft: false 
 ---
 

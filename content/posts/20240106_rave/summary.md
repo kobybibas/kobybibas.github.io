@@ -5,6 +5,7 @@ tags:
     - Video editing
     - Diffusion models
     - Control net
+    - Summary
 draft: false 
 ---
 

@@ -2,8 +2,9 @@
 title: "[Lecture notes] Let's build the GPT Tokenizer" 
 date: 2024-06-08
 tags: 
-- LLM
+- Large Language Models
 - Tokenization
+- Lecture notes
 draft: false 
 ---
 
