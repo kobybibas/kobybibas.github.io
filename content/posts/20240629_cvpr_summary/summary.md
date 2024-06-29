@@ -77,25 +77,20 @@ Foundation models are designed to handle various downstream tasks such that they
 
 An important aspect of such models is they can bridge different data types and modalities, such as text (customer queries) and product information (price, title, rating, videos). 
 
-Tasks:
-* Image-text retrieval
-* Visual reasoning
-* Multimodal representation learning and alignment (e.g., CLIP)
+Multimodal are trained on the following tasks: Image-text retrieval, Visual reasoning, and Multimodal representation learning and alignment (e.g., CLIP).
 
 Challenges and Solutions:
 * Multimodal Alignment: Finding common code spaces to integrate different modalities.
 * Vision Language Pretraining: Addressing intra-modality coherence by introducing more tasks.
 * Video Language Alignment: Developing complex architectures for video-caption alignment due to the lack of datasets.
 
-**Ecommerce use cases**
-
-#1 Online Shopping Use Cases:
+**#1 Online Shopping Use Cases**
 1. Image-based product search: This enabled multimodal search for specific needs (e.g., "shirt for wedding" or "shirt for office").
 2. User-generated content (UGC) recommendation
 3. Related product recommendations
 4. Conversational search (shopping assistant)
 
-#2 Video Ads and Product Placement:
+**#2 Video Ads and Product Placement**
 1. Video ads can disrupt customer experience.
 2. Product placement during movies as a less intrusive alternative.
 3. Dynamic product changes in scenes for relevant advertising.
@@ -104,7 +99,6 @@ There’s a risk for product placement of brand safety. Need to ensure the place
 ![](/posts/20240629_cvpr_summary/unnamed+5.png)![](/posts/20240629_cvpr_summary/unnamed+6.png)
 
 ### How I stopped afraid of foundation models: [Yossi Keller](https://yosikeller.github.io/) 
-
 Training foundation models can be very expensive. However, foundation models are not just about having huge models but having a model that serves multiple tasks. Such models can leverage efficient architectures and be quite cheap.
 
 Insights:
@@ -120,14 +114,12 @@ An example of a good foundation model: Segment Anything.
 ![](/posts/20240629_cvpr_summary/unnamed+7.png)![](/posts/20240629_cvpr_summary/unnamed+8.png)![](/posts/20240629_cvpr_summary/unnamed+9.png)
 
 ### [A Massive Multi-discipline Multimodal Understanding and Reasoning Benchmark for Expert AGI](https://arxiv.org/abs/2311.16502)
-
 Current multimodal benchmarks are too simplistic to evaluate artificial general intelligence (AGI) effectively, particularly AGI that is comparable to a human expert, which requires both breadth and depth of knowledge.
 
 **New Benchmark Proposal**
 * The speaker introduced a new benchmark designed to evaluate multimodal models on college-level tasks requiring advanced reasoning and domain-specific knowledge.
 * Dataset includes 11.5K multimodal questions from six core disciplines (e.g., Art & Design, Business, Science).
 * This benchmark aims to challenge models similarly to human experts and is already widely used in the industry.
-
 
 **Performance and Improvement**
 * Evaluation of open-source models and advanced models like GPT-4V and Gemini showed they still lag behind human experts.
@@ -137,8 +129,7 @@ Current multimodal benchmarks are too simplistic to evaluate artificial general 
 ![](/posts/20240629_cvpr_summary/unnamed+10.png)![](/posts/20240629_cvpr_summary/unnamed+11.png)
 
 ### [Eyes Wide Shut? Exploring the Visual Shortcomings of Multimodal LLMs](https://arxiv.org/html/2401.06209v2)
-
-Multimodal models make unexpected mistakes in tasks such as counting objects (how many wheels are in the image) and determining object composition ((whether the object is in the left or in the right)
+Multimodal models make unexpected mistakes in tasks such as counting objects (how many wheels are in the image) and determining object composition (whether the object is in the left or in the right)
 
 A main source of the issue is the CLIP model that is widely used to encode images in Multimodal models.
 
@@ -157,7 +148,6 @@ To reduce the issue, use CLIP and DINO embeddings to encode images.
 ![](/posts/20240629_cvpr_summary/unnamed+12.png)![](/posts/20240629_cvpr_summary/unnamed+13.png)![](/posts/20240629_cvpr_summary/unnamed+14.png)
 
 ### [LISA: Reasoning Segmentation via Large Language Model](https://arxiv.org/abs/2308.00692)
-
 A new task called reasoning segmentation, which aims to 
 * Expand semantic segmentation vocabulary to handle expressions like "the lady with the blue shirt."
 * Extend referring expressions to include arbitrary, reasoning-based queries, such as "who is the president of the United States in the image."
@@ -167,8 +157,8 @@ Method:
 2. Create a dataset of Q&A along with segmentation masks.
 
 ![](/posts/20240629_cvpr_summary/unnamed+15.png)![](/posts/20240629_cvpr_summary/unnamed+16.png)![](/posts/20240629_cvpr_summary/unnamed+17.png)
-### [Visual Program Distillation: Distilling Tools and Programmatic Reasoning into Vision-Language Models](https://arxiv.org/abs/2312.03052)
 
+### [Visual Program Distillation: Distilling Tools and Programmatic Reasoning into Vision-Language Models](https://arxiv.org/abs/2312.03052)
 Multimodal models struggle with tasks like counting and understanding spatial relations.
 
 Existing approaches involve using LLMs to generate programs that utilize specialized vision models, but are not scalable and incurs high latency due to multiple model loading. 
@@ -201,7 +191,6 @@ Data Collection Approach:
 ![](/posts/20240629_cvpr_summary/unnamed+20.png)
 
 # Poster summary
-
 [Making Large Multimodal Models Understand Arbitrary Visual Prompts](https://vip-llava.github.io/): Allowing multimodal models understand arbitrary visual prompts via directly overlying the visual prompts onto the original image. 
 ![](/posts/20240629_cvpr_summary/unnamed+21.png)
 
@@ -209,7 +198,6 @@ Data Collection Approach:
 ![](/posts/20240629_cvpr_summary/unnamed+22.png)
 
 [Multi-Modal Hallucination Control by Visual Information Grounding](https://arxiv.org/html/2403.14003v1). From their abstract: To reduce hallucinations, we introduce Multi-Modal Mutual-Information Decoding, a new sampling method for prompt amplification. M3ID amplifies the influence of the reference image over the language prior, hence favoring the generation of tokens with higher mutual information with the visual prompt. 
-
 
 [TextCraftor: Your Text Encoder Can be Image Quality Controller](https://snap-research.github.io/textcraftor/): Synthesising an image that aligns well with the input text still requires multiple runs with carefully crafted prompts to achieve satisfactory results. This work aims to improve the text encoder: They found that, instead of replacing the CLIP text encoder used in Stable Diffusion with other large language models, they can improve it via fine-tuning.
 ![](/posts/20240629_cvpr_summary/unnamed+23.png)
