@@ -8,11 +8,11 @@ tags:
 draft: false 
 ---
 
-I attended the [CVPR conference](https://cvpr.thecvf.com/virtual/2024), a cutting-edge gathering of computer vision researchers and professionals showcasing the latest advancements in the field. Some recent trends I noticed:
+Last week I attended the [CVPR conference](https://cvpr.thecvf.com/virtual/2024), a gathering of computer vision researchers and professionals showcasing the latest advancements in the field. Some interesting recent trends:
 1. Multimodal models and datasets
     * Large Language Models (LLMs) are being used to train vision models
-    * Images are used to ground LLMs, decreasing their hallucination
-   * Models are being fed with both images and videos to achieve better results
+    * Images are used to ground LLMs, reducing their hallucination
+    * Models are being fed with both images and videos to achieve better results
 2. Foundation models are commodity  
     * These models are becoming more accessible and less expensive to create
     * They are trained on multiple modalities and tasks (even for a very niche tasks like hand pose estimation)
