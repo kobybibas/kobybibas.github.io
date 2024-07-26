@@ -8,7 +8,7 @@ draft: false
 ---
 
 ## TL;DR
-Existing diffusion models for sequence generation have two main limitations. They either generate sequences one token at a time, without the ability to steer the sampling process towards desired outcomes, or diffuse the entire sequence iteratively, but are constrained to a fixed sequence length. The Diffusion Forcing method combines the benefits of both approaches by diffusing the entire sequence iteratively with independent per-token noise levels that are conditioned on the previous token in the sequence. 
+Existing diffusion models for sequence generation have two main limitations: They either generate sequences one token at a time, without the ability to steer the sampling process towards desired outcomes, or diffuse the entire sequence iteratively but are constrained to a fixed sequence length. Diffusion Forcing combines the benefits of both approaches by diffusing the entire sequence iteratively with independent per-token noise levels that are conditioned on the previous token in the sequence. 
 
 ## Method
 Next token prediction and entire sequence diffusion can have a unified view.
@@ -26,12 +26,14 @@ The diffusion process then is preformed along the two axes: time and noise level
 
 ![method_overview](/posts/20240721_diffusion_forcing_next_token_prediction_meets_full_sequence_diffusion/method_overview.png)
 
-![training_and_sampling_algorithm](training_and_sampling_algorithm.png)
+![training_and_sampling_algorithm](/posts/20240721_diffusion_forcing_next_token_prediction_meets_full_sequence_diffusion/training_and_sampling_algorithm.png)
 
 
 
 ## Limitations
-USing a simple RNN. Interestily to see if the method is scalalbe to Transformers
+1. The current implementation relies on a simple Recurrent Neural Network (RNN), which may not be sufficient for more complex tasks. It would be interesting to explore whether the method can be scaled up to more powerful architectures, such as Transformers and how the RNN model can take into account hidden state of previous tokens. 
+2. Compared to next token prediction methods, Diffusion Forcing introduces an additional hyperparameter: the number of diffusion steps to perform along the noise axis.
+3. Using the proposed method in text generation tasks, it is unclear how to determine the optimal sequence length. Unlike next token prediction methods, which can predict a special "EndOfSequence" token to indicate completion, Diffusion Forcing may not provide a clear signal for when a sentence is complete. This can lead to incomplete sentences or require additional sequence generation to complete the thought.
 
 ## Resource
 [Arxiv](https://arxiv.org/pdf/2407.01392)
