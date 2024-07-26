@@ -3,6 +3,7 @@ This is the code repository for my blog where I discuss technical topics. The we
 Launch a local site:
 ```
 hugo server
+hugo server -D
 ```
 
 Deploy site to github.io: https://gohugo.io/hosting-and-deployment/hosting-on-github/
