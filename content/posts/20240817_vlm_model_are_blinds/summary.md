@@ -11,17 +11,15 @@ draft: false
 ## TL;DR
 The recent trend is to equip Large Language models with vision capabilities and creating Visual Language models (VLM).  However, it's unclear how well VLMs perform on simple vision tasks. This paper introduces "BlindTest", a benchmark of 7 simple tasks, such as identifying overlapping circles, intersecting lines, and circled letters. The results show that VLMs achieve only 58.57% accuracy on average, far from the expected human accuracy of 100%.
 
-# Task example
+## Task example
 The paper aims to investigate how VLMs perceive simple images composed of basic geometric shapes. This study serves as a proxy to answer the broader question: "Do VLMs perceive images like humans do?"
 To this end, the evaluation tasks feature images with simple geometric shapes.
 
 ![Task example](/posts/20240817_vlm_model_are_blinds/example_of_vlm_task.png) 
 
-![All tasks](/posts/20240817_vlm_model_are_blinds/task_evaluated.png) 
-
 ![All tasks](/posts/20240817_vlm_model_are_blinds/vlm_benchmark_performance.png) 
 
-# How this benchmark differs from existing onces
+## How this benchmark differs from existing onces
 VLMs are powerful such that describing unusual activities in an image (e.g. a man ironing on a moving taxi) has become a standard sanity check.
 
 Existing VLM benchmarks cover a wide range of topics but only measure the overall performance gap between humans and LLMs, without identifying specific limitations for future research. Additionally, many benchmarks allow answers to be inferred from the question and choices alone or are memorized by VLMs from their large-scale training.
