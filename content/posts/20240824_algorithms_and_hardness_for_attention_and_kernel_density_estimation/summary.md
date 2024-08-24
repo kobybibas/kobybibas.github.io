@@ -26,7 +26,7 @@ KDE almost linear solution can be achieved based on the input dimension regime.
 
 ### KDE in practice
 The most widespread kernel is the Gaussian Kernel:
-![Gaussian Kernel](/posts/posts/20240824_algorithms_and_hardness_for_attention_and_kernel_density_estimation/gaussian_kernler_function.png)
+$$f(x,y) = e^{||x-y||_2^2} $$
 
 KDE applications define different parameters regimes. 
 1. Estimate the probability density function of a random variable: \(m << n\).
@@ -57,10 +57,14 @@ There can be n different boxes so we may up with n^2 computations. We leverage t
 * If boxes are well-separated, we can use constant degree polynomial.
 * If boxes are too close, we keep partition the space to smaller boxes until one of the previous points are met. 
 
+![Partition space to boxes](/posts/content/posts/20240824_algorithms_and_hardness_for_attention_and_kernel_density_estimation/partition_spaces_to_boxes.png)
+
 ## Lower bound of KDE computation cost
 The above algorithm are optimal, there's a tight lower bound that shows we can not do better.
 The main idea of the proof is the problem of KDE is equivalent to solve th HAmming closest pair problem in subquadratic time, which was already proven to require quadratic time. 
 
+Full results are summarized in this slide
+![KDE summary](/posts/content/posts/20240824_algorithms_and_hardness_for_attention_and_kernel_density_estimation/kde_results_summary.png)
 
 ## Resource
 [Youtube](https://www.youtube.com/watch?v=6Dsf1E6ZGP8)
