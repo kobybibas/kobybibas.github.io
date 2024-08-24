@@ -20,13 +20,13 @@ Kernel Density Estimation (KDE) is a statistical technique with applications acr
 **The goal**. Approximately compute (compute up an error) the multiplication \(Kw\)
 ![KDE Goal](/posts/20240824_algorithms_and_hardness_for_attention_and_kernel_density_estimation/kde_goal.png)
 
-<br>
+&nbsp;
 
 A Naive algorithm is with a complexity of \(O(mn^2)\) with the following implementation:
 1. Constructing the matrix \(K\): Figuring out the \(m \times n\) entries of \(K\). Each \(f(x_i,j_i)\) is with \(m\) multiplications and there are \(n^2\) combinations the need to be evaluated. 
 2. Multiple \(K\) by the vector \(w\). This adds additional \(n^2\) computations.
 
-<br>
+&nbsp;
 
 The KDE solution that is almost linear can be achieved based on the input dimension regime:
 1. Moderate dimension algorithm: The Polynomial method.
@@ -50,7 +50,6 @@ KDE applications define different parameters regimes.
 ![e-x approximation](/posts/20240824_algorithms_and_hardness_for_attention_and_kernel_density_estimation/e_-x_polynimials_approximation.png)
 Using Chebyshev, less expansion terms (less \(j\)) are needed to reach a certain error bound compared to Taylor series.
 
-
 ## Low dimensional algorithm: The Fast Multiple method
 We can apply the same method of the Moderate dimension such that when \(m=O(1)\) we can get \(\epsilon = 1/poly(n)\).
 However, applying the Fast Multiple Method results is a better computational cost.
@@ -58,6 +57,8 @@ However, applying the Fast Multiple Method results is a better computational cos
 Steps:
 1. Partition the space into boxes.
 2. Sum the contribution to \(Kw\) over pairs of nonempty boxes.
+
+&nbsp;
 
 There can be \(n\) different boxes so we may up with \(n^2\) computations. We leverage the following insights. 
 * If boxes are far apart, their contribution to the summation is negligible and can be ignored.
