@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.LanguageCode }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ block "title" . }}{{ .Site.Title }}{{ end }}</title>
+
+    <!-- Link to your site's CSS -->
+    <link rel="stylesheet" href="{{ "css/style.css" | relURL }}">
+
+    <!-- Include KaTeX CSS and JS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js" 
+            onload="renderMathInElement(document.body);"></script>
+
+    <!-- Any other head elements like SEO tags, etc. -->
+    {{ partial "meta.html" . }}
+
+</head>
+<body>
+    <!-- Your site's header content -->
+    <header>
+        <nav>
+            <!-- Navigation links -->
+            <a href="{{ "/" | relLangURL }}">Home</a>
+            <a href="{{ "/about/" | relLangURL }}">About</a>
+            <a href="{{ "/posts/" | relLangURL }}">Posts</a>
+        </nav>
+    </header>
