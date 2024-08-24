@@ -21,13 +21,11 @@ Kernel Density Estimation (KDE) is a statistical technique with applications acr
 ![KDE Goal](/posts/20240824_algorithms_and_hardness_for_attention_and_kernel_density_estimation/kde_goal.png)
 
 &nbsp;
-
 A Naive algorithm is with a complexity of \(O(mn^2)\) with the following implementation:
 1. Constructing the matrix \(K\): Figuring out the \(m \times n\) entries of \(K\). Each \(f(x_i,j_i)\) is with \(m\) multiplications and there are \(n^2\) combinations the need to be evaluated. 
 2. Multiple \(K\) by the vector \(w\). This adds additional \(n^2\) computations.
 
 &nbsp;
-
 The KDE solution that is almost linear can be achieved based on the input dimension regime:
 1. Moderate dimension algorithm: The Polynomial method.
 2. Low dimensional algorithm: The Fast Multiple method.
@@ -59,7 +57,6 @@ Steps:
 2. Sum the contribution to \(Kw\) over pairs of nonempty boxes.
 
 &nbsp;
-
 There can be \(n\) different boxes so we may up with \(n^2\) computations. We leverage the following insights. 
 * If boxes are far apart, their contribution to the summation is negligible and can be ignored.
 * If boxes are well-separated, we can use constant degree polynomial.
