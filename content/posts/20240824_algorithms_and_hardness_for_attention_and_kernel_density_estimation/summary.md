@@ -11,12 +11,13 @@ draft: false
 Kernel Density Estimation (KDE) is a statistical technique with applications across various fields, such as estimating the distribution of a random variable and computing the attention layer in Transformers. While the standard algorithm for KDE has a quadratic time complexity, this presentation introduces two advanced techniques (the polynomial method and the Fast Multipole Method) that reduce the computation time to nearly linear in certain cases.
 
 ## KDE problem formulation
-Given the following inputs: 
-* 2n points: \(x_1,x_2,...,x_n\) and \(y_1,y_2,...,y_n\). Each point is m dimensional 
-* A weight vector \(w\) which is n dimensional.
-* error parameter \(\epsilon\).
-* The kernel function \(f(x,y)\).
-The goal is to approximately compute (compute up an error) the multiplication \(Kw\)
+**Inputs.**
+* \(2n\) points: \(x_1,x_2,...,x_n\) and \(y_1,y_2,...,y_n\). Each point is \(m\) dimensional.
+* A weight vector \(w\) which is \(n\) dimensional.
+* An error parameter \(\epsilon\).
+* The kernel function \(f(x,y)\). \(K[i,j]=f(x_i,y_j)\)
+
+**The goal**. Approximately compute (compute up an error) the multiplication \(Kw\)
 ![KDE Goal](/posts/20240824_algorithms_and_hardness_for_attention_and_kernel_density_estimation/kde_goal.png)
 
 A Naive algorithm is with a complexity of \(O(mn^2)\) with the following implementation.
@@ -24,8 +25,8 @@ A Naive algorithm is with a complexity of \(O(mn^2)\) with the following impleme
 2. Multiple \(K\) by the vector \(w\). This adds additional \(n^2\) computations.
 
 The KDE solution that is almost linear can be achieved based on the input dimension regime:
-1. Moderate dimension algorithm: The Polynomial method
-2. Low dimensional algorithm: The Fast Multiple method
+1. Moderate dimension algorithm: The Polynomial method.
+2. Low dimensional algorithm: The Fast Multiple method.
 
 ### KDE in practice
 The most widespread kernel is the Gaussian Kernel:
@@ -44,7 +45,7 @@ This can be achieved by a polynomial approximation of e^{-x}
 
 ### Chebyshev polynomials are a good approximators of e^{-x}
 ![e-x approximation](/posts/20240824_algorithms_and_hardness_for_attention_and_kernel_density_estimation/e_-x_polynimials_approximation.png)
-Using Chebyshev, less expansion terms (less j) are needed to reach a certain error bound compared to Taylor series.
+Using Chebyshev, less expansion terms (less \(j\)) are needed to reach a certain error bound compared to Taylor series.
 
 
 ## Low dimensional algorithm: The Fast Multiple method
