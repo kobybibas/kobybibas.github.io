@@ -39,13 +39,12 @@ $$f(x,y) = e^{||x-y||_2^2} $$
 KDE applications define different parameters regimes. 
 1. Estimate the probability density function of a random variable: \(m << n\).
 2. n-body problem in physics: \(m << n\).
-3. Attention computation in Large Language Models: The attention matrix is rescaling of Gaussian Kernel Matrix where \(n\) is the length of the context sequence and \(m\) is the vector size associate with a token. In the common case this \(m = O(\log n)\).
+3. Attention computation in Large Language Models: The attention matrix is a rescaling of the Gaussian Kernel matrix where \(n\) is the length of the context sequence and \(m\) is the vector size associate with a token. In the common case \(m = O(\log n)\).
 
 
 ## Moderate dimension algorithm: The Polynomial method
-1. Find a low rank approximation for \(K\): \(LR^T = ~K\)
-2. Then we can compute \(Kw\) quickly: \(L(R^T w)\)
-This can be achieved by a polynomial approximation of e^{-x}
+1. Find a low rank approximation for \(K\): \(LR^T=~K\)
+2. Compute \(Kw\) quickly with \(L(R^T w)\). This can be achieved by a polynomial approximation of \(e^{-x}\)
 
 ### Chebyshev polynomials are a good approximators of e^{-x}
 ![e-x approximation](/posts/20240824_algorithms_and_hardness_for_attention_and_kernel_density_estimation/e_-x_polynimials_approximation.png)
@@ -60,7 +59,7 @@ Steps:
 1. Partition the space into boxes.
 2. Sum the contribution to \(Kw\) over pairs of nonempty boxes.
 
-There can be n different boxes so we may up with n^2 computations. We leverage the following insights. 
+There can be \(n\) different boxes so we may up with \(n^2\) computations. We leverage the following insights. 
 * If boxes are far apart, their contribution to the summation is negligible and can be ignored.
 * If boxes are well-separated, we can use constant degree polynomial.
 * If boxes are too close, we keep partition the space to smaller boxes until one of the previous points are met. 
@@ -68,11 +67,11 @@ There can be n different boxes so we may up with n^2 computations. We leverage t
 ![Partition space to boxes](/posts/20240824_algorithms_and_hardness_for_attention_and_kernel_density_estimation/partition_spaces_to_boxes.png)
 
 ## Lower bound of KDE computation cost
-The above algorithm are optimal, there's a tight lower bound that shows we can not do better.
-The main idea of the proof is the problem of KDE is equivalent to solve th HAmming closest pair problem in subquadratic time, which was already proven to require quadratic time. 
-
-Full results are summarized in this slide
-![KDE summary](/posts/20240824_algorithms_and_hardness_for_attention_and_kernel_density_estimation/kde_results_summary.png)
+The above algorithms are optimal: there's a tight lower bound that shows we can not do better.
+The main idea of the lower bound proof is showing the problem of KDE is equivalent to solve the Hamming closest pair problem, which was already proven to require quadratic time.
 
 ## Resource
 [Youtube](https://www.youtube.com/watch?v=6Dsf1E6ZGP8)
+
+Full results are summarized in this slide
+![KDE summary](/posts/20240824_algorithms_and_hardness_for_attention_and_kernel_density_estimation/kde_results_summary.png)
