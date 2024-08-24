@@ -8,33 +8,31 @@ draft: false
 ---
 
 ## TL;DR
-Kernel Density Estimation is a statistical task with many applications in many different fields: from estimating the distribution function of a random variable t o computing the attention layer of Transformers
-It has a straightforward quadratic-time algorithms. In this presentation two algorithmic techniques are used (the polynomial method, and the Fast Multipole Method) leading to almost linear-time algorithms in different parameter regimes.
+Kernel Density Estimation (KDE) is a statistical technique with applications across various fields, such as estimating the distribution of a random variable and computing the attention layer in Transformers. While the standard algorithm for KDE has a quadratic time complexity, this presentation introduces two advanced techniques (the polynomial method and the Fast Multipole Method) that reduce the computation time to nearly linear in certain cases.
 
-## Kernel Density Estimation
-Given 
-* 2n points: \(x1,x2,...,xn\) and \(y1,y2,...,yn\).
-* weight vector w
-* error parameter \epsilon
-The goal is to find the kernel matrix K such that:
+## Kernel Density Estimation problem formulation
+Given the following inputs: 
+* 2n points: \(x_1,x_2,...,x_n\) and \(y_1,y_2,...,y_n\). Each point is m dimensional 
+* A weight vector \(w\) which is n dimensional.
+* error parameter \(\epsilon\)
+* The kernel function \(f(x,y)\)
+The goal is to approximately compute (compute up an error) the multiplication \(Kw\)
 ![KDE Goal](/posts/content/posts/20240824_algorithms_and_hardness_for_attention_and_kernel_density_estimation/kde_goal.png)
 
-A Naive algorithm is with a complexity of  \(O(mn^2)\): Construct the matrix K, figurING out the \(m \times n\) entries of K are and multiple by the vector w??
+A Naive algorithm is with a complexity of \(O(mn^2)\) with the following implementation
+1. Constructing the matrix K: Figuring out the \(m \times n\) entries of K. Each \(f(x_i,j_i)\) is with \(m\) multiplications and there are \(n^2\) combinations the need to be evaluated. 
+2. Multiple \(K\) by the vector \(w\). This adds an additional of \(n^2\) computations
+KDE almost linear solution can be achieved based on the input dimension regime.
 
-Input is m*n, output is O(n).
-Can we don't explicitly compute K?
-
-The Gaussian Kernel is the most widespread 
+### KDE In practice
+The most widespread kernel is the Gaussian Kernel:
 ![Gaussian Kernel](/posts/content/posts/20240824_algorithms_and_hardness_for_attention_and_kernel_density_estimation/gaussian_kernler_function.png)
 
 KDE applications define different parameters regimes. 
-1. Estimate the probability density function of a random variable
-2. n-body problem in physics
-3. Attention computation in Large Language Models: The attention matrix is rescaling of Gaussian Kernel Matrix. n is the length of the context sequence. m is the vector size associate with a token. m = O(log n)
+1. Estimate the probability density function of a random variable: \(m<<n\)
+2. n-body problem in physics: \(m<<n\)
+3. Attention computation in Large Language Models: The attention matrix is rescaling of Gaussian Kernel Matrix where \(n\) is the length of the context sequence and \(m\) is the vector size associate with a token. In the common case this \(m = O(\log n)\).
 
-## KDE results
-What error can be achieved quickly based on the input dimension regime.  
-TBD image
 
 ## Moderate dimension algorithm: polynomial method
 1. Find a low rank approximation for K (LR^T = ~K)
@@ -62,7 +60,7 @@ There can be n different boxes so we may up with n^2 computations.
 * If boxes are well-separated, we can use constant degree polynomial.
 * If boxes are too close, keep partition the space to smaller boxes until one of the previous points are met. 
 
-## Lower bound
+## Lower bound of KDE computation cost
 The above algorithm are optimal, there's a tight lower bound that shows we can not do better.
 The main idea of the proof is the problem of KDE is equivalent to solve th HAmming closest pair problem in subquadratic time, which was already proven to require quadratic time. 
 
