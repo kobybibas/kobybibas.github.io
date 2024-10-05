@@ -25,10 +25,10 @@ The **local branch** focuses on a zoomed-in ROI related to a specific attribute 
 
 ![Model architecture](/posts/20241004_fine_grained_fashion_similarity_prediction/model_architecture.png)
 
-**Training Procedure.**
+### Training Procedure
 The goal is to create multiple embedding spaces, each focused on a specific attribute. In these spaces, products with the same attribute value (e.g., Round Neck) are close together than products with different values (e.g., V Neck) are far apart. This is achieved using a triplet ranking loss, applied to both the global and local branches.
 
-Training happens in two stages. First, the global branch is trained until it produces reliable ROIs. Then, both the global and local branches are trained together, with an additional alignment loss that ensures the original images and their corresponding localized regions are consistently embedded (features are similar).
+Training consist of two stages. First, the global branch is trained until it produces reliable ROIs. Then, both the global and local branches are trained together, with an additional alignment loss that ensures the original images and their corresponding localized regions are consistently embedded (features are similar).
 
 ![Localized Attributes](/posts/20241004_fine_grained_fashion_similarity_prediction/localized_attributes.png)
 
