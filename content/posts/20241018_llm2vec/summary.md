@@ -29,7 +29,7 @@ LLM2Vec's method has three key steps:
 
 The training procedure begins with the first two steps, followed by contrastive learning. For efficiency, the authors used Low-Rank Adaptation ([LoRA](https://arxiv.org/abs/2106.09685)) in their experiments.
 
-![Building blocks](20241018_llm2vec/llm2vec_three_building_blocks.png)
+![Building blocks](/posts/20241018_llm2vec/llm2vec_three_building_blocks.png)
 
 
 Mistral-7B with bidirectional
