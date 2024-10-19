@@ -8,8 +8,8 @@ summary: publications
 [Full list in Google scholar](https://scholar.google.com/citations?user=MYsSRvYAAAAJ&hl=iw)
 
 
-Koby Bibas, ``Large Scale Product Recognition for Improving Ad Preformance'', a talk in [Retail Vision CVPR 2024 Workshop](https://retailvisionworkshop.github.io/)
-
+Koby Bibas, ``Large Scale Product Recognition for Improving Ad Performance'', a talk in [Retail Vision CVPR 2024 Workshop](https://retailvisionworkshop.github.io/) and [Data Executive Event](https://lu.ma/bb0jxa36)
+ 
 Koby Bibas, Shachar Shayovitz, and Meir Feder, [``Deep Individual Active Learning: Safeguarding Against Out-of-Distribution Challenges in Neural Networks''](https://pubmed.ncbi.nlm.nih.gov/38392384/). Entropy, 2024. 
 
 Koby Bibas, Oren Sar Shalom, and Dietmar Jannach, [``Semi-supervised Adversarial Learning for Complementary Item Recommendation''](https://arxiv.org/abs/2303.05812). The ACM Web Conference, 2023.
