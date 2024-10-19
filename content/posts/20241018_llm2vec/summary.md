@@ -33,11 +33,6 @@ The training procedure begins with the first two steps, followed by contrastive 
 
 ![Building blocks](/posts/20241018_llm2vec/llm2vec_three_building_blocks.png)
 
-
-Mistral-7B with bidirectional
-attention, we speculate that Mistral models are pre-trained with some form bidirectional
-attention, e.g., prefix language modeling ?
-
 ## Limitations
 The approach requires retraining, which can be computationally expensive for large, modern models. Although LoRA improves training efficiency, resource demands might still be too big.
 
