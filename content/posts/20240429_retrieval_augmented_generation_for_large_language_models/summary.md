@@ -2,7 +2,8 @@
 title: "[Summary] Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks" 
 date: 2024-04-29
 tags: 
-    - Large Language Model
+    - LLM
+    - Large Language Models
     - Retrieval Augmented Generation
     - Vector index
     - BART

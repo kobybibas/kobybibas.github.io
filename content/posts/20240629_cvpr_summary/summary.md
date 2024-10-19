@@ -3,6 +3,7 @@ title: "CVPR 2024 Summary"
 date: 2024-06-29
 tags: 
 - Large Language Models
+- LLM
 - Conference
 - Visual-Language-Models
 draft: false 

@@ -2,8 +2,7 @@
 title: "[Summary] Vision Language Model are Blinds" 
 date: 2024-08-17
 tags: 
-- Vision Language models
-- VLM
+- Visual-Language-Models
 - Benchmark
 draft: false 
 ---

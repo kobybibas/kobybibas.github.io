@@ -3,7 +3,10 @@ title: "[Summary] LLM2Vec: Large Language Models Are Secretly Powerful Text Enco
 date: 2024-10-18
 tags: 
 - LLM
+- Large Language Models
 - Encoder
+- BART
+- Self-supervision
 draft: false 
 ---
 
