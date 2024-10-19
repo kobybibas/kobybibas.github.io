@@ -15,6 +15,8 @@ State-of-the-art language models are primarily decoder-only, focusing on token p
 
 ## Background
 Until recently, large language models (LLMs) were predominantly based on bidirectional encoders or encoder-decoder frameworks like BERT and T5. However, the field has shifted towards decoder-only models, which use causal attention mechanisms. 
+
+
 Decoder-only models are more sample-efficient because, during training, the same input sequence is reused multiple times: The model is trained to predict the next token based on progressively longer portions of the sequence, allowing it to learn from the entire sequence step by step.
 However, the downside is they struggle to create rich contextual embeddings since causal attention limits them from capturing information across the entire input sequence.
 
