@@ -9,15 +9,22 @@ draft: true
 
 ## TL;DR
 
-## Background
+## Model Architecture overview
 
-## Method
+
+### Type A:
 
 ![Type A](/posts/20241101_the_evolution_of_multimodal_model_architectures/type_a.png)
 
+### Type B:
+
 ![Type B](/posts/20241101_the_evolution_of_multimodal_model_architectures/type_b.png)
 
+### Type C:
+
 ![Type C](/posts/20241101_the_evolution_of_multimodal_model_architectures/type_c.png)
+
+### Type D:
 
 ![Type D](/posts/20241101_the_evolution_of_multimodal_model_architectures/type_d.png)
 
