@@ -20,7 +20,7 @@ This phenomenon is usually measured using attention map similarity: as attention
 However, using the attention map similarity overlooks cases of **dimensional collapse**:  it fails to capture cases where representations span a low-dimensional space without fully collapsing.
 
 The figure below shows the singular values distribution. It illustrates how the proposed method helps to distribute singular values more uniformly across dimensions.
-![Singular values](/posts/20250201_contranorm/dimensional_collapse.png)
+![Singular values](/posts/20250201_contranorm/singular_values.png)
 
 
 ## Method
