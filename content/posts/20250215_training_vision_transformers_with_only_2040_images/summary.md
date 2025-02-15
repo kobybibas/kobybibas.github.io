@@ -3,6 +3,8 @@ title: "[Summary] Training Vision Transformers with Only 2040 Images"
 date: 2025-02-15
 tags: 
 - Vision Transformer
+- Self-supervision
+- Computer vision
 draft: false 
 ---
 
@@ -25,6 +27,7 @@ Training a Vision Transformer on small datasets involves two steps
 Parametric instance discrimination is approximately equivalent to contrastive loss, they both have the following terms:
 * Alignment term encouraging more aligned positive features.
 * Uniformity term encouraging the features to be roughly uniformly distributed on the unit hypersphere.
+  
 Its advantage is in simplicity and better training stability oven the contrastive loss training. 
 
 ![ablation_study](/posts/20250215_training_vision_transformers_with_only_2040_images/ablation_study.png)
