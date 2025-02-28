@@ -36,7 +36,7 @@ params:
       url: avatar.png
       title: Me
     content: |
-      - I'm Koby, a PhD student with a focus on machine learning. My academic pursuits center around computer vision and information theory algorithms.
+      - I'm Koby, a machine learning engineer. My PHD centered around computer vision and information theory algorithms.
       - In my free time, I enjoy my guilty pleasures: coffee and carbs.
       - This website serves as a repository for my learning notes, paper summaries, and proof of concepts.
     social:
