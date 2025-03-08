@@ -1,6 +1,6 @@
 ---
 title: "[Summary] Relightable Gaussian Codec Avatars"
-date: 2025-02-15
+date: 2025-02-28
 tags: 
 - Codec Avatar
 - Gaussian Splatting 
