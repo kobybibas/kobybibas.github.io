@@ -68,5 +68,7 @@ Given multi-view video data of a person illuminated with known point light patte
 
 ## Resources
 [arxiv](https://arxiv.org/abs/2312.03704), CVPR 2024 (Oral)
+
 [Project page](https://shunsukesaito.github.io/rgca/)
+
 [3D Gaussian Splatting! - Computerphile](https://www.youtube.com/watch?v=VkIJbpdTujE)
