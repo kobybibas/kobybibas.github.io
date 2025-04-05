@@ -48,10 +48,10 @@ $$
 L = L_{camera} + L_{depth} + L_{pmap} + \lambda L_{track}
 $$
 
-* Camera loss ($L_{camera}$): Huber loss on camera intrinsics and extrinsics.
-* Depth loss ($L_{depth}$): Aleatoric-uncertainty loss weighted by predicted confidence maps, includes pixel-wise and gradient-based terms.
-* Point map loss ($L_{pmap}$): Same as depth loss, but applied to predicted 3D point maps.
-* Tracking loss ($L_{track}$): Uses CoTracker-style correlation with self-attention to predict 2D correspondences across views; includes visibility estimation.
+* Camera loss: Huber loss on camera intrinsics and extrinsics.
+* Depth loss: Aleatoric-uncertainty loss weighted by predicted confidence maps, includes pixel-wise and gradient-based terms.
+* Point map loss: Same as depth loss, but applied to predicted 3D point maps.
+* Tracking loss: Uses CoTracker-style correlation with self-attention to predict 2D correspondences across views; includes visibility estimation.
 
 ## Limitations
 1. Seems difficult to train: From the paper: "We use a cosine learning rate scheduler with a peak learning rate of 0.0002 and a warmup of 8K iterations". This is not a standard setup which indicates many iteration of training to make it work
