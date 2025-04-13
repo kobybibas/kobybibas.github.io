@@ -23,8 +23,9 @@ Keep the transformer’s attention mechanisms constant during analysis to isolat
 
 2. **Linear Approximation of MLP Layers:**
 Each nonlinear MLP layer is replaced by a simpler linear layer trained to mimic the original MLP’s behavior using easily interpretable features. These simplified linear layers are called Cross-Layer Transcoders (CLTs). Specifically, this involves:
-* Recording the inputs and outputs of each original MLP during a forward pass.
-* CLTs to replicate the MLP’s mappings, optimizing via standard regression techniques (e.g., minimizing mean squared error).
+* Recording the inputs and outputs of each original MLP during a forward pass
+* CLTs to replicate the MLP’s mappings via linear combination of pre-defined interpretable features
+* Optimizing via standard regression techniques (e.g., minimizing mean squared error)
     
 ![replacement_model](/posts/20500412_biology_large_language_model/replacement_model.png)
 
