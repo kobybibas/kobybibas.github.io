@@ -38,6 +38,7 @@ The simplified model’s computations are visualized as attribution graphs, whic
 * Edges quantify the strength of influence between features.
 * Paths with negligible contributions are pruned, and related features are combined into “supernodes” to highlight the model’s broader computational steps.
 
+![attribution_graph](/posts/20500412_biology_large_language_model/attribution_graph.png)
 
 ## Key findings patterns
 - The model reasons across steps (e.g., “capital of the state with Dallas” → “Texas” → “Austin”)
