@@ -10,41 +10,35 @@ draft: false
 ---
 
 ## TL;DR  
-Large Language Models (LLMs) are often considered “black boxes,” making it hard to explain their predictions or assess whether they genuinely reason. 
-A local “replacement model” approach swaps original MLP layers with simpler linear modules while preserving most of the behavior. 
-By mapping out how features influence one another, structured reasoning, planning, and even hidden goals are revealed in the LLM’s computations.
+Large Language Models (LLMs) are often perceived as “black boxes,” making their decision-making and reasoning processes difficult to interpret. 
+A novel method simplifies these complex models by replacing internal nonlinear layers with linear modules tailored to clearly understandable features. 
+This approach reveals structured reasoning, planning behaviors, and even hidden intentions within the model’s computations.
 
 ## Method
-One reason models are difficult to interpret is that neurons are typically polysemantic: they perform many different, seemingly unrelated functions. 
-The aim is to produces a “replacement model” that behaves similarly to the original network but is much easier to interpret.
-To achieve the goal, the LLM is applied with these changes:
-1. For a given prompt, fix the attention layer
-2. Swapping MLP layers with linear approximations of pre-defined explainable features  
-3. Adding error nodes to have more similar prediction to the original LLM
-4. Creating attribution graph by pruning node
+Interpreting LLMs is challenging because individual neurons often represent multiple, unrelated concepts simultaneously (polysemanticity). 
+To address this, the approach creates a simplified "replacement model", preserving most of the original model’s performance while enhancing interpretability through these steps:
 
+1. **Fix Attention Layers:**
+Keep the transformer’s attention mechanisms constant during analysis to isolate the complexity arising specifically from nonlinear layers (MLPs).
 
-**Cross-Layer Transcoders (CLTs)** replicate the behavior of each MLP in the transformer by using linear approximations of earlier layer activations. The process involves:
-1. Running a forward pass of the original transformer to record inputs and outputs from each MLP layer
-2. Fix the attention layer
-3. Training a lightweight linear module to approximate each MLP’s mapping from inputs to outputs
-4. Employing a simple regression objective (e.g., minimizing mean squared error) to align the CLT’s outputs with those of the original MLP
-
-**Error Nodes.** Since MLP layers are replaced by linear approximations, they cannot fully reconstruct the original model’s outputs. 
-To increase representational capacity, error nodes are introduced to capture the residual information that the linear layers fail to account for.
-
+2. **Linear Approximation of MLP Layers:**
+Each nonlinear MLP layer is replaced by a simpler linear layer trained to mimic the original MLP’s behavior using easily interpretable features. These simplified linear layers are called Cross-Layer Transcoders (CLTs). Specifically, this involves:
+* Recording the inputs and outputs of each original MLP during a forward pass.
+* CLTs to replicate the MLP’s mappings, optimizing via standard regression techniques (e.g., minimizing mean squared error).
+    
 ![replacement_model](/posts/20500412_biology_large_language_model/replacement_model.png)
 
-**Attribution Graphs.** A directed graph is constructed from the replacement model as follows:
-* Nodes: represent active features, input tokens, or outputs.  
-* Edges: represent how strongly one feature linearly contributes to another.  
+3. **Introduction of Error Nodes:**
+Since linear approximations alone cannot capture all complexity, additional “error nodes” are added to represent any residual information missed by the linear layers. This enhances the model’s fidelity to the original behavior.
 
-The process traces from input to output through active features, pruning paths with negligible impact. 
-Related features often form groups with shared roles, combining these into “supernodes” highlights broader computational steps in the model.
+4. **Creation of Attribution Graphs:**
+The simplified model’s computations are visualized as attribution graphs, which clearly display how different features influence each other. In these graphs:
+* Nodes represent input tokens, model outputs, or active internal features.
+* Edges quantify the strength of influence between features.
+* Paths with negligible contributions are pruned, and related features are combined into “supernodes” to highlight the model’s broader computational steps.
 
-![Attribution graph](/posts/20500412_biology_large_language_model/attribution_graph.png)
 
-## Uncovered patterns
+## Key findings patterns
 - The model reasons across steps (e.g., “capital of the state with Dallas” → “Texas” → “Austin”)
 - It plans rhymes when writing poetry
 - It generalizes addition to new formats
