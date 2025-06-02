@@ -26,7 +26,7 @@ The LettuceDetect model is as follows.
 2. ModernBERT architecture as the backbone: Useful for long sequences to encode the entire concatenated input
 3. Each Answer tokens are predicted as supported (0) or hallucinated (1): The model outputs per-token hallucination probabilities
 4. Consecutive tokens whose probability exceeds 0.5 are aggregated into hallucination spans
-![System architecture](/posts/20250425_lettuce_detect/summary.md)
+![System architecture](/posts/20250425_lettuce_detect/image.png)
 
 ## Limitations 
 * Like similar RAG systems, performance depends on retrieval quality: irrelevant context can yield false alarms

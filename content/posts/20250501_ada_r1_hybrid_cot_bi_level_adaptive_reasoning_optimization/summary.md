@@ -30,6 +30,8 @@ Across 2K problems, 12 responses per model per question are generated, excluding
 Accuracy gains are computed as the difference between Long-CoT and Short-CoT.
 Results show that for about half the samples, Long-CoT offers no benefit and sometimes reduces accuracy.
 
+![long_vs_short](/posts/20250501_ada_r1_hybrid_cot_bi_level_adaptive_reasoning_optimization/long_vs_short.png)
+
 ## Method
 Ada-R1 employs a two-stage adaptive reasoning framework:
 
@@ -47,6 +49,9 @@ Training pairs are formed from the Cartesian product of these groups.
 A subset is used to construct DPO training tuples (x, yw, yl), where yw is the preferred response. 
 
 Instance-level preferences further encourage brevity among correct responses within each group. 
+
+![pipeline](/posts/20250501_ada_r1_hybrid_cot_bi_level_adaptive_reasoning_optimization/pipeline.png)
+
 
 ## Limitations
 Bi-Level Preference Training requires sampling many candidate chains and labeling them by correctness and CoT length. Generating this data is compute-intensive, and the learned preferences may not transfer to new domains without re-sampling and re-labeling.
