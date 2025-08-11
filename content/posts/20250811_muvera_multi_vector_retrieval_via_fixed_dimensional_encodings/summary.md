@@ -27,7 +27,7 @@ MUVERA aims to create a simpler, faster alternative that maps the problem back t
 
 ## Method: Multi-Vector Retrieval Algorithm 
 MUVERA is a two-stage retrieval process that uses FDEs to approximate Chamfer Similarity for fast candidate generation.
-In its core is Fixed Dimensional Encodings (FDEs): a single vector constructed from a set of vectors through a data-oblivious transformation. This makes the encoding process fast and robust to data distribution shifts. 
+In its core is FDE: a single vector constructed from a set of vectors through a data-oblivious transformation. This makes the encoding process fast and robust to data distribution shifts. 
 
 MUVERA creates and utilizes FDEs as follows.
 1. **Partitioning:** The embedding space is randomly partitioned into \(B\) disjoint regions or clusters.
@@ -49,5 +49,6 @@ The final FDE has a dimension of \(B \cdot d_{proj} \cdot R_{reps}\).
 
 ## References
 [Paper]((https://arxiv.org/pdf/2405.19504))
+
 [Blog post](https://research.google/blog/muvera-making-multi-vector-retrieval-as-fast-as-single-vector-search/)
 
