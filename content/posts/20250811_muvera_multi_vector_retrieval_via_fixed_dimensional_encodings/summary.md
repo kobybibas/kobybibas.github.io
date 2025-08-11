@@ -10,7 +10,7 @@ draft: false
 ---
 
 ## TL;DR
-Recent advancements in vector retrieval systems demonstrate that mapping queries and documents to multiple vectors and performing multi-vector retrieval surpasses common single-vector retrieval methods. However, multi-vector retrieval is computationally intensive as it does not use linear operations like the inner product, for which most systems are optimized. MUVERA is a method designed to accelerate multi-vector retrieval: It converts sets of vectors into single Fixed Dimensional Encodings (FDEs). The inner product of two FDEs approximates the Chamfer Similarity score, allowing standard, highly-optimized Maximum Inner Product Search (MIPS) solvers to generate a candidate list. A final, exact Chamfer Similarity calculation is then performed only on this small set of candidates for precise ranking.
+Recent advancements in vector retrieval demonstrate that mapping queries and documents to multiple vectors and performing multi-vector retrieval surpasses common single-vector retrieval methods. However, multi-vector retrieval is computationally intensive as it does not use linear operations like the inner product. MUVERA is a method designed to accelerate multi-vector retrieval: It converts sets of vectors into single Fixed Dimensional Encodings (FDEs). The inner product of two FDEs approximates the Chamfer Similarity score, allowing standard, highly-optimized Maximum Inner Product Search (MIPS) solvers to generate a candidate list, following by exact similarity calculation on this small set of candidates for precise ranking.
 
 ## Motivation
 Models like ColBERT generate a set of embeddings for each document or query, often one vector per token. This approach has shown improved performance on information retrieval benchmarks. The similarity between a query set of vectors \(Q = \{q_1, \dots, q_n\}\) and a document set \(D = \{d_1, \dots, d_m\}\) is calculated using Chamfer Similarity (also called MaxSim). This involves finding the best-matching document vector for each query vector and summing the similarity scores.
@@ -21,18 +21,15 @@ $$
 
 This calculation presents two primary challenges:
 * Representing each token as a vector increases the total number of embeddings in a corpus by a large factor (**storage cost**)
-* The MaxSim operation is non-linear and cannot be optimized with standard inner product search indexes (computational cost**)
+* The MaxSim operation is non-linear and cannot be optimized with standard inner product search indexes (**computational cost**)
 
 MUVERA aims to create a simpler, faster alternative that maps the problem back to a standard single-vector search paradigm.
 
 ## Method: Multi-Vector Retrieval Algorithm 
 MUVERA is a two-stage retrieval process that uses FDEs to approximate Chamfer Similarity for fast candidate generation.
+In its core is Fixed Dimensional Encodings (FDEs): a single vector constructed from a set of vectors through a data-oblivious transformation. This makes the encoding process fast and robust to data distribution shifts. 
 
-![System architecture from the paper showing the two-stage retrieval process.](/posts/20250810_muvera_multi_vector_retrieval_via_fixed_dimensional_encodings/two_step_retreival.png)
-
-#### Fixed Dimensional Encodings (FDEs)
-An FDE is a single vector constructed from a set of vectors through a data-oblivious transformation. This makes the encoding process fast and robust to data distribution shifts. The steps are:
-
+MUVERA creates and utilizes FDEs as follows.
 1. **Partitioning:** The embedding space is randomly partitioned into \(B\) disjoint regions or clusters.
 2. **Aggregation:** Vectors within each partition are aggregated differently for queries and documents to reflect the asymmetry of Chamfer Similarity.
     * **Query FDEs:** All query vectors falling into a partition are **summed**.
@@ -46,12 +43,11 @@ The final FDE has a dimension of \(B \cdot d_{proj} \cdot R_{reps}\).
 
 
 ## Limitations
-1. The method's effectiveness depends on how well the FDE inner product approximates Chamfer Similarity. This relationship is controlled by hyperparameters (\(B\), \(d_{proj}\), \(R_{reps}\)), creating a trade-off between the FDE dimension (and thus speed/memory) and retrieval accuracy.
+1. The method's effectiveness depends on how well the FDE inner product approximates Chamfer Similarity. This relationship is controlled by hyperparameters ( \(B, d_{proj}, R_{reps}\) ), creating a trade-off between the FDE dimension (and thus speed/memory) and retrieval accuracy.
 2. While faster, MUVERA requires storing an additional FDE vector for each document. The size of this vector can become large depending on the hyperparameter settings, which may be a constraint in memory-limited environments.
 3. Although robustness is a strength, a data-oblivious partitioning scheme may be less optimal than a data-aware one (e.g., k-means clustering).
 
 ## References
 [Paper]((https://arxiv.org/pdf/2405.19504))
-
 [Blog post](https://research.google/blog/muvera-making-multi-vector-retrieval-as-fast-as-single-vector-search/)
 
