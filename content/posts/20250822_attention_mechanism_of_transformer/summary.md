@@ -1,5 +1,5 @@
 ---
-title: "[Concept] The Attention Mechanism of Transformer Models"
+title: "[Concept] Inside Transformer Attention"
 date: 2025-08-22
 tags:
 - Transformers
@@ -7,12 +7,13 @@ tags:
 draft: false
 ---
 
-Attention blocks are the backbone of the Transformer aritehcture, enabling the understanding of information across the input sequence.
+## Attention Layer
+Attention blocks are the backbone of the Transformer architecture, enabling the model to capture dependencies across the input sequence.
 
-The attention layer takes the following inputs:
-1.  Query vector $q\in\mathbb{R}^d$
-2.  Matrix of keys  $K\in\mathbb{R}^{n\times d}$ (rows $k_i^\top$)
-3.  Matrix of values $V\in\mathbb{R}^{n\times d_v}$
+An attention layer takes as input:
+1. A query vector \(q \in \mathbb{R}^d\)  
+2. A matrix of keys \(K \in \mathbb{R}^{n \times d}\) (rows are \(k_i^\top\))  
+3. A matrix of values \(V \in \mathbb{R}^{n \times d_v}\)
 
 In the vanilla Transformer setup, the query, key, and value come from the same token embedding \(x\)  but the model is free to learn different subspaces for “asking” (queries), “addressing” (keys), and “answering” (values):
 * \(q = xW^Q\)
@@ -21,8 +22,8 @@ In the vanilla Transformer setup, the query, key, and value come from the same t
 
 Then, to compute the attention the following procedure is executed:
 1.  Compute similarities: $$ s_i=\frac{\langle q,k_i\rangle}{\sqrt{d}} $$
-2.  Convert scores to a probability like values: $$ p_i=\mathrm{softmax}(s)_i=\frac{e^{s_i}}{\sum_j e^{s_j}} $$
-3. Aggregate: $$\mathrm{Attn}(q,K,V)=\sum_{i=1}^n p_i\, v_i$$
+2.  Convert scores to probabilities: $$ p_i=\mathrm{softmax}(s)_i=\frac{e^{s_i}}{\sum_j e^{s_j}} $$
+3. Aggregate values: $$\mathrm{Attn}(q,K,V)=\sum_{i=1}^n p_i\, v_i$$
 
 For a batch of queries $Q\in\mathbb{R}^{m\times d}$:
 
@@ -59,24 +60,24 @@ where we used the following properties:
 2. Independence across coordinates and between $q$ and $k$.
 3. $\mathbb{E}[q_n^2]=\mathbb{E}[k_{in}^2]=1$.
 
-Dividing by \(\sqrt d\) keeps the logits’ variance $\approx 1$, avoiding softmax saturation and stabilizing gradients.
+Dividing by \(\sqrt d\) keeps the variance of the logits near 1, preventing softmax saturation and stabilizing gradients.
 
 
 
 
 ## Multi-Head Attention
-Multi-head attention composes multiple low-rank bilinear forms which is expressive yet parameter-efficient: ach head is a different kernel (or subspace), giving disentangled relational channels and richer low-rank structure. 
-In the process, the model learns $h$  (lower-dim $d_h=d/h$) separate linear maps
+Multi-head attention combines multiple low-rank bilinear forms, making it expressive yet parameter-efficient. Each head corresponds to a different kernel (or subspace), yielding disentangled relational channels and richer low-rank structure.  
+
+The model learns \(h\) sets of projections, each of dimension \(d_h = d/h\):  
 * \(QW_i^Q \)
 * \(KW_i^K\)
 * \(VW_i^V\),
   
-The model computes these $h$ attentions in parallel, then concatenate and mix with $W^O$.
+It computes \(h\) separate attentions in parallel, concatenates the results, and projects them with \(W^O\).
 
-**Causal/mask:** add a mask $M$ with $-\infty$ on disallowed positions before the softmax:
-
+**Causal/masked attention:** A mask \(M\) with \(-\infty\) on disallowed positions is added before softmax:  
 $$
-\mathrm{softmax}\!\Big(\frac{QK^\top}{\sqrt d}+M\Big)V.
+\mathrm{softmax}\!\Big(\frac{QK^\top}{\sqrt d} + M\Big)V.
 $$
 
 ## Compute and Storage Cost
