@@ -1,9 +1,10 @@
 ---
 title: "[Summary] The Evolution of Multimodal Model Architectures" 
 date: 2024-11-01
-tags: 
-- Multimodal
-- Visual-Language-Models
+tags:
+  - Multimodal
+  - Vision-Language Models
+  - Model Architectures
 draft: false 
 ---
 

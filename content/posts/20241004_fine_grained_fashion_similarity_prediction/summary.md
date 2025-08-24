@@ -2,9 +2,10 @@
 title: "[Summary] Fine-Grained Fashion Similarity Prediction by Attribute-Specific Embedding Learning" 
 date: 2024-10-04
 tags: 
-- Fine grained classification
-- Transformer
-- Fashion
+  - Fine-Grained Classification
+  - Transformer
+  - Fashion
+  - Attribute Embedding
 draft: false 
 ---
 

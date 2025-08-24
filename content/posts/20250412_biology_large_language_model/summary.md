@@ -2,10 +2,10 @@
 title: "[Summary] On the Biology of a Large Language Model"
 date: 2025-04-12
 tags:
-- Interpretability
-- Transformers
-- Attribution Graphs
-- Large Language Model
+  - Interpretability
+  - Transformers
+  - Attribution Graphs
+  - Large Language Models
 draft: false
 ---
 

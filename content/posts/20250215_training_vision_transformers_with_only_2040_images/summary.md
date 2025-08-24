@@ -1,10 +1,11 @@
 ---
 title: "[Summary] Training Vision Transformers with Only 2040 Images"
 date: 2025-02-15
-tags: 
-- Vision Transformer
-- Self-supervision
-- Computer vision
+tags:
+  - Vision Transformer
+  - Self-Supervision
+  - Computer Vision
+  - Data Efficiency
 draft: false 
 ---
 

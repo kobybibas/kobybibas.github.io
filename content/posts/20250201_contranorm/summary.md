@@ -1,8 +1,10 @@
 ---
 title: "[Summary] ContraNorm: A Contrastive Learning Per-spective on Oversmoothing and beyond"
 date: 2025-02-01
-tags: 
-- Transformer
+tags:
+  - Transformer
+  - Contrastive Learning
+  - Oversmoothing
 draft: false 
 ---
 

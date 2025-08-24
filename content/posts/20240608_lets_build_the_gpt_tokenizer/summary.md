@@ -2,9 +2,10 @@
 title: "[Lecture notes] Let's build the GPT Tokenizer" 
 date: 2024-06-08
 tags: 
-- Large Language Models
-- Tokenization
-- Lecture notes
+  - Large Language Models
+  - Tokenization
+  - NLP
+  - Lecture Notes
 draft: false 
 ---
 
@@ -43,7 +44,7 @@ The process of Byte Pair Encoding is as follows.
 An important metric for evaluating tokenizer is the compression ratio: (the text length in characters) / (the text length in tokens). A higher compression ratio indicates that the LLM can handle a longer context length.
 
 ## Regex Patterns
-To ensure tokens retain their semantic meaning, certain patterns should not be merged, e.g., 'dog.', 'dog!', and 'dog?' should remain separate tokens.
+To ensure tokens retain their semantic meaning, certain patterns should not be merged, e.g., 'dog.', 'dog!' and 'dog?' should remain separate tokens.
 In the GPT-2 code, additional merging rules are enforced to prevent such merges. These rules are implemented using [regular expressions (regex)](https://github.com/openai/gpt-2/blob/master/src/encoder.py#L53). Some of the rules are:
 1. Not merging sequences with space between.
 2. Numbers are not merged with letters.

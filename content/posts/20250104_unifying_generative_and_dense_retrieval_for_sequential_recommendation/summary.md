@@ -2,9 +2,11 @@
 title: "[Summary] Unifying Generative and Dense Retrieval for Sequential Recommendation" 
 date: 2025-01-04
 tags: 
-- Recommender system
-- Large Language Models 
-- Multimodal 
+  - Recommender Systems
+  - Large Language Models
+  - Multimodal
+  - Dense Retrieval
+  - Generative Retrieval
 draft: false 
 ---
 

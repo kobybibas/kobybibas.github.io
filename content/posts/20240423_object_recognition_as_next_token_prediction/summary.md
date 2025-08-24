@@ -1,12 +1,12 @@
 ---
 title: "[Summary] Object Recognition as Next Token Prediction"
 date: 2024-04-23
-tags: 
-    - Large Language Models
-    - Object Recognition
-    - Prompt engineering  
-    - Open set
-    - Summary
+tags:
+  - Large Language Models
+  - Object Recognition
+  - Prompt Engineering
+  - Open Set Recognition
+  - Summary
 draft: false 
 ---
 

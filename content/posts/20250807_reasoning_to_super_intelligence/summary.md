@@ -2,11 +2,11 @@
 title: "[Summary] From Reasoning to Super-Intelligence: A Search-Theoretic Perspective"
 date: 2025-08-07
 tags:
-- Reasoning
-- Super-Intelligence
-- Search Theory
-- Large Language Models
-- Chain of Thoughts
+  - Reasoning
+  - Super-Intelligence
+  - Search Theory
+  - Large Language Models
+  - Chain of Thought
 draft: false
 ---
 
@@ -70,4 +70,4 @@ Compared to other methods, the Diligent Learner explicitly models what to do whe
 5. The difficulty of validation depends heavily on the task domain. In some domains, validating a reasoning chain might be as hard as generating it, which weakens the core assumption that validation is easier than search.
 
 ## References
-[Paper](https://openreview.net/pdf?id=Dw1rJACYcf) 
+[Paper](https://openreview.net/pdf?id=Dw1rJACYcf)

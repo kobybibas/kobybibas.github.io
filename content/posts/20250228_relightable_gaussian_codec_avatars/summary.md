@@ -1,10 +1,11 @@
 ---
 title: "[Summary] Relightable Gaussian Codec Avatars"
 date: 2025-02-28
-tags: 
-- Codec Avatar
-- Gaussian Splatting 
-- Conditional Variational Autoencoder
+tags:
+  - Codec Avatar
+  - Gaussian Splatting
+  - Conditional Variational Autoencoder
+  - Relighting
 draft: false 
 ---
 

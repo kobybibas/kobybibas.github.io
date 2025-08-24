@@ -1,11 +1,11 @@
 ---
 title: "[Summary] LettuceDetect: A Hallucination Detection Framework for RAG Applications"
 date: 2025-04-25
-tags: 
-- Hallucination Detection
-- Retrieval-Augmented Generation
-- Large Language Models
-- Token Classification
+tags:
+  - Hallucination Detection
+  - Retrieval-Augmented Generation
+  - Large Language Models
+  - Token Classification
 draft: false 
 ---
 

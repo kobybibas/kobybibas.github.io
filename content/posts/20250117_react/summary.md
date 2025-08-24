@@ -1,10 +1,11 @@
 ---
 title: "[Summary] ReAct: Synergizing Reasoning and Acting in Language Models"
 date: 2025-01-17
-tags: 
-- Large Language Models 
-- Prompt engineering
-- Chain of Thought
+tags:
+  - Large Language Models
+  - Prompt Engineering
+  - Chain of Thought
+  - Reasoning
 draft: false 
 ---
 

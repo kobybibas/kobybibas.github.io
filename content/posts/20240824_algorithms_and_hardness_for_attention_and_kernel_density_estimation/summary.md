@@ -4,6 +4,8 @@ date: 2024-08-24
 tags: 
 - Kernel Density Estimation
 - Attention
+- Algorithms
+- Lecture Notes
 draft: false 
 ---
 
