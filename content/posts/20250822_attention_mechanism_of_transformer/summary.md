@@ -7,48 +7,22 @@ tags:
 draft: false
 ---
 
-*  query vector $q\in\mathbb{R}^d$
-*  keys $K\in\mathbb{R}^{n\times d}$ (rows $k_i^\top$)
-*  values $V\in\mathbb{R}^{n\times d_v}$
+Attention blocks are the backbone of the Transformer aritehcture, enabling the understanding of information across the input sequence.
 
-Steps to compute the attention
-1.  Compute similarities \(s_i=\frac{\langle q,k_i\rangle}{\sqrt{d}}\)
-2.  Convert scores to a probability like values: \(p_i=\mathrm{softmax}(s)_i=\frac{e^{s_i}}{\sum_j e^{s_j}}\)
-3. Aggregate: \(\mathrm{Attn}(q,K,V)=\sum_{i=1}^n p_i\, v_i\)
+The attention layer takes the following inputs:
+1.  Query vector $q\in\mathbb{R}^d$
+2.  Matrix of keys  $K\in\mathbb{R}^{n\times d}$ (rows $k_i^\top$)
+3.  Matrix of values $V\in\mathbb{R}^{n\times d_v}$
 
-In the vanilla Transformer setup:
-* $q = xW^Q$,
-* $k = xW^K$,
-* $v = xW^V$.
+In the vanilla Transformer setup, the query, key, and value come from the same token embedding \(x\)  but the model is free to learn different subspaces for “asking” (queries), “addressing” (keys), and “answering” (values):
+* \(q = xW^Q\)
+* \(k = xW^K\)
+* \(v = xW^V\)
 
-Query, key, and value all come from the same token embedding \(x\), but with different learned linear projections:
-They start from the same information, but the model is free to learn different subspaces for “asking” (queries), “addressing” (keys), and “answering” (values).
-
-**Why $\tfrac{1}{\sqrt d}$ scaling?**
-If \(q,k_i\sim\mathcal N(0,I)\), then \(\langle q,k_i\rangle\) has variance \(d\). 
-Dividing by \(\sqrt d\) keeps the logits’ variance $\approx 1$, avoiding softmax saturation and stabilizing gradients.
-
-
-![Attention](content/posts/20250822_attention_mechanism_of_transformer/attention.png) 
-*Taken from https://learnopencv.com/attention-mechanism-in-transformer-neural-networks/*
-
-## Probabilistic/kernel view
-Let \(\kappa(q,k)=\exp\!\big(\tfrac{\langle q,k\rangle}{\sqrt d}\big)\). Then
-
-$$
-\mathrm{Attn}(q,K,V)
-= \frac{\sum_i \kappa(q,k_i)\, v_i}{\sum_j \kappa(q,k_j)}
-$$
-
-This is the *Nadaraya–Watson kernel regression* estimator with exponential (dot-product) kernel. 
-* Keys are inputs
-* Values are labels 
-* The attention predicts a kernel-weighted average label at query \(q\).
-
-
-
-
-## Batched/matrix form + multi-head
+Then, to compute the attention the following procedure is executed:
+1.  Compute similarities: $$ s_i=\frac{\langle q,k_i\rangle}{\sqrt{d}} $$
+2.  Convert scores to a probability like values: $$ p_i=\mathrm{softmax}(s)_i=\frac{e^{s_i}}{\sum_j e^{s_j}} $$
+3. Aggregate: $$\mathrm{Attn}(q,K,V)=\sum_{i=1}^n p_i\, v_i$$
 
 For a batch of queries $Q\in\mathbb{R}^{m\times d}$:
 
@@ -57,9 +31,47 @@ $$
 \quad\text{(row-wise softmax).}
 $$
 
-**Multi-head:** learn $h$ separate linear maps
-$QW_i^Q,\ KW_i^K,\ VW_i^V$ (lower-dim $d_h=d/h$), compute $h$ attentions in parallel, then concatenate and mix with $W^O$.
-Intuition: each head is a different kernel / subspace, giving **disentangled relational channels** and richer low-rank structure.
+With tokens as nodes, attention does content-based weighted aggregation—like a fully connected Graph-Neural-Network (GNN) layer with learned edge weights.
+
+![Attention](/posts/20250822_attention_mechanism_of_transformer/attention.png) 
+*Taken from https://learnopencv.com/attention-mechanism-in-transformer-neural-networks/*
+
+## Why $\tfrac{1}{\sqrt d}$ scaling?
+If \(q,k_i\sim\mathcal N(0,I)\), then \(\langle q,k_i\rangle\) has variance \(d\):
+
+$$
+\begin{aligned}
+Var(\langle q,k_i\rangle) 
+&= E\left[(\langle q,k_i\rangle-0)^2\right] = E\left[\left( \sum_{n=1}^d q_n \cdot k_{in}\right)^2\right]
+\\
+&=  E\left[\sum_{n=1}^d q_n^2 k_{in}^2 \;+\; 2\sum_{1\le n<m\le d} q_n k_{in}\, q_m k_{im}\right]
+\\
+&=
+\sum_{n=1}^d E\left[ q_n^2\right]  E\left[k_{in}^2\right] 
+\\
+&=d
+\end{aligned}
+
+$$
+
+where we used the following properties:
+1. $\mathbb{E}[q_n]=\mathbb{E}[k_{in}]=0$.
+2. Independence across coordinates and between $q$ and $k$.
+3. $\mathbb{E}[q_n^2]=\mathbb{E}[k_{in}^2]=1$.
+
+Dividing by \(\sqrt d\) keeps the logits’ variance $\approx 1$, avoiding softmax saturation and stabilizing gradients.
+
+
+
+
+## Multi-Head Attention
+Multi-head attention composes multiple low-rank bilinear forms which is expressive yet parameter-efficient: ach head is a different kernel (or subspace), giving disentangled relational channels and richer low-rank structure. 
+In the process, the model learns $h$  (lower-dim $d_h=d/h$) separate linear maps
+* \(QW_i^Q \)
+* \(KW_i^K\)
+* \(VW_i^V\),
+  
+The model computes these $h$ attentions in parallel, then concatenate and mix with $W^O$.
 
 **Causal/mask:** add a mask $M$ with $-\infty$ on disallowed positions before the softmax:
 
@@ -67,21 +79,20 @@ $$
 \mathrm{softmax}\!\Big(\frac{QK^\top}{\sqrt d}+M\Big)V.
 $$
 
-**Shapes & cost:** For seq length $n$, width $d$, cost is $O(n^2 d)$ time and $O(n^2)$ memory (the attention matrix). This motivates long-context variants (sparse, linearized, low-rank, etc.).
+## Compute and Storage Cost
+For seq length \(n\), width \(d\) (each token in the sequence is represented by a vector of length \(d\)), the cost is 
+* \(O(n^2 d)\) compute 
+* \(O(n^2)\) memory (the attention matrix) 
+  
+This motivates long-context variants (sparse, linearized, low-rank, etc.).
 
-## Gradients & stability (what really matters in practice)
+In **Linear attention**, the softmax kernel is replaced by a feature map \(\phi(\cdot)\) with $\kappa(q,k)\approx \phi(q)^\top\phi(k)$ to get 
+$$
+(\phi(Q)\,(\phi(K)^\top V))
+$$ 
+and \(O(n d^2)\) time, \(O(n d)\) memory.
 
-Let $A=\mathrm{softmax}(QK^\top/\sqrt d)$. Then output $Y=AV$.
+In **KV caching (inference)**, past $K,V$ are re-used to serve next query in $O(n d)$ per step.
 
-* **Backprop wrt V:** $\partial L/\partial V = A^\top (\partial L/\partial Y)$. So values get gradients redistributed by attention weights.
-* **Backprop wrt scores $S=QK^\top/\sqrt d$:** uses Jacobian of softmax; roughly, it pushes scores to increase probability mass on value directions that reduce loss. Saturation (very peaky $A$) kills gradients → hence scaling, normalization, and temperature tuning matter.
-* **Init/norm:** Pre-LN Transformers and RMSNorm/LayerNorm stabilize the score distribution; residual connections keep signal/gradient highways.
-* **Temperature:** dividing logits by $T>1$ (equivalently multiplying by $<1$) flattens attention; $T<1$ sharpens.
-
-## Deeper lenses (quick hits)
-
-* **Low-rank view:** $QK^\top$ is at most rank $d$. Multi-head attention composes multiple low-rank bilinear forms → expressive yet parameter-efficient.
-* **Message passing:** With tokens as nodes, attention does content-based weighted aggregation—like a fully connected GNN layer with learned edge weights.
-* **Energy-based view:** Softmax attention arises from a linear energy plus entropy regularizer; alternatives (sparsemax, entmax) alter the regularizer → sparse supports.
-* **Linear attention:** Replace softmax kernel by a feature map $\phi(\cdot)$ with $\kappa(q,k)\approx \phi(q)^\top\phi(k)$ to get $(\phi(Q)\,(\phi(K)^\top V))$ and **O(n d^2)** time, **O(n d)** memory.
-* **KV caching (inference):** Reuse past $K,V$ to serve next query in $O(n d)$ per step.
+## Resource
+https://learnopencv.com/attention-mechanism-in-transformer-neural-networks/

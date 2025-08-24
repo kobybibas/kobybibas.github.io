@@ -2,5 +2,7 @@
     "cSpell.enabled": true,
     "cSpell.words": [
         "subquadratic"
-    ]
+    ],
+    "mdmath.delimiters": "brackets",
+    "markdown.extension.math.enabled": false
 }
