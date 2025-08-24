@@ -1,9 +1,10 @@
 ---
 title: "[Summary] Learning to Prompt for Vision-Language Models" 
 date: 2024-03-22
-tags: 
-    - CLIP
-    - Prompt engineering 
+tags:
+  - Vision-Language Models
+  - Prompt Engineering
+  - CLIP
 draft: false 
 ---
 

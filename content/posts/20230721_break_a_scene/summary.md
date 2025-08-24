@@ -1,9 +1,9 @@
----
 title: "[Summary] Break-A-Scene: Extracting Multiple Concepts from a Single Image"
 date:  2023-07-21
 tags:
-    - Diffusion model
-    - Summary
+    - Diffusion Models
+    - Concept Extraction
+    - Image Generation
 ---
 
 ## TL;DR

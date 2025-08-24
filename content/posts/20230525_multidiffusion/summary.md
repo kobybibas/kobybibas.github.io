@@ -1,12 +1,10 @@
----
 title: "[Summary] MultiDiffusion: Fusing Diffusion Paths for Controlled Image Generation"
 date: 2023-05-19
-tags: 
-    - Diffusion model
-    - Image editing
-    - Controllability 
+tags:
+    - Diffusion Models
+    - Image Editing
+    - Controllability
 ---
-
 ## TL;DR
 To enable a more controllable image diffusion, MultiDiffusion introduce patches generation with a global constrain.
 
