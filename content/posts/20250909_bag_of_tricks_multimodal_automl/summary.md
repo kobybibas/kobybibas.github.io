@@ -11,10 +11,10 @@ draft: false
 ---
 
 ## TL;DR
-Many machine learning systems deal with multimodal data, however there's no comprehensive study examining different design choices and implementation tricks across modalities. 
-The paper surveys common "tricks" for multimodal systems and found the most consistently effective techniques are: (i) basic training tricks such as gradient clipping and learning-rate warmup, (ii) late fusion using pretrained unimodal encoders (especially CLIP-aligned image and text encoders), (iii) auxiliary cross-modal alignment objectives, (iv) simple input-level augmentation, and (v) modality dropout and learnable embeddings for handling missing inputs.
+Many machine learning systems deal with multimodal data, however there's no study examining different design choices across modalities. 
+The paper surveys common "tricks" for multimodal systems and found the most effective techniques are: (i) basic strategies such as gradient clipping and learning-rate warmup, (ii) late fusion using pretrained unimodal encoders, (iii) auxiliary cross-modal alignment objectives, (iv) simple input-level augmentation, and (v) modality dropout and learnable embeddings for handling missing inputs.
 
-![multimodal example](/posts/20250909_bag_of_tricks_multimodal_automl/multimodal_example.png)
+
 
 ## Motivation
 While multimodal learning has gained traction, practitioners face recurring design decisions without clear guidance on which approaches work best. 
@@ -26,6 +26,8 @@ Multimodal learning faces recurring design questions:
 
 The study collects strategies scattered across prior work and evaluates them under one framework. 
 The experimental setup fine-tunes three modality-specific backbones: Swin Transformer Large (images), DeBERTa-V3 (text), FT-Transformer (tabular).
+
+![multimodal example](/posts/20250909_bag_of_tricks_multimodal_automl/multimodal_example.png)
 
 ## Basic tricks
 Certain generic training adjustments consistently improved performance:
