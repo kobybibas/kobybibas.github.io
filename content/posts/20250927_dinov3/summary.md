@@ -10,32 +10,32 @@ draft: false
 ---
 
 ## TLDR
-The DINO series advances self-supervised learning for vision transformers through iterative architectural and data refinements. DINOv1 introduces student-teacher distillation on ImageNet-1k. DINOv2 scales to 142M curated images with patch-level objectives. DINOv3 reaches 1.7B Instagram images with register tokens, new Gram matrix based loss, and a custom 7B-parameter ViT, achieving state-of-the-art performance on dense prediction tasks (like instance segmentation) while maintaining a frozen backbone. 
+The DINO series advances self-supervised learning for vision transformers through iterative architectural and data refinements. DINOv1 introduces student-teacher distillation on ImageNet-1k. DINOv2 scales to 142M curated images with patch-level objectives. DINOv3 reaches 1.7B Instagram images with register tokens, new Gram matrix based loss, with a custom 7B-parameter ViT, achieving state-of-the-art performance on dense prediction tasks (like instance segmentation) while maintaining a frozen backbone. 
 
 ## Motivation
 Supervised pretraining on ImageNet has dominated vision models, but manually annotating large datasets is expensive and constrains representation quality to label granularity. Self-supervised learning (SSL) offers an alternative by leveraging unlabeled data at scale. 
 Early SSL methods like contrastive learning require careful negative sampling and large batch sizes. 
-DINO sidesteps these constraints through knowledge distillation between student and teacher networks operating on augmented views of images.
+DINO sidesteps these constraints through knowledge distillation between student and teacher model operating on augmented views of images.
 
-## DINOv1 Architecture and Training
+## DINOv1
 DINOv1 employs a Vision Transformer for both student and teacher networks. The student receives multiple augmented crops (2 global at 224×224, several local at 96×96) while the teacher processes only global views.
 
 The training objective minimizes cross-entropy between student and teacher distributions:
 $$ 
 \min_{\theta_s} H(P_t, P_s) = - \sum_{i=1}^K P_t^{(i)} \log P_s^{(i)} 
 $$
-where $P_t$ and $P_s$ are teacher and student outputs respectively.
+where \(P_t\) and \(P_s\) are teacher and student outputs respectively.
 
 The core challenge is preventing trivial solutions where all images collapse to identical representations. Three mechanisms prevent this collapse:
-1. **Exponential moving average updates** for teacher weights: $\theta_t \leftarrow \lambda \theta_t + (1-\lambda)\theta_s$ with $\lambda = 0.996$
+1. **Exponential moving average updates** for teacher weights: \(\theta_t \leftarrow \lambda \theta_t + (1-\lambda)\theta_s\) with \(\lambda = 0.996\)
 2. **Centering** teacher outputs by subtracting running mean
-3. **Sharpening** via low temperature softmax ($\tau_t = 0.04$) for teacher vs higher temperature ($\tau_s = 0.1$) for student
+3. **Sharpening** via low temperature softmax \(\tau_t = 0.04\) for teacher vs higher temperature \(\tau_s = 0.1\) for student
 
-The architecture uses standard ViT variants (ViT-S/16, ViT-B/16) trained on ImageNet-1k for 300 epochs. No explicit contrastive loss or negative pairs required.
+The architecture uses standard ViT variants (ViT-S/16, ViT-B/16) trained on ImageNet-1k for 300 epochs with no explicit contrastive loss nor negative pair.
 
 ![DINOv3_dense_features](/posts/20250927_dinov3/DINOv1_self_distillation.png) 
 
-## DINOv2 Data Curation and Local Objectives
+## DINOv2
 
 **Dataset expansion.**  DINOv2 addresses DINOv1's data hunger by constructing LVD-142M, a 142-million image dataset curated through a multi-stage pipeline:
 1. Start with ~1.2B uncurated web images
@@ -60,7 +60,7 @@ This process balances coverage of visual concepts while filtering low-quality da
 The combined global and local objectives yield representations that excel at both image-level retrieval and dense prediction tasks like segmentation.
 ![DINOv2_data_processing_pipeline](/posts/20250927_dinov3/DINOv2_data_processing_pipeline.png) 
 
-## DINOv3 Register Tokens and Billion-Scale Training
+## DINOv3
 Analysis revealed that DINOv2 transformers "smuggle" global information into irrelevant background patches through attention, contaminating patch representations. Register tokens fix this by providing dedicated slots for storing global context separate from spatial features.
 
 **Dataset expansion.** DINOv3 uses 1.7B images from public Instagram posts. The curation pipeline adds balanced clustering:
