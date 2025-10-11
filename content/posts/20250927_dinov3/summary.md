@@ -10,92 +10,94 @@ draft: false
 ---
 
 ## TLDR
+The DINO series advances self-supervised learning for vision transformers through iterative architectural and data refinements. DINOv1 introduces student-teacher distillation on ImageNet-1k. DINOv2 scales to 142M curated images with patch-level objectives. DINOv3 reaches 1.7B Instagram images with register tokens, new Gram matrix based loss, and a custom 7B-parameter ViT, achieving state-of-the-art performance on dense prediction tasks (like instance segmentation) while maintaining a frozen backbone. 
 
 ## Motivation
+Supervised pretraining on ImageNet has dominated vision models, but manually annotating large datasets is expensive and constrains representation quality to label granularity. Self-supervised learning (SSL) offers an alternative by leveraging unlabeled data at scale. 
+Early SSL methods like contrastive learning require careful negative sampling and large batch sizes. 
+DINO sidesteps these constraints through knowledge distillation between student and teacher networks operating on augmented views of images.
 
-## DINOv1
-Trains a student model to match the output of a slowly updated teacher model on multiple views of the same image. The architecture is Vision Transformer (ViT) for both teacher and student. such that they produce a trivial soluton (a fix number)
+## DINOv1 Architecture and Training
+DINOv1 employs a Vision Transformer for both student and teacher networks. The student receives multiple augmented crops (2 global at 224×224, several local at 96×96) while the teacher processes only global views.
 
-**Dataset.** Training dataset is ImageNet-1k 
+The training objective minimizes cross-entropy between student and teacher distributions:
+$$ 
+\min_{\theta_s} H(P_t, P_s) = - \sum_{i=1}^K P_t^{(i)} \log P_s^{(i)} 
+$$
+where $P_t$ and $P_s$ are teacher and student outputs respectively.
 
+The core challenge is preventing trivial solutions where all images collapse to identical representations. Three mechanisms prevent this collapse:
+1. **Exponential moving average updates** for teacher weights: $\theta_t \leftarrow \lambda \theta_t + (1-\lambda)\theta_s$ with $\lambda = 0.996$
+2. **Centering** teacher outputs by subtracting running mean
+3. **Sharpening** via low temperature softmax ($\tau_t = 0.04$) for teacher vs higher temperature ($\tau_s = 0.1$) for student
 
-**New training techniques.**
-To prevent the trivial collapse of the features (produce a trivial soluton like a fix number), the following measures are implemented:
-1. The teacher weights are an exponential moving average (EMA) of the student’s weights
-2. The teacher outputs are centered by subtracting the batch mean. 
-3. The teacher outputs are sharpened by applying a low softmax temperature, which prevents the distribution from becoming too flat.
-
-## DINOv2
-uses a larger scale model (ViTs are data hungry) x100 more data than DINOv1.
-
-**Dataset.**
-Created a new dataset LVD-142M (starting from an initial set of ~1.2B web images) of high quality curated images.
-* Utilizing curated data sources (ImageNet-22k, the train split of ImageNet-1k, Google Landmarks, and several fine-grained classification datasets)
-* Filter near-duplicate images
-* Exapnd the curated data by retrieving samples close to the curated source using features from a DINO-like model
-
-![DINOv2_data_processing_pipeline](/posts/20250927_dinov3/DINOv2_data_processing_pipeline.png)
-
-**New training techniques.**
-
-1. A new patch-level loss from iBOT [4] (another SSL method), where some input patches are masked for the student (but not for the teacher). The student is then asked to predict the teacher’s features for those masked patches, encouraging good local representations that complement the global objective. 
-
-2. Different heads for global and patch-level objectives, which separate learnable MLP projections are applied to the [CLS] token for global features and to the regular patches for local features, avoiding interference at scale.
-The [CLS] token is placed at the beginning of the input sequence and serves as an aggregate representation that encapsulates information from the entire input sequence. In vision models, this token acts as a global feature representation that has "seen" and processed information from all the image patches through the transformer's self-attention mechanism
-
-3. teacher centering + sharpening is replaced by a special batch normalization 
-
-4.  Mixed-resolution training 
+The architecture uses standard ViT variants (ViT-S/16, ViT-B/16) trained on ImageNet-1k for 300 epochs. No explicit contrastive loss or negative pairs required.
 
 
-## DINO V3
-After DINOv2, a follow-up analysis shoed that transformer smuggles global image information into irrelevant background patches, essentially “upclassing” them to carry global context and creating more room for complex reasoning.
+## DINOv2 Data Curation and Local Objectives
 
-The fix is very simple: add a few register tokens to the input, giving the model a dedicated place to stash global information and keeping patch representations clean. Similar to the [CLS] token, which is not tied to any image patch, these extra tokens help smooth attention maps and improve dense prediction
+**Dataset expansion.**  DINOv2 addresses DINOv1's data hunger by constructing LVD-142M, a 142-million image dataset curated through a multi-stage pipeline:
+1. Start with ~1.2B uncurated web images
+2. Use embeddings from curated sources (ImageNet-22k, ImageNet-1k train split, Google Landmarks, fine-grained datasets) as retrieval seeds
+3. Deduplicate using copy detection to remove near-duplicates
+4. Retrieve additional images whose DINO embeddings lie close to curated exemplars
+5. Cluster retrieved images and subsample to maintain diversity
 
-**Dataset.** Public posts on Instagram,  another x10 on the data side, 1.7B images.
-1. To get a balanced diversity: images are first embedded with DINOv2, then clustered and subsampled in a balanced way from each group to ensure coverage of all visual concepts appearing on the internet
-2. the retrieval step picks images close to trusted seed datasets to cover visual concepts relevant for downstream tasks
+This process balances coverage of visual concepts while filtering low-quality data.
 
-**Architecture changes.**
-1. DINOv3 also scales up aggressively. The team introduces a custom ViT-7B architecture, making it the largest vision transformer in this line of work so far (larger variants have been trained for supervised tasks, e.g., by Google).
-2. Patch size is increased from 14 to 16, and special attention is also put on positional embeddings, using an improved RoPE variant with box jittering augmentation to later handle different resolutions, scales, and aspect ratios more robustly.
+**Architectural modifications.**
+- Separate projection heads for global $[CLS]$ token and patch tokens, preventing interference between objectives
+- Patch-level loss from iBOT: randomly mask 40-50% of student patches, predict teacher features for masked positions using unmasked context
+- Koleo regularizer to prevent dimensional collapse in feature space
+- SwiGLU activation replacing standard GELU
 
-**New training techiniques.**
-1. To prevent breaking down of intra-patch consistency a new loss function operates on the Gram matrix (i.e., the matrix of all pairwise dot products of patch features in an image) and pushes the Gram matrix of the student towards that of an early iteration of the teacher.
+**Training enhancements.**
+- Replace centering + sharpening with Sinkhorn-Knopp batch normalization for numerical stability
+- Mixed-resolution training with crops at $\{224, 448\}$ for global views
+- Longer training schedules (up to 500k iterations)
 
-* Post training on mixed resolutions per mini-batch. Specifically, global crop sizes are sampled from {512, 768} and local crop sizes from {112, 168, 224, 336}. This is since the inital trainig is done on 256x256 image resolution. 
-Rope positional encoding to  handle various of resolution 
+The combined global and local objectives yield representations that excel at both image-level retrieval and dense prediction tasks like segmentation.
+![DINOv2_data_processing_pipeline](/posts/20250927_dinov3/DINOv2_data_processing_pipeline.png) 
 
-* aligning DINOv3 with a text encoder, since CLIP-style models with open-vocabulary are key to modern multimodal research. The focus here is on keeping the vision backbone completely frozen, so we can keep all its beautiful properties, and see if a text encoder can be trained from scratch with a contrastive objective to match current state-of-the-art models.
+## DINOv3 Register Tokens and Billion-Scale Training
+Analysis revealed that DINOv2 transformers "smuggle" global information into irrelevant background patches through attention, contaminating patch representations. Register tokens fix this by providing dedicated slots for storing global context separate from spatial features.
+
+**Dataset expansion.** DINOv3 uses 1.7B images from public Instagram posts. The curation pipeline adds balanced clustering:
+1. Embed all images with DINOv2-L
+2. Cluster embeddings into 10k groups
+3. Subsample images uniformly across clusters to ensure representation of rare visual concepts
+4. Retrieve images near trusted seed datasets (ImageNet, fine-grained benchmarks) to prioritize task-relevant concepts
+This combines diversity (via clustering) with task alignment (via retrieval).
+
+**Architecture scaling.**
+- Custom ViT-7B with 7 billion parameters, the largest vision-only transformer to date
+- Patch size increased from 14 to 16 pixels for computational efficiency
+- Improved RoPE positional embeddings with box jittering augmentation for handling variable resolutions and aspect ratios at inference
+
+**Training innovations.**
+1. Gram matrix regularization to preserve intra-patch consistency. The loss operates on $G = FF^T$ where $F$ is the matrix of patch features, pushing student Gram matrices toward early-teacher values
+2. Mixed-resolution training with global crops sampled from $\{512, 768\}$ and local crops from $\{112, 168, 224, 336\}$
+3. Post-training alignment with text encoders while keeping vision backbone frozen, enabling CLIP-style zero-shot capabilities without degrading visual representations
 
 
+## Applications
+Most of the results where obtained using a frozen backbone: Most detection models fine-tune encoders, but DINOv3 demonstrates competitive performance with a completely frozen ViT, simplifying deployment and preserving general-purpose features.
 
-## Applications 
+1. **Unsupervised object discovery** uses TokenCut, a non-parametric graph algorithm that segments objects by clustering patch features based on similarity. No labels needed.
 
-For unsupervised object detection, we use the non-parametric graph-based TokenCut algorithm (
+2. **Video instance segmentation** propagates masks across frames via nearest-neighbor label transfer in feature space. Given ground-truth masks for frame 1, the algorithm finds patches in frame 2 whose DINOv3 features lie closest to labeled patches in frame 1, transferring labels accordingly.
 
-Video segmentation tracking :
-given ground-truth instance segmentation masks in the first
-frame of a video, the goal is to propagate these masks to subsequent frames. Following Jabri et al. (2020), we use a non-parametric label propagation
-algorithm that considers the similarity between patch features across frames. 
+3. **Video classification** trains a shallow 4-layer transformer probe on frozen patch features extracted per frame, enabling spatio-temporal reasoning without backpropagating through the backbone.
 
-Video classification 
-we train an attentive
-probe—a shallow 4-layer transformer-based classifier—on top of patch features extracted from each frame.
-This enables reasoning over temporal and spatial dimensions as the features are extracted independently per
-
-
-Object detection
-Implementation We build upon the Plain-DETR (Lin et al., 2023b), but make the following modification:
-We do not fuse the transformer encoder into the backbone, but keep it as a separate module, similar to the
-original DETR (Carion et al., 2020), which allows us to keep the DINOv3 backbone completely frozen during
-training and inference. To the best of our knowledge, this makes it the first competitive detection model to
-use a frozen backbone.
-Kb: this suggest generally we should fine tune for object detection 
-
+4. **Object detection** uses a modified Plain-DETR architecture where the ViT backbone remains frozen during training and inference. Only the detection head and transformer decoder receive gradient updates. This contrasts with standard practice where backbones are fine-tuned, demonstrating that DINOv3 features generalize without task-specific adaptation.
 
 ## Limitations
+
+The papers don't explicitly enumerate limitations, but several emerge from the methodology:
+
+1. Instagram bias in DINOv3's dataset may favor certain visual styles and demographics over others, potentially affecting performance on specialized domains
+2. Text alignment** in DINOv3 keeps vision frozen, which simplifies training but may limit multimodal reasoning compared to joint training
+3. Frozen backbone assumption works for many tasks but may underperform full fine-tuning when training data is abundant and task-specific
 
 # Resource
 [DINOv1 Paper](https://arxiv.org/pdf/2104.14294)
