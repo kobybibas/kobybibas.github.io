@@ -1,6 +1,6 @@
 ---
 title: "[Summary] DINOv3: Self-Supervised Vision Transformers at Scale"
-date: 2025-09-27
+date: 2025-10-11
 tags:
 - Self-Supervised Learning
 - Vision Transformers
@@ -33,7 +33,7 @@ The core challenge is preventing trivial solutions where all images collapse to 
 
 The architecture uses standard ViT variants (ViT-S/16, ViT-B/16) trained on ImageNet-1k for 300 epochs with no explicit contrastive loss nor negative pair.
 
-![DINOv3_dense_features](/posts/20250927_dinov3/DINOv1_self_distillation.png) 
+![DINOv3_dense_features](/posts/20251011_dinov3/DINOv1_self_distillation.png) 
 
 ## DINOv2
 
@@ -58,7 +58,7 @@ This process balances coverage of visual concepts while filtering low-quality da
 - Longer training schedules (up to 500k iterations)
 
 The combined global and local objectives yield representations that excel at both image-level retrieval and dense prediction tasks like segmentation.
-![DINOv2_data_processing_pipeline](/posts/20250927_dinov3/DINOv2_data_processing_pipeline.png) 
+![DINOv2_data_processing_pipeline](/posts/20251011_dinov3/DINOv2_data_processing_pipeline.png) 
 
 ## DINOv3
 Analysis revealed that DINOv2 transformers "smuggle" global information into irrelevant background patches through attention, contaminating patch representations. Register tokens fix this by providing dedicated slots for storing global context separate from spatial features.
@@ -97,7 +97,7 @@ Most of the results where obtained using a frozen backbone: Most detection model
 2. Text alignment** in DINOv3 keeps vision frozen, which simplifies training but may limit multimodal reasoning compared to joint training
 3. Frozen backbone assumption works for many tasks but may underperform full fine-tuning when training data is abundant and task-specific
 
-![DINOv3_dense_features](/posts/20250927_dinov3/DINOv3_dense_features.png) 
+![DINOv3_dense_features](/posts/20251011_dinov3/DINOv3_dense_features.png) 
 
 # Resource
 [DINOv1 Paper](https://arxiv.org/pdf/2104.14294)
