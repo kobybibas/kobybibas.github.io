@@ -33,6 +33,7 @@ The core challenge is preventing trivial solutions where all images collapse to 
 
 The architecture uses standard ViT variants (ViT-S/16, ViT-B/16) trained on ImageNet-1k for 300 epochs. No explicit contrastive loss or negative pairs required.
 
+![DINOv3_dense_features](/posts/20250927_dinov3/DINOv1_self_distillation.png) 
 
 ## DINOv2 Data Curation and Local Objectives
 
@@ -98,6 +99,8 @@ The papers don't explicitly enumerate limitations, but several emerge from the m
 1. Instagram bias in DINOv3's dataset may favor certain visual styles and demographics over others, potentially affecting performance on specialized domains
 2. Text alignment** in DINOv3 keeps vision frozen, which simplifies training but may limit multimodal reasoning compared to joint training
 3. Frozen backbone assumption works for many tasks but may underperform full fine-tuning when training data is abundant and task-specific
+
+![DINOv3_dense_features](/posts/20250927_dinov3/DINOv3_dense_features.png) 
 
 # Resource
 [DINOv1 Paper](https://arxiv.org/pdf/2104.14294)
