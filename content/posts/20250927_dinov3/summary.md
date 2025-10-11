@@ -27,9 +27,9 @@ $$
 where \(P_t\) and \(P_s\) are teacher and student outputs respectively.
 
 The core challenge is preventing trivial solutions where all images collapse to identical representations. Three mechanisms prevent this collapse:
-1. **Exponential moving average updates** for teacher weights: \(\theta_t \leftarrow \lambda \theta_t + (1-\lambda)\theta_s\) with \(\lambda = 0.996\)
-2. **Centering** teacher outputs by subtracting running mean
-3. **Sharpening** via low temperature softmax \(\tau_t = 0.04\) for teacher vs higher temperature \(\tau_s = 0.1\) for student
+1. Exponential moving average updates** for teacher weights: \(\theta_t \leftarrow \lambda \theta_t + (1-\lambda)\theta_s\) with \(\lambda = 0.996\)
+2. Centering teacher outputs by subtracting running mean
+3. Sharpening via low temperature softmax \(\tau_t = 0.04\) for teacher vs higher temperature \(\tau_s = 0.1\) for student
 
 The architecture uses standard ViT variants (ViT-S/16, ViT-B/16) trained on ImageNet-1k for 300 epochs with no explicit contrastive loss nor negative pair.
 
@@ -47,14 +47,14 @@ The architecture uses standard ViT variants (ViT-S/16, ViT-B/16) trained on Imag
 This process balances coverage of visual concepts while filtering low-quality data.
 
 **Architectural modifications.**
-- Separate projection heads for global $[CLS]$ token and patch tokens, preventing interference between objectives
+- Separate projection heads for global \([CLS]\) token and patch tokens, preventing interference between objectives
 - Patch-level loss from iBOT: randomly mask 40-50% of student patches, predict teacher features for masked positions using unmasked context
 - Koleo regularizer to prevent dimensional collapse in feature space
 - SwiGLU activation replacing standard GELU
 
 **Training enhancements.**
 - Replace centering + sharpening with Sinkhorn-Knopp batch normalization for numerical stability
-- Mixed-resolution training with crops at $\{224, 448\}$ for global views
+- Mixed-resolution training with crops at \(\{224, 448\}\) for global views
 - Longer training schedules (up to 500k iterations)
 
 The combined global and local objectives yield representations that excel at both image-level retrieval and dense prediction tasks like segmentation.
@@ -76,8 +76,8 @@ This combines diversity (via clustering) with task alignment (via retrieval).
 - Improved RoPE positional embeddings with box jittering augmentation for handling variable resolutions and aspect ratios at inference
 
 **Training innovations.**
-1. Gram matrix regularization to preserve intra-patch consistency. The loss operates on $G = FF^T$ where $F$ is the matrix of patch features, pushing student Gram matrices toward early-teacher values
-2. Mixed-resolution training with global crops sampled from $\{512, 768\}$ and local crops from $\{112, 168, 224, 336\}$
+1. Gram matrix regularization to preserve intra-patch consistency. The loss operates on \(G = FF^T\) where \(F\) is the matrix of patch features, pushing student Gram matrices toward early-teacher values
+2. Mixed-resolution training with global crops sampled from \(\{512, 768\}\) and local crops from \(\{112, 168, 224, 336\}\)
 3. Post-training alignment with text encoders while keeping vision backbone frozen, enabling CLIP-style zero-shot capabilities without degrading visual representations
 
 
@@ -93,9 +93,6 @@ Most of the results where obtained using a frozen backbone: Most detection model
 4. **Object detection** uses a modified Plain-DETR architecture where the ViT backbone remains frozen during training and inference. Only the detection head and transformer decoder receive gradient updates. This contrasts with standard practice where backbones are fine-tuned, demonstrating that DINOv3 features generalize without task-specific adaptation.
 
 ## Limitations
-
-The papers don't explicitly enumerate limitations, but several emerge from the methodology:
-
 1. Instagram bias in DINOv3's dataset may favor certain visual styles and demographics over others, potentially affecting performance on specialized domains
 2. Text alignment** in DINOv3 keeps vision frozen, which simplifies training but may limit multimodal reasoning compared to joint training
 3. Frozen backbone assumption works for many tasks but may underperform full fine-tuning when training data is abundant and task-specific
