@@ -68,10 +68,11 @@ Analysis revealed that DINOv2 transformers "smuggle" global information into irr
 2. Cluster embeddings into 10k groups
 3. Subsample images uniformly across clusters to ensure representation of rare visual concepts
 4. Retrieve images near trusted seed datasets (ImageNet, fine-grained benchmarks) to prioritize task-relevant concepts
+
 This combines diversity (via clustering) with task alignment (via retrieval).
 
 **Architecture scaling.**
-- Custom ViT-7B with 7 billion parameters, the largest vision-only transformer to date
+- Custom ViT-7B, the largest vision-only transformer to date
 - Patch size increased from 14 to 16 pixels for computational efficiency
 - Improved RoPE positional embeddings with box jittering augmentation for handling variable resolutions and aspect ratios at inference
 
@@ -84,13 +85,13 @@ This combines diversity (via clustering) with task alignment (via retrieval).
 ## Applications
 Most of the results where obtained using a frozen backbone: Most detection models fine-tune encoders, but DINOv3 demonstrates competitive performance with a completely frozen ViT, simplifying deployment and preserving general-purpose features.
 
-1. **Unsupervised object discovery** uses TokenCut, a non-parametric graph algorithm that segments objects by clustering patch features based on similarity. No labels needed.
+1. **Unsupervised object discovery** uses TokenCut, a non-parametric graph algorithm that segments objects by clustering patch features based on similarity
 
-2. **Video instance segmentation** propagates masks across frames via nearest-neighbor label transfer in feature space. Given ground-truth masks for frame 1, the algorithm finds patches in frame 2 whose DINOv3 features lie closest to labeled patches in frame 1, transferring labels accordingly.
+2. **Video instance segmentation** propagates masks across frames via nearest-neighbor label transfer in feature space. Given ground-truth masks for frame 1, the algorithm finds patches in frame 2 whose DINOv3 features lie closest to labeled patches in frame 1, transferring labels accordingly
 
-3. **Video classification** trains a shallow 4-layer transformer probe on frozen patch features extracted per frame, enabling spatio-temporal reasoning without backpropagating through the backbone.
+3. **Video classification** trains a shallow 4-layer transformer probe on frozen patch features extracted per frame, enabling spatio-temporal reasoning without backpropagating through the backbone
 
-4. **Object detection** uses a modified Plain-DETR architecture where the ViT backbone remains frozen during training and inference. Only the detection head and transformer decoder receive gradient updates. This contrasts with standard practice where backbones are fine-tuned, demonstrating that DINOv3 features generalize without task-specific adaptation.
+4. **Object detection** uses a modified Plain-DETR architecture where the ViT backbone remains frozen during training and inference. Only the detection head and transformer decoder receive gradient updates
 
 ## Limitations
 1. Instagram bias in DINOv3's dataset may favor certain visual styles and demographics over others, potentially affecting performance on specialized domains
