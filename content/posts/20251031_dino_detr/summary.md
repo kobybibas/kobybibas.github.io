@@ -10,7 +10,7 @@ draft: false
 ---
 
 ## TL;DR
-Object detection has shifted from heavy, hand-engineered pipelines based on anchors and heuristics to end to end transformer architectures that learn object localization and classification jointly. This progression (from DETR to RF-DETR) has reduced post-processing, improved training stability, and brought real-time inference within reach.
+Object detection has shifted from heavy, hand-engineered pipelines based on anchors and heuristics to end to end transformer architectures that learn object localization and classification jointly. This progression (from DETR 2020 to RF-DETR 2025) has reduced post-processing, improved training stability, and brought real-time inference within reach.
 
 ![summary_scope)](/posts/20251031_dino_detr/summary_scope.png)
 
