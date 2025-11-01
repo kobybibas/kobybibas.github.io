@@ -67,7 +67,7 @@ Main novelties:
 4. Modern Pretraining: Adopts a DINOv2 backbone pretrained through large-scale self-supervision, enhancing transfer and low-data adaptation.
 
 RF-DETR represents the cutting edge of real-time object detection by uniting deformable attention, efficient transformer design, and powerful pre-training. 
-It delivers state-of-the-art accuracy with the speed needed for practical deployment across a variety of applications
+It delivers state-of-the-art accuracy with the speed needed for practical deployment.
 
 ![rfdetr_architecture](/posts/20251031_dino_detr/rfdetr_architecture.png)
 
