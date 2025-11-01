@@ -14,7 +14,7 @@ Object detection has shifted from heavy, hand-engineered pipelines based on anch
 
 ![summary_scope)](/posts/20251031_dino_detr/summary_scope.png)
 
-# [DETR: End-to-End Object Detection with Transformers (2020)](https://arxiv.org/abs/2005.12872)
+## [DETR: End-to-End Object Detection with Transformers (2020)](https://arxiv.org/abs/2005.12872)
 
 DEtection TRansformer (DETR) introduced a simple yet novel idea: formulate object detection as a direct set prediction problem solved with transformers. 
 Instead of relying on multi-stage heuristics such as Anchor Boxes (redefined bounding boxes of specific sizes and aspect ratios spread uniformly over an image) or non-maximum suppression (a heuristic step that removes duplicated detections by suppressing overlapping boxes with lower confidence), DETR learns to predict all objects and their bounding boxes in a single forward pass.
@@ -84,16 +84,9 @@ DINO DETR (DETR with Improved DeNoising Anchor Boxes)  2022:
 - [DINO: DETR with Improved DeNoising Anchor Boxes (arXiv)](https://arxiv.org/abs/2203.03605) 
 - [How to DINO-DET with Improved Denoising Anchor Boxes (Medium article)](https://akmaier.medium.com/how-to-dino-detr-with-improved-denoising-anchor-boxes-d9799f024773)
 
-
-RF-DETR:
-* https://blog.roboflow.com/rf-detr/
-* https://towardsdatascience.com/rf-detr-under-the-hood-the-insights-of-a-real-time-transformer-detection/
-* [LW-DETR: A Transformer Replacement to YOLO for Real-Time Detection. Qiang Chen et. al. 2024.](https://arxiv.org/pdf/2406.03459)
-
 RF-DETR (Roboflow Detection Transformer) 2025:
 - [RF-DETR: Real-Time Transformer Detection ](https://blog.roboflow.com/rf-detr/)
 - [Insights into RF-DETR architecture (Medium article)](https://towardsdatascience.com/rf-detr-under-the-hood-the-insights-of-a-real-time-transformer-detection/)
 - [LW-DETR: A Transformer Replacement for YOLO for Real-Time Detection (arXiv)](https://arxiv.org/pdf/2406.03459)
-
 
 [Excalidraw figures](https://excalidraw.com/?#json=OPo23HDKhm_iS1Ul3e7by,XwM7kYYPfgGyYoo5iXXxxA)
