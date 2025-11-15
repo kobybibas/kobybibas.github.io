@@ -1,5 +1,5 @@
 ---
-title: "[Concept] How Transformers Learn Order: Absolute, Relative, and Rotary Positions"
+title: "How Transformers Learn Order: Absolute, Relative, and Rotary Positions"
 date: 2025-11-15
 tags:
  - Positional Encoding
