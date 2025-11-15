@@ -132,7 +132,7 @@ where \(R_{n-m}\) is a rotation matrix that depends only on the relative offset 
 
 ![rope](/posts/20251115_postinal_encoding/rope.png)
 
-```
+```python
 def apply_rope(x):
     # x: (batch, seq_len, n_heads, head_dim)
     batch_size, seq_len, n_heads, head_dim = x.shape
