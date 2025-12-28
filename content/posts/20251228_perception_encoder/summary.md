@@ -1,3 +1,14 @@
+---
+title: "[Summary] Perception Encoder: The best visual embeddings are not at the output of the network"
+date: 2025-12-28
+tags:
+- Vision
+- Multimodal
+- Contrastive Learning
+- Perception Encoder
+draft: false
+---
+
 **TL;DR** Current beliefs suggest that a single vision model cannot achieve SOTA performance across language-centric and spatial tasks. Perception Encoder (PE) is a vision encoder demonstrates that contrastive vision-language pretraining provides versatile features suitable for both multimodal language modeling and dense spatial prediction. These diverse capabilities reside within intermediate layers rather than the model output. The authors fine-tune two PE variants to migrate these hidden representations to the final layer: one optimized for language tasks and another for spatial tasks. 
 
 # Motivation
@@ -18,7 +29,7 @@ The authors develop a multi-stage pipeline to create a unified SOTA encoder:
 3. **Stage #3: Joint Finetuning**: Finetuning the image encoder on both image and video data (via average pooling across sampled frames).
 4. **Stage #4: Alignment Tuning**: Specific training to "lift" the hidden intermediate features to the final layer for **either** language or spatial tasks.
 
-![[Pasted image 20251227135558.png]]
+![PE Core architecture](/posts/20251228_perception_encoder/pe_fig1_core.png)
 
 ## Stage #1: PE Core
 
@@ -28,7 +39,7 @@ The authors improve the standard CLIP recipe through several regularization and 
 * **2D [[RoPE]]**: Adding 2D Rotary Positional Embeddings improves extrapolation and robustness.
 * **Mask Regularization**: A variation of MaskFeat is used where 1/16th of the batch is masked; masked tokens must match their unmasked counterparts via cosine similarity.  
 
-![[Pasted image 20251228135131.png]]
+![PE data pipeline](/posts/20251228_perception_encoder/pe_fig2_pipeline.png)
 
 ## Stage #2: Video Data Engine
 
@@ -37,7 +48,7 @@ To overcome the scarcity of high-quality video-text data, the authors develop a 
 * Llama Summarization: Video captions, frame-level captions (from Llama 3.2), and existing metadata are summarized by Llama 3.3 70B to create information-dense descriptions.
 * PE Video Dataset (PVD): A released dataset of 1M diverse videos with 120K human-refined annotations, where humans removed hallucinations and added specific details like "glass bowl" or "scraping".
 
-![[Pasted image 20251228140509.png]]
+![Alignment methods overview](/posts/20251228_perception_encoder/pe_fig3_alignment.png)
 
 ## Stage #3: Fine Tuning
 
@@ -47,7 +58,7 @@ The authors perform contrastive finetuning using the bootstrapped 22M synthetic 
 
 ## Stage #4: Alignment
 
-To make the internal "best" features accessible at the model output, the authors introduce two alignment methods25.
+To make the internal "best" features accessible at the model output, the authors introduce two alignment methods.
 
 ### A. Language Alignment
 
