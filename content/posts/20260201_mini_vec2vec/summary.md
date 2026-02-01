@@ -19,15 +19,15 @@ Deep learning models often converge toward a geometric structure representing th
 
 We assume access to two pools of text embeddings, each from a different encoder. Our task is to align the encoders' embedding spaces without paired examples.
 
-The solution should learn a function $f$ such that:
+The solution should learn a function \(f\) such that:
 
 $$f(E_A(z)) \approx E_B(z)$$
 
-where $z$ represents a datapoint $z \in Z$.
+where \(z\) represents a datapoint \(z \in Z\).
 
 ## Mini-vec2vec Pipeline
 
-The mini-vec2vec pipeline operates in three distinct phases designed to find correspondences in unaligned sets $E_A$ and $E_B$.
+The mini-vec2vec pipeline operates in three distinct phases designed to find correspondences in unaligned sets \(E_A\) and \(E_B\).
 
 ### A. Pre-processing
 
@@ -43,7 +43,7 @@ $$\{c_j^A\}_{j=1}^k, \quad \{c_j^B\}_{j=1}^k$$
 2. **Similarity Matrices:** Computing intra-space similarity matrices for these centroids (similarity matrices between the centroids of the same embedding space):
 $$S_{ij}^A = \cos(c_i^A, c_j^A), \quad S_{ij}^B = \cos(c_i^B, c_j^B)$$
 
-3. **Quadratic Assignment Problem (QAP):** The authors solve for an optimal permutation that aligns centroids from $E_A$ to $E_B$ based on their relational structure. Finding the optimal assignment to maximize correlation of the similarity metrics. Denote $\pi: \{1, 2, \ldots, k\} \rightarrow \{1, 2, \ldots, k\}$ as the permutation from the set $\Pi_k$:
+3. **Quadratic Assignment Problem (QAP):** Solving for an optimal permutation that aligns centroids from \(E_A\) to \(E_B\) based on their relational structure, i.e., finding the optimal assignment to maximize correlation of the similarity metrics. Denote \(\pi: \{1, 2, \ldots, k\} \rightarrow \{1, 2, \ldots, k\}\) as the permutation from the set \(\Pi_k\):
 
 $$\pi^* = \arg \max_{\pi \in \Pi_k} \sum_{i=1}^k \sum_{j=1}^k S_{ij}^A S_{\pi(i) \pi(j)}^B$$
 
@@ -52,12 +52,24 @@ $$\mathbf{r}_i^A = [\cos(\mathbf{x}_i^A, \mathbf{c}_1^A), \cos(\mathbf{x}_i^A, \
 
 ### C. Mapping and Refinement
 
-Using the relational features, pseudo-parallel pairs can then be identified. A vector $v_a$ is matched to the centroid of its $k$ nearest neighbors in the relative space of $B$. The mapping $f: \mathbb{R}^d \to \mathbb{R}^d$ is then estimated via Procrustes analysis or least squares. This process repeats, using the newly learned transformation to better align the spaces and find more accurate pairs in the subsequent iteration.
+Using the relational features, pseudo-parallel pairs can then be identified. For each vector in space $A$, we find its $k$ nearest neighbors in space $B$ based on their relational representations, then pair it with the **average** of those neighbors:
+
+$$\text{Pair}_i = \left(\mathbf{x}_i^A, \frac{1}{k} \sum_{j \in \text{top-}k} \mathbf{x}_j^B\right)$$
+
+The neighborhood lookup is done in the relative space (which aligns the two spaces), but the actual pairing happens in absolute space \(B\).
+
+The optimal linear transformation is then computed via Procrustes analysis using SVD:
+
+$$\mathbf{W}^* = \mathbf{VU}^T \quad \text{where} \quad \mathbf{U}\Sigma\mathbf{V}^T = \text{SVD}(\mathbf{A}^T\mathbf{B})$$
+
+Here, \(\mathbf{A}\) and \(\mathbf{B}\) are matrices containing all the pseudo-parallel pairs.
+
+This process repeats iteratively, refining the transformation and finding increasingly accurate pairs in each round.
 
 ## Limitations
 1. The success of mini-vec2vec assumes the correctness of the Platonic Representation Hypothesis: if two models have captured fundamentally different aspects of the data (e.g., a code-only model vs. a prose-only model), the anchor-based matching will likely fail
 2. The linear mapping might struggle with models trained on vastly different tokenization schemes where the manifold topology diverges
-3. The QAP step might take significant time for large $k$
+3. The QAP step might take significant time for large \(k\).
 
 ## Resources
 [GitHub Repository](https://github.com/guy-dar/mini-vec2vec)
