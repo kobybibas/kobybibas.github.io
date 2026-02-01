@@ -52,7 +52,7 @@ $$\mathbf{r}_i^A = [\cos(\mathbf{x}_i^A, \mathbf{c}_1^A), \cos(\mathbf{x}_i^A, \
 
 ### C. Mapping and Refinement
 
-Using the relational features, pseudo-parallel pairs can then be identified. For each vector in space $A$, we find its $k$ nearest neighbors in space $B$ based on their relational representations, then pair it with the **average** of those neighbors:
+Using the relational features, pseudo-parallel pairs can then be identified. For each vector in space \(A\), we find its \(k\) nearest neighbors in space \(B\) based on their relational representations, then pair it with the **average** of those neighbors:
 
 $$\text{Pair}_i = \left(\mathbf{x}_i^A, \frac{1}{k} \sum_{j \in \text{top-}k} \mathbf{x}_j^B\right)$$
 
@@ -67,7 +67,7 @@ Here, \(\mathbf{A}\) and \(\mathbf{B}\) are matrices containing all the pseudo-p
 This process repeats iteratively, refining the transformation and finding increasingly accurate pairs in each round.
 
 ## Limitations
-1. The success of mini-vec2vec assumes the correctness of the Platonic Representation Hypothesis: if two models have captured fundamentally different aspects of the data (e.g., a code-only model vs. a prose-only model), the anchor-based matching will likely fail
+1. mini-vec2vec assumes the correctness of the Platonic Representation Hypothesis: if two models have captured fundamentally different aspects of the data (e.g., a code-only model vs. a prose-only model), the anchor-based matching will likely fail
 2. The linear mapping might struggle with models trained on vastly different tokenization schemes where the manifold topology diverges
 3. The QAP step might take significant time for large \(k\).
 
