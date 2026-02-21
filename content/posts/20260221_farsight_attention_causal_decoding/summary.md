@@ -21,9 +21,7 @@ Two key observations drive this work:
 
 Together, these observations suggest that balanced information propagation and refined positional encoding can mitigate both failure modes.
 
-<div style="text-align: center;">
-<img src="hallucination_types.png" width="50%">
-</div>
+![Hallucination Types](/posts/20260221_farsight_attention_causal_decoding/hallucination_types.png)
 
 ## Method
 
@@ -58,9 +56,7 @@ RoPE encodes relative positional information by multiplying rotation matrices in
 
 FarSight addresses this with a positional awareness encoding scheme that applies a diminishing masking rate, preserving long-range dependencies between vision and text tokens and counteracting the progressive decay of visual information during generation.
 
-<div style="text-align: center;">
-<img src="attention_collapse.png" width="50%">
-</div>
+![Attention Collapse](/posts/20260221_farsight_attention_causal_decoding/attention_collapse.png)
 
 ## Limitations
 
