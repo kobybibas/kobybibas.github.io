@@ -27,11 +27,15 @@ The architecture is a decoder-only transformer that operates on patches instead 
 3. Then fed through 20 causal self-attention layers (16 heads, dim=1280)
 4. An output residual block maps each token to a prediction of length h=128
 
+![TimesFM Architecture](/posts/20260404_timesfm_decoder_only_time_series/architecture.png)
+
 Key design choices:
 - Output patches are longer than input patches (h=128 vs. p=32), so forecasting 512 steps takes 4 auto-regressive steps instead of 16. Fewer steps means less error accumulation.
 - Patch masking during training: a random number of timepoints (0 to p-1) are masked from the start of the first patch, so the model learns to handle any context length.
 
 Training data: Google Trends, Wikipedia pageviews, other real-world sources, and synthetic data (ARMA, sinusoids, piecewise linear, step functions). ~100B timepoints total, mixed 80% real and 20% synthetic. The synthetic data fills granularity gaps, especially for sub-hourly frequencies underrepresented in real datasets. Loss: MSE. Trained for 1.5M iterations on 16 TPUv5e cores (~2 days for the 200M model).
+
+![TimesFM Training Data](/posts/20260404_timesfm_decoder_only_time_series/training.png)
 
 ## Limitations
 
