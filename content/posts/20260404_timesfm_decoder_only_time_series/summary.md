@@ -19,7 +19,13 @@ NLP and CV have foundation models, but time series is harder: no discrete vocabu
 
 ## Method
 
-Given a context window of L timepoints, learn a model that predicts the next H steps, optimized with MAE.
+Given a context window of \(L\) timepoints \(y_{1:L}\), learn a model \(f\) that predicts the next \(H\) steps:
+$$
+f(y_{1:L}) \rightarrow \hat{y}_{L+1:L+H}
+$$
+optimized with MAE.
+
+### Architecture
 
 The architecture is a decoder-only transformer that operates on patches instead of individual timepoints:
 1. The input is split into non-overlapping patches of length p=32 (the time series analogue of a token)
@@ -33,7 +39,9 @@ Key design choices:
 - Output patches are longer than input patches (h=128 vs. p=32), so forecasting 512 steps takes 4 auto-regressive steps instead of 16. Fewer steps means less error accumulation.
 - Patch masking during training: a random number of timepoints (0 to p-1) are masked from the start of the first patch, so the model learns to handle any context length.
 
-Training data: Google Trends, Wikipedia pageviews, other real-world sources, and synthetic data (ARMA, sinusoids, piecewise linear, step functions). ~100B timepoints total, mixed 80% real and 20% synthetic. The synthetic data fills granularity gaps, especially for sub-hourly frequencies underrepresented in real datasets. Loss: MSE. Trained for 1.5M iterations on 16 TPUv5e cores (~2 days for the 200M model).
+### Training data
+
+Google Trends, Wikipedia pageviews, other real-world sources, and synthetic data (ARMA, sinusoids, piecewise linear, step functions). ~100B timepoints total, mixed 80% real and 20% synthetic. The synthetic data fills granularity gaps, especially for sub-hourly frequencies underrepresented in real datasets. Loss: MSE. Trained for 1.5M iterations on 16 TPUv5e cores (~2 days for the 200M model).
 
 ![TimesFM Training Data](/posts/20260404_timesfm_decoder_only_time_series/training.png)
 
