@@ -26,6 +26,8 @@ The core idea is to train a large transformer model on synthetic data, and perfo
 - **BNN prior** - one dataset = one random neural net: sample an NN architecture and its weights, then for each data point sample an input x, feed it through the BNN with sampled noise, and use the output y as the target.
 - **SCM prior** - one dataset = one random causal graph: sample high-level parameters (dataset size, number of features), randomly create an acyclic graph that describes the causal structure of the features and the target, and sample data from that distribution. Because features and target are just nodes in the graph, this generates cases the BNN prior cannot: the target causing features, and hidden confounders.
 
+![Graphs generating data in the TabPFN prior: a BNN, an SCM, and SCMs sampled from the prior](/posts/20260712_tabular_foundation_models/tabpfn_prior_graphs.png)
+
 **In-context learning.** For a new tabular dataset, the model doesn't train on it. Instead, we feed the entire table into the context, and the transformer predicts the entire test set labels in one pass. There's no gradient updates and no hyperparameter tuning.
 
 ## The Models
