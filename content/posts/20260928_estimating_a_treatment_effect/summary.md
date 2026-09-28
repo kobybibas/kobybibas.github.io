@@ -74,9 +74,7 @@ When we need the causal effect, there are different tools we can use.
 
 ## Machine Learning Approach for Counterfactual Inference
 
-### S-learner
-
-In this approach we train a model with the treatment as one of the model features
+**S-learner.** In this approach we train a model with the treatment as one of the model features
 
 $$
 \mu(x, t) := \mathbb{E}[Y \mid x, T=t]
@@ -88,9 +86,7 @@ $$
 \hat{\tau}(x) = \hat\mu(x, 1) - \hat\mu(x, 0).
 $$
 
-### T-learner
-
-The T-learner fits a separate model for each treatment:
+**T-learner.** The T-learner fits a separate model for each treatment:
 
 $$
 \mu_t(x) = \mathbb{E}[Y \mid x, T=t]
@@ -162,8 +158,6 @@ We can pick \(c\) as large as we want, so the error is arbitrarily large. While 
 
 ## Reference
 
-<https://causaldm.github.io/Causal-Decision-Making/0_Motivating_Examples/CEL.html>
+[Causal Effect Learning](https://causaldm.github.io/Causal-Decision-Making/0_Motivating_Examples/CEL.html), from Causal Decision Making.
 
-<https://www.youtube.com/watch?v=gRkUhg9Wb-I>  
-
-<https://www.youtube.com/watch?v=g5v-NvNoJQQ>
+[Causal Inference, Part 1](https://www.youtube.com/watch?v=gRkUhg9Wb-I) and [Causal Inference, Part 2](https://www.youtube.com/watch?v=g5v-NvNoJQQ). Two lectures in the same series, David Sontag, MIT 6.S897 Machine Learning for Healthcare.
