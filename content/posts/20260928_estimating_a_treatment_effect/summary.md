@@ -42,18 +42,20 @@ A common quantity in causal learning is the average treatment effect (ATE):
 $$
 \tau = \mathbb{E}[Y(1) - Y(0)]
 $$
+
 The issue is the effect can depend on the sample we treat. **Heterogeneous treatment effect (HTE)**, or conditional average treatment effect (CATE), is the effect given the features \(x\). 
 
 Under three common assumptions in causal inference:
 1. Consistency: If a sample received treatment \(t\), the outcome we recorded is \(Y(t)\). Also, one sample's treatment does not change another's.
 2. No unmeasured confounders: Given \(x\), treatment does not depend on the potential outcomes, i.e., every confounder is inside \(x\).
-3. Common support: For the features we see, all possible treatments have a nonzero chance.  
+3. Common support: For the features we see, all possible treatments have a nonzero chance.
+
 The CATE can be identified from the observed data:
 $$
 \tau(x) = \mathbb{E}[Y \mid x, T=1] - \mathbb{E}[Y \mid x, T=0]
 $$
 
-### When to Use Causal Learning VS the Typical Correlation Based Learning
+## When to Use Causal Learning VS the Typical Correlation Based Learning
 
 The question we care about decides whether we need a causal effect at all:
 
@@ -70,9 +72,11 @@ When we need the causal effect, there are different tools we can use.
 | We can randomize                                      | Run the A/B test. Fit a CATE model if we need who benefits.                                 |
 | We cannot randomize, but the confounders are measured | Estimate the effect from observational data: S-learner or T-learner. |
 
-### Machine Learning Approach for Counterfactual Inference
+## Machine Learning Approach for Counterfactual Inference
 
-**S-learner.** In this approach we train a model with the treatment as one of the model features
+### S-learner
+
+In this approach we train a model with the treatment as one of the model features
 
 $$
 \mu(x, t) := \mathbb{E}[Y \mid x, T=t]
@@ -84,7 +88,9 @@ $$
 \hat{\tau}(x) = \hat\mu(x, 1) - \hat\mu(x, 0).
 $$
 
-**T-learner.** The T-learner fits a separate model for each treatment:
+### T-learner
+
+The T-learner fits a separate model for each treatment:
 
 $$
 \mu_t(x) = \mathbb{E}[Y \mid x, T=t]
@@ -96,7 +102,7 @@ $$
 \hat{\tau}(x) = \hat\mu_1(x) - \hat\mu_0(x)
 $$
 
-### Model Complexity
+## Model Complexity
 
 It's tempting to use a linear estimator to model the causal effect. However, if the true model is not linear, we get a biased estimator which results in a wrong conclusion. This means we must follow the true model, which is not likely in the real world. So we want to use a more powerful model class (random forest, NN).
 
@@ -134,7 +140,7 @@ $$
 
 We can pick \(c\) as large as we want, so the error is arbitrarily large. While the average effect is right, the effect for a given \(x\) is not.
 
-#### Glossary
+## Glossary
 
 **Treatment** \(T \in \{0,1\}\). The intervention we set. A value of \(T\) is written \(t\), and the treatment of sample \(i\) is \(T_i\).
 
@@ -154,7 +160,7 @@ We can pick \(c\) as large as we want, so the error is arbitrarily large. While 
 
 **Covariate adjustment**. Estimate \(\tau(x)\) from \(\mathbb{E}[Y \mid x, T=1] - \mathbb{E}[Y \mid x, T=0]\). The S-learner and the T-learner do this with \(\mu\).
 
-#### Reference
+## Reference
 
 <https://causaldm.github.io/Causal-Decision-Making/0_Motivating_Examples/CEL.html>
 
