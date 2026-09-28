@@ -1,5 +1,5 @@
 ---
-title: "[Summary] Estimating a Treatment Effect with Causal Inference"
+title: "[Concept] Estimating a Treatment Effect with Causal Inference"
 date: 2026-09-28
 tags:
   - Causal Inference
