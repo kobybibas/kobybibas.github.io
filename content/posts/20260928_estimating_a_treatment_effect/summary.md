@@ -161,3 +161,5 @@ We can pick \(c\) as large as we want, so the error is arbitrarily large. While 
 [Causal Effect Learning](https://causaldm.github.io/Causal-Decision-Making/0_Motivating_Examples/CEL.html), from Causal Decision Making.
 
 [Causal Inference, Part 1](https://www.youtube.com/watch?v=gRkUhg9Wb-I) and [Causal Inference, Part 2](https://www.youtube.com/watch?v=g5v-NvNoJQQ). Two lectures in the same series, David Sontag, MIT 6.S897 Machine Learning for Healthcare.
+
+Next: [Estimating a Treatment Effect from Observational Data](https://kobybibas.github.io/posts/20261025_treatment_effect_observational_data/summary/).
