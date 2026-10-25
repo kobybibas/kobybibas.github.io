@@ -1,5 +1,5 @@
 ---
-title: "[Concept] Estimating a Treatment Effect from Observational Data"
+title: "[Concept] [2/2] Estimating a Treatment Effect from Observational Data"
 date: 2026-10-25
 tags:
   - Causal Inference
@@ -12,7 +12,7 @@ draft: false
 
 Causal inference is essential for informed decision-making, as it uncovers the true data-generating processes beyond mere associations found in predictive models. The fundamental challenge in causal effect estimation is that we see the outcome under the treatment a sample received. We do not see the outcome that sample would have had under the other treatment.
 
-Short recap from [Estimating a Treatment Effect with Causal Inference](https://kobybibas.github.io/posts/20260928_estimating_a_treatment_effect/summary/):
+Short recap from [\[1/2\] Estimating a Treatment Effect with Causal Inference](https://kobybibas.github.io/posts/20260928_estimating_a_treatment_effect/summary/):
 
 - **Conditional average treatment effect (CATE)** \(\tau(x) = \mathbb{E}[Y(1) - Y(0) \mid x]\). The effect of treatment for a sample with features \(x\).
 - **ATE** \(\mathbb{E}[\tau(x)]\). The average of the CATE over samples. A randomized difference of means.

@@ -1,5 +1,5 @@
 ---
-title: "[Concept] Estimating a Treatment Effect with Causal Inference"
+title: "[Concept] [1/2] Estimating a Treatment Effect with Causal Inference"
 date: 2026-09-28
 tags:
   - Causal Inference
@@ -162,4 +162,4 @@ We can pick \(c\) as large as we want, so the error is arbitrarily large. While 
 
 [Causal Inference, Part 1](https://www.youtube.com/watch?v=gRkUhg9Wb-I) and [Causal Inference, Part 2](https://www.youtube.com/watch?v=g5v-NvNoJQQ). Two lectures in the same series, David Sontag, MIT 6.S897 Machine Learning for Healthcare.
 
-Next: [Estimating a Treatment Effect from Observational Data](https://kobybibas.github.io/posts/20261025_treatment_effect_observational_data/summary/).
+Next: [\[2/2\] Estimating a Treatment Effect from Observational Data](https://kobybibas.github.io/posts/20261025_treatment_effect_observational_data/summary/).
